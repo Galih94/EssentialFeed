@@ -11,6 +11,7 @@
 		3084106D2A0243C700B0351E /* FeedFeature.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 308410622A0243C600B0351E /* FeedFeature.framework */; };
 		308410722A0243C700B0351E /* FeedFeatureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 308410712A0243C700B0351E /* FeedFeatureTests.swift */; };
 		308410732A0243C700B0351E /* FeedFeature.h in Headers */ = {isa = PBXBuildFile; fileRef = 308410652A0243C600B0351E /* FeedFeature.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3084107D2A02454000B0351E /* FeedItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3084107C2A02454000B0351E /* FeedItem.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,6 +30,7 @@
 		308410662A0243C600B0351E /* FeedFeature.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = FeedFeature.docc; sourceTree = "<group>"; };
 		3084106C2A0243C700B0351E /* FeedFeatureTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FeedFeatureTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		308410712A0243C700B0351E /* FeedFeatureTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedFeatureTests.swift; sourceTree = "<group>"; };
+		3084107C2A02454000B0351E /* FeedItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedItem.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,6 +74,7 @@
 			isa = PBXGroup;
 			children = (
 				308410652A0243C600B0351E /* FeedFeature.h */,
+				3084107C2A02454000B0351E /* FeedItem.swift */,
 				308410662A0243C600B0351E /* FeedFeature.docc */,
 			);
 			path = FeedFeature;
@@ -194,6 +197,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3084107D2A02454000B0351E /* FeedItem.swift in Sources */,
 				308410672A0243C600B0351E /* FeedFeature.docc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -395,6 +399,7 @@
 		3084107A2A0243C700B0351E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 5K6BH2N7SF;
@@ -410,6 +415,7 @@
 		3084107B2A0243C700B0351E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 5K6BH2N7SF;
