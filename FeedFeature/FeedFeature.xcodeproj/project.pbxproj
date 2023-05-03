@@ -12,6 +12,7 @@
 		308410722A0243C700B0351E /* FeedFeatureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 308410712A0243C700B0351E /* FeedFeatureTests.swift */; };
 		308410732A0243C700B0351E /* FeedFeature.h in Headers */ = {isa = PBXBuildFile; fileRef = 308410652A0243C600B0351E /* FeedFeature.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3084107D2A02454000B0351E /* FeedItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3084107C2A02454000B0351E /* FeedItem.swift */; };
+		3084107F2A02466A00B0351E /* FeedLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3084107E2A02466A00B0351E /* FeedLoader.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -31,6 +32,7 @@
 		3084106C2A0243C700B0351E /* FeedFeatureTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FeedFeatureTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		308410712A0243C700B0351E /* FeedFeatureTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedFeatureTests.swift; sourceTree = "<group>"; };
 		3084107C2A02454000B0351E /* FeedItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedItem.swift; sourceTree = "<group>"; };
+		3084107E2A02466A00B0351E /* FeedLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedLoader.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,6 +77,7 @@
 			children = (
 				308410652A0243C600B0351E /* FeedFeature.h */,
 				3084107C2A02454000B0351E /* FeedItem.swift */,
+				3084107E2A02466A00B0351E /* FeedLoader.swift */,
 				308410662A0243C600B0351E /* FeedFeature.docc */,
 			);
 			path = FeedFeature;
@@ -197,6 +200,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3084107F2A02466A00B0351E /* FeedLoader.swift in Sources */,
 				3084107D2A02454000B0351E /* FeedItem.swift in Sources */,
 				308410672A0243C600B0351E /* FeedFeature.docc in Sources */,
 			);
