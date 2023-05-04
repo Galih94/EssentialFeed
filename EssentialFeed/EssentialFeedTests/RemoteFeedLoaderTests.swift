@@ -9,7 +9,7 @@ import XCTest
 
 class RemoteFeedLoader {
     func load() {
-        HTTPClient.shared.requestedURL = URL(string: "https://a-url.com")
+        HTTPClient.shared.get(from: URL(string: "https://a-url.com")!)
     }
 }
 
@@ -19,6 +19,10 @@ class HTTPClient {
     private init() {}
     
     var requestedURL: URL?
+    
+    func get(from url: URL) {
+        requestedURL = url
+    }
 }
 
 final class RemoteFeedLoaderTests: XCTestCase {
