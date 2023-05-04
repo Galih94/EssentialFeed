@@ -13,6 +13,7 @@
 		3084109C2A034B0B00B0351E /* EssentialFeed.h in Headers */ = {isa = PBXBuildFile; fileRef = 3084108E2A034B0A00B0351E /* EssentialFeed.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		308410A62A034B5600B0351E /* FeedItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 308410A52A034B5600B0351E /* FeedItem.swift */; };
 		308410A82A034EC600B0351E /* FeedLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 308410A72A034EC600B0351E /* FeedLoader.swift */; };
+		308410AD2A0357D300B0351E /* RemoteFeedLoaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 308410AC2A0357D300B0351E /* RemoteFeedLoaderTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -33,6 +34,7 @@
 		3084109A2A034B0B00B0351E /* EssentialFeedTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EssentialFeedTests.swift; sourceTree = "<group>"; };
 		308410A52A034B5600B0351E /* FeedItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedItem.swift; sourceTree = "<group>"; };
 		308410A72A034EC600B0351E /* FeedLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedLoader.swift; sourceTree = "<group>"; };
+		308410AC2A0357D300B0351E /* RemoteFeedLoaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteFeedLoaderTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,6 +87,7 @@
 		308410992A034B0B00B0351E /* EssentialFeedTests */ = {
 			isa = PBXGroup;
 			children = (
+				308410AC2A0357D300B0351E /* RemoteFeedLoaderTests.swift */,
 				3084109A2A034B0B00B0351E /* EssentialFeedTests.swift */,
 			);
 			path = EssentialFeedTests;
@@ -218,6 +221,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				308410AD2A0357D300B0351E /* RemoteFeedLoaderTests.swift in Sources */,
 				3084109B2A034B0B00B0351E /* EssentialFeedTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -355,6 +359,7 @@
 		308410A02A034B0B00B0351E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
@@ -383,6 +388,7 @@
 		308410A12A034B0B00B0351E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
@@ -412,6 +418,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 5K6BH2N7SF;
@@ -428,6 +435,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 5K6BH2N7SF;
