@@ -12,6 +12,10 @@ internal final class FeedItemsMapper {
     private static var OK_200: Int { return 200 }
     private struct Root: Decodable {
         let items: [Item]
+        
+        var feed: [FeedItem] {
+            return items.map({ $0.item })
+        }
     }
 
     private struct Item: Decodable { // make internal representation from FeedItem so it can map into FeedItem without changing FeedItem Implementation
@@ -25,24 +29,12 @@ internal final class FeedItemsMapper {
         }
     }
     
-    internal static func map(_ data: Data, _ response: HTTPURLResponse) throws -> [FeedItem] {
-        guard response.statusCode == OK_200 else {
-            throw RemoteFeedLoader.Error.invalidData
-        }
-        
-        let root = try JSONDecoder().decode(Root.self, from: data)
-        
-        return root.items.map({ $0.item })
-    }
-    
-    
-    
     internal static func map(_ data: Data, from response: HTTPURLResponse) -> RemoteFeedLoader.Result {
-        do {
-            let items = try FeedItemsMapper.map(data, response)
-            return .success(items)
-        } catch {
-            return .failure(.invalidData)
+        guard let root = try? JSONDecoder().decode(Root.self, from: data),
+                response.statusCode == OK_200 else {
+            return .failure(RemoteFeedLoader.Error.invalidData)
         }
+        
+        return .success(root.feed)
     }
 }
