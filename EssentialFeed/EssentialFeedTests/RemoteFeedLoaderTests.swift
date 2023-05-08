@@ -123,6 +123,25 @@ final class RemoteFeedLoaderTests: XCTestCase {
         
     }
     
+    private func makeItem(id: UUID, description: String? = nil, location: String? = nil, imageURL: URL) -> (model: FeedItem, json: [String: Any]) {
+        let item = FeedItem(
+            id: id,
+            description: description,
+            location: location,
+            imageURL: imageURL)
+        let json: [String: Any] = [
+            "id": id.uuidString,
+            "description": description,
+            "location": location,
+            "image": imageURL.absoluteString
+        ].reduce(into: [String: Any]()) { accumulationResult, element in
+            if let value = element.value { // make sure value is not nil
+                accumulationResult[element.key] = value // if not nil add to accumulationResult dictionary
+            }
+        }
+        return (item, json)
+    }
+    
     private class HTTPClientSpy: HTTPClient {
         
         private var messages = [(url: URL, completion: (HTTPClientResult) -> Void)]()
