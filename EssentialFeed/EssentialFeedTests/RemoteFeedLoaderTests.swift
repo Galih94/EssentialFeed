@@ -108,7 +108,7 @@ final class RemoteFeedLoaderTests: XCTestCase {
         
         action() // need this to trigger error from client
         
-        XCTAssertEqual(capturedResults, [result])
+        XCTAssertEqual(capturedResults, [result], file: file, line: line)
         
     }
     
