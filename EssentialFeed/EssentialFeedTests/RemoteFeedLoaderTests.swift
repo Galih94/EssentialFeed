@@ -64,7 +64,7 @@ final class RemoteFeedLoaderTests: XCTestCase {
     func test_load_deliversErrorOn200HTTPResponseWithEmptyJSONList() {
         let (sut, client) = makeSUT()
         expect(sut, toCompleteWithResult: .success([])) {
-            let emptyListJSON = Data("{\"items\": []}".utf8)
+            let emptyListJSON = makeItemsJSON(items: [])
             client.complete(withStatusCode: 200, data: emptyListJSON) // need this to trigger error from client
         }
     }
