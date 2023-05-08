@@ -12,7 +12,7 @@ public enum HTTPClientResult {
     case failure(Error)
 }
 
-public enum Result {
+public enum Result: Equatable {
     case success([FeedItem])
     case failure(Error)
 }
