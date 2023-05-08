@@ -82,14 +82,10 @@ final class RemoteFeedLoaderTests: XCTestCase {
             location: "a location",
             imageURL: URL(string: "http://another-a-url.com")!)
         
-        let itemsJSON = [
-            "items": [item1.json, item2.json]
-        ]
-        
         let items = [item1.model, item2.model]
         
         expect(sut, toCompleteWithResult: .success(items)) {
-            let json = try! JSONSerialization.data(withJSONObject: itemsJSON)
+            let json = makeItemsJSON(items: [item1.json, item2.json])
             client.complete(withStatusCode: 200, data: json) // need this to trigger error from client
         }
     }
@@ -132,6 +128,14 @@ final class RemoteFeedLoaderTests: XCTestCase {
             }
         }
         return (item, json)
+    }
+    
+    private func makeItemsJSON(items: [[String: Any]]) -> Data {
+        let itemsJSON = [
+            "items": items
+        ]
+        
+        return try! JSONSerialization.data(withJSONObject: itemsJSON)
     }
     
     private class HTTPClientSpy: HTTPClient {
