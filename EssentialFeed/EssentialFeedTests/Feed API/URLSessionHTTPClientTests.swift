@@ -17,7 +17,6 @@ final class URLSessionHTTPClient {
     }
     
     func get(from url: URL, completion: @escaping (HTTPClientResult) -> Void ) {
-        let url = URL(string: "http://another-url.com")!
         session.dataTask(with: url) {_, _, error in
             if let error = error {
                 completion(.failure(error))
@@ -59,6 +58,7 @@ final class URLSessionHTTPClientTests: XCTestCase {
     
     private class URLProtocolStub: URLProtocol {
         private static var stub: Stub?
+        private static var requestObserver: ((URLRequest) -> Void)?
         
         private struct Stub {
             let data: Data?
@@ -69,6 +69,10 @@ final class URLSessionHTTPClientTests: XCTestCase {
         static func stub(data: Data?, response: URLResponse?, error: Error?) {
             stub = Stub(data: data, response: response, error: error)
         }
+        
+        static func observeRequests(observer: @escaping (URLRequest) -> Void) {
+            requestObserver = observer
+        }
 
         
         static func startInterceptingRequests() {
@@ -78,10 +82,11 @@ final class URLSessionHTTPClientTests: XCTestCase {
         static func stopInterceptingRequests() {
             URLProtocol.unregisterClass(URLProtocolStub.self)
             stub = nil
+            requestObserver = nil
         }
                 
         override class func canInit(with request: URLRequest) -> Bool { // need to override canInit to make sure we are the one who set the request return success or fails
-           
+            requestObserver?(request)
             return true // set always true so it willalways be initalized regardless of url
         }
         
