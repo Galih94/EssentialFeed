@@ -6,6 +6,7 @@
 //
 
 import XCTest
+import EssentialFeed
 
 //MARK: - Production code move later
 final class URLSessionHTTPClient {
@@ -15,9 +16,11 @@ final class URLSessionHTTPClient {
         self.session = session
     }
     
-    func get(from url: URL) {
-        session.dataTask(with: url) {_, _,_ in
-            
+    func get(from url: URL, completion: @escaping (HTTPClientResult) -> Void ) {
+        session.dataTask(with: url) {_, _, error in
+            if let error = error {
+                completion(.failure(error))
+            }
         }.resume()
     }
 }
@@ -32,7 +35,7 @@ final class URLSessionHTTPClientTests: XCTestCase {
         let task = URLSessionDataTaskSpy()
         session.stub(url: url, task: task)
         let sut = URLSessionHTTPClient(session: session)
-        sut.get(from: url)
+        sut.get(from: url) { _ in }
         
         XCTAssertEqual(task.resumeCallCount, 1)
     }
