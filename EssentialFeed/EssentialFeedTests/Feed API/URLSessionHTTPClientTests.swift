@@ -68,7 +68,7 @@ final class URLSessionHTTPClientTests: XCTestCase {
             let error: Error?
         }
         
-        func stub(url: URL, error: Error? = nil) {
+        static func stub(url: URL, error: Error? = nil) {
             stubs[url] = Stub(error: error)
         }
         
