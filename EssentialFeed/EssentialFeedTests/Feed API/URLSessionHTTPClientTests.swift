@@ -9,10 +9,14 @@ import XCTest
 import EssentialFeed
 
 //MARK: - Production code move later
+protocol HTTPSession {
+    func dataTask(with url: URL, completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void) -> URLSessionDataTask
+}
+
 final class URLSessionHTTPClient {
-    private let session: URLSession
+    private let session: HTTPSession
     
-    init(session: URLSession) {
+    init(session: HTTPSession) {
         self.session = session
     }
     
@@ -64,9 +68,8 @@ final class URLSessionHTTPClientTests: XCTestCase {
     
     //MARK: - Helper Tests code
     
-    private final class URLSessionSpy: URLSession {
+    private final class URLSessionSpy: HTTPSession {
         private var stubs = [URL: Stub]()
-        override init(){}
         
         private struct Stub {
             let task: URLSessionDataTask
@@ -77,7 +80,7 @@ final class URLSessionHTTPClientTests: XCTestCase {
             stubs[url] = Stub(task: task, error: error)
         }
         
-        override func dataTask(with url: URL, completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void) -> URLSessionDataTask {
+        func dataTask(with url: URL, completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void) -> URLSessionDataTask {
             guard let stub = stubs[url] else {
                 fatalError("Cannot find stub for \(url)")
             }
