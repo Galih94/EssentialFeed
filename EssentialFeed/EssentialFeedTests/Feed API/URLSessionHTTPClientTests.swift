@@ -39,7 +39,7 @@ final class URLSessionHTTPClientTests: XCTestCase {
     
     func test_getFromURL_resumeDataTaskWithURL() {
         let url = URL(string: "http://any-url.com")!
-        let session = URLSessionSpy()
+        let session = HTTPSessionSpy()
         let task = URLSessionDataTaskSpy()
         session.stub(url: url, task: task)
         let sut = URLSessionHTTPClient(session: session)
@@ -50,7 +50,7 @@ final class URLSessionHTTPClientTests: XCTestCase {
     
     func test_getFromURL_failsDataTaskWithURL() {
         let url = URL(string: "http://any-url.com")!
-        let session = URLSessionSpy()
+        let session = HTTPSessionSpy()
         let error = NSError(domain: "any error domain", code: 1)
         session.stub(url: url, error: error)
         let sut = URLSessionHTTPClient(session: session)
@@ -72,7 +72,7 @@ final class URLSessionHTTPClientTests: XCTestCase {
     
     //MARK: - Helper Tests code
     
-    private final class URLSessionSpy: HTTPSession {
+    private final class HTTPSessionSpy: HTTPSession {
         private var stubs = [URL: Stub]()
         
         private struct Stub {
