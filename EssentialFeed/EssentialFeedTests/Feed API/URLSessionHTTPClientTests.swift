@@ -40,6 +40,28 @@ final class URLSessionHTTPClientTests: XCTestCase {
         XCTAssertEqual(task.resumeCallCount, 1)
     }
     
+    func test_getFromURL_failsDataTaskWithURL() {
+        let url = URL(string: "http://any-url.com")!
+        let session = URLSessionSpy()
+        let error = NSError(domain: "any error domain", code: 1)
+        session.stub(url: url, error: error)
+        let sut = URLSessionHTTPClient(session: session)
+        
+        let exp = expectation(description: "Wait for get from url")
+        sut.get(from: url) { result in
+            switch result {
+            case let .failure(receivedError as NSError):
+                XCTAssertEqual(receivedError, error)
+            default:
+                XCTFail("Expected failure with error \(error) got \(result) instead")
+            }
+            exp.fulfill()
+        }
+        
+        wait(for: [exp], timeout: 1.0)
+        
+    }
+    
     //MARK: - Helper Tests code
     
     private final class URLSessionSpy: URLSession {
