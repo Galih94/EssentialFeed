@@ -29,6 +29,20 @@ final class URLSessionHTTPClient {
 //MARK: - Tests code
 final class URLSessionHTTPClientTests: XCTestCase {
     
+    func test_getFromURL_performGetRequestWithURL() {
+        URLProtocolStub.startInterceptingRequests()
+        let url = URL(string: "http://any-url.com")!
+        let exp = expectation(description: "Wait for get from url")
+        URLProtocolStub.observeRequests { request in
+            XCTAssertEqual(request.url, url)
+            XCTAssertEqual(request.httpMethod, "GET")
+            exp.fulfill()
+        }
+        URLSessionHTTPClient().get(from: url) { _ in }
+        wait(for: [exp], timeout: 1.0)
+        URLProtocolStub.stopInterceptingRequests()
+    }
+    
     func test_getFromURL_failsOnRequestError() {
         URLProtocolStub.startInterceptingRequests() // make sure we use URLProtocolStub here
         let url = URL(string: "http://any-url.com")!
