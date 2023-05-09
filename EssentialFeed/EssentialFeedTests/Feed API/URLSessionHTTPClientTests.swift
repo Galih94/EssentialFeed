@@ -30,7 +30,7 @@ final class URLSessionHTTPClientTests: XCTestCase {
         let url = URL(string: "http://any-url.com")!
         let session = URLSessionSpy()
         let task = URLSessionDataTaskSpy()
-        session.stub(with: url, for: task)
+        session.stub(url: url, task: task)
         let sut = URLSessionHTTPClient(session: session)
         sut.get(from: url)
         
@@ -40,16 +40,24 @@ final class URLSessionHTTPClientTests: XCTestCase {
     //MARK: - Helper Tests code
     
     private final class URLSessionSpy: URLSession {
-        private var stubs = [URL: URLSessionDataTask]()
+        private var stubs = [URL: Stub]()
         override init(){}
         
-        func stub(with url: URL, for task: URLSessionDataTask) {
-            stubs[url] = task
+        private struct Stub {
+            let task: URLSessionDataTask
+            let error: Error?
+        }
+        
+        func stub(url: URL, task: URLSessionDataTask = FakeURLSessionDataTask(), error: Error? = nil) {
+            stubs[url] = Stub(task: task, error: error)
         }
         
         override func dataTask(with url: URL, completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void) -> URLSessionDataTask {
-            let dataTask = FakeURLSessionDataTask()
-            return stubs[url] ?? dataTask
+            guard let stub = stubs[url] else {
+                fatalError("Cannot find stub for \(url)")
+            }
+            completionHandler(nil, nil, stub.error)
+            return stub.task
         }
     }
     
