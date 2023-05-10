@@ -23,17 +23,14 @@ final class URLSessionHTTPClientTests: XCTestCase {
     func test_getFromURL_performGetRequestWithURL() {
         
         let url = anyURL()
-        let expGetDataFromURL = expectation(description: "Wait for get from url")
         let expObserverRequest = expectation(description: "Wait for observer request get from url")
         URLProtocolStub.observeRequests { request in
             XCTAssertEqual(request.url, url)
             XCTAssertEqual(request.httpMethod, "GET")
             expObserverRequest.fulfill()
         }
-        makeSUT().get(from: url) { _ in
-            expGetDataFromURL.fulfill()
-        }
-        wait(for: [expObserverRequest, expGetDataFromURL], timeout: 1.0)
+        makeSUT().get(from: url) { _ in }
+        wait(for: [expObserverRequest], timeout: 1.0)
     }
     
     func test_getFromURL_failsOnRequestError() {
@@ -172,7 +169,6 @@ final class URLSessionHTTPClientTests: XCTestCase {
         }
                 
         override class func canInit(with request: URLRequest) -> Bool { // need to override canInit to make sure we are the one who set the request return success or fails
-            requestObserver?(request)
             return true // set always true so it willalways be initalized regardless of url
         }
         
@@ -181,6 +177,11 @@ final class URLSessionHTTPClientTests: XCTestCase {
         }
         
         override func startLoading() {
+            if let requestObserver = URLProtocolStub.requestObserver { // guard here if requestObserver is still exist just return to avoid race condition when using URLProtocolStub
+                client?.urlProtocolDidFinishLoading(self)
+                return requestObserver(request)
+            }
+            
             if let data = URLProtocolStub.stub?.data {
                 client?.urlProtocol(self, didLoad: data)
             }
