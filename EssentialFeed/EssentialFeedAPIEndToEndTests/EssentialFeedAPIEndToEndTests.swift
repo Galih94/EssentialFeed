@@ -26,7 +26,7 @@ final class EssentialFeedAPIEndToEndTests: XCTestCase {
         case let .success(items):
             XCTAssertEqual(items.count, 8, "Expected 8 items")
             items.enumerated().forEach { (index, receivedItem) in
-                XCTAssertEqual(receivedItem, expectedItem(at: index))
+                XCTAssertEqual(receivedItem, expectedItem(at: index), "Unexpected item found at index \(index)")
             }
         case let .failure(error):
             XCTFail("Expected succcess got \(error) instead")
