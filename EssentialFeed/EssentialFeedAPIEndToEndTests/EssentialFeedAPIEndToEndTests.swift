@@ -9,20 +9,6 @@ import XCTest
 import EssentialFeed
 
 final class EssentialFeedAPIEndToEndTests: XCTestCase {
-
-    func demo() {
-        // set cache on url configuration for certain url session
-        let cache = URLCache(memoryCapacity: 10 * 1024 * 1024, diskCapacity: 100 * 1024 * 1024, diskPath: nil) // 10 mb and 100 mb with default diskpath
-        // default folder cache is file:///Users/your-mac-username-here/Library/Caches/com.apple.dt.xctest.tool
-        let configuration = URLSessionConfiguration.default
-        configuration.urlCache = cache
-        configuration.requestCachePolicy = .reloadIgnoringLocalCacheData // can to set up cache policy in configuration
-        let session = URLSession(configuration: configuration)
-        let request = URLRequest(url: URL("http://any-url.com"), cachePolicy: .returnCacheDataDontLoad, timeoutInterval: 30) // can to set up cache policy in URLRequest initialization
-
-        // set cache on url on global mutable state so all session will use the cache above
-        URLCache.shared = cache
-    }
     
     func test_endToEndTestServerGETFeedResult_matchedFixedTestAccountData() {
         switch getFeedResult() {
