@@ -10,11 +10,15 @@ import EssentialFeed
 
 final class EssentialFeedAPIEndToEndTests: XCTestCase {
     
-    func demo() { // set cache on url configuration for certain url session
+    func demo() {
+        // set cache on url configuration for certain url session
         let cache = URLCache(memoryCapacity: 10 * 1024 * 1024, diskCapacity: 100 * 1024 *1024, diskPath: nil) // 10 mb and 100 mb with default diskpath
         let configuration = URLSessionConfiguration.default
         configuration.urlCache = cache
         let session = URLSession(configuration: configuration)
+        
+        // set cache on url on global mutable state so all session will use the cache above
+        URLCache.shared = cache
     }
     
     func test_endToEndTestServerGETFeedResult_matchedFixedTestAccountData() {
