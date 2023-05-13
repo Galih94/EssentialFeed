@@ -110,8 +110,7 @@ final class CacheFeedUseCaseTests: XCTestCase {
     }
     
     func test_save_failsOnDeletionError() {
-        let timeStamp = Date()
-        let (sut, store) = makeSUT( currentDate: { timeStamp })
+        let (sut, store) = makeSUT()
         let deletionError = anyNSError()
         
         expect(sut, toCompleteWithError: deletionError) {
@@ -120,8 +119,7 @@ final class CacheFeedUseCaseTests: XCTestCase {
     }
     
     func test_save_failsOnInsertionError() {
-        let timeStamp = Date()
-        let (sut, store) = makeSUT( currentDate: { timeStamp })
+        let (sut, store) = makeSUT()
         let insertionError = anyNSError()
         
         expect(sut, toCompleteWithError: insertionError) {
@@ -131,8 +129,7 @@ final class CacheFeedUseCaseTests: XCTestCase {
     }
     
     func test_save_successOnSuccessfulCacheInsertion() {
-        let timeStamp = Date()
-        let (sut, store) = makeSUT( currentDate: { timeStamp })
+        let (sut, store) = makeSUT()
         
         expect(sut, toCompleteWithError: nil) {
             store.completeDeletionSuccessfully()
