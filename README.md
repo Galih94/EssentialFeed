@@ -13,3 +13,9 @@ This repositories contains learning material on implementing Feed Feature
 4. System timestamps the new cache.
 5. System saves new cache data.
 6. System delivers success message. 
+
+### Deleting error course (sad path):
+1. System delivers error.
+
+### Saving error course (sad path):
+1. System delivers error.
