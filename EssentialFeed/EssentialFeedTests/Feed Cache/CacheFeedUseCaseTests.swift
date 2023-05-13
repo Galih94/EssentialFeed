@@ -55,11 +55,10 @@ final class CacheFeedUseCaseTests: XCTestCase {
         let error = anyNSError()
         
         sut.save(items: items)
-        sut.store.completeDeletion(with: error)
+        store.completeDeletion(with: error)
         
         XCTAssertEqual(store.insertCallCount, 0)
     }
-    
     // MARK: - Helpers
     
     private func makeSUT(file: StaticString = #filePath, line: UInt = #line) -> (LocalFeedLoader, FeedStore) {
