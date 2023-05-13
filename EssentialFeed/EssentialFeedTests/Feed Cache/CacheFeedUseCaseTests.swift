@@ -150,7 +150,6 @@ final class CacheFeedUseCaseTests: XCTestCase {
         let timeStamp = Date()
         let (sut, store) = makeSUT( currentDate: { timeStamp })
         let items = [uniqueItem(), uniqueItem()]
-        let insertionError = anyNSError()
         
         var receivedError: Error?
         let exp = expectation(description: "Wait for save completion")
