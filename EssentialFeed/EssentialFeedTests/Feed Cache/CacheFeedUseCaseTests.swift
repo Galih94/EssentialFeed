@@ -21,7 +21,10 @@ class LocalFeedLoader {
         store.deleteCachedCompletion { [weak self] error in
             guard let self = self else { return }
             if error == nil {
-                self.store.insert(items, timeStamp: self.currentDate(), completion: completion)
+                self.store.insert(items, timeStamp: self.currentDate(), completion:  { [weak self] error in
+                    guard let self = self else { return }
+                    completion(error)
+                })
             } else {
                 completion(error)
             }
@@ -105,7 +108,7 @@ final class CacheFeedUseCaseTests: XCTestCase {
         }
     }
     
-    func test_save_doesNotDeliverDelitionErrorSfterSUTInstanceHasBeenDeallocated() {
+    func test_save_doesNotDeliverDelitionErrorsAfterSUTInstanceHasBeenDeallocated() {
         let store = FeedStoreSpy()
         var sut: LocalFeedLoader? = LocalFeedLoader(store: store, currentDate: Date.init)
         
@@ -117,6 +120,24 @@ final class CacheFeedUseCaseTests: XCTestCase {
         sut = nil
         
         store.completeDeletion(with: anyNSError())
+        XCTAssertTrue(receivedErrors.isEmpty)
+        
+        
+    }
+    
+    func test_save_doesNotDeliverInsertionErrorsAfterSUTInstanceHasBeenDeallocated() {
+        let store = FeedStoreSpy()
+        var sut: LocalFeedLoader? = LocalFeedLoader(store: store, currentDate: Date.init)
+        
+        var receivedErrors = [Error?]()
+        sut?.save(items: [uniqueItem()]) {
+            receivedErrors.append($0)
+        }
+        
+        store.completeDeletionSuccessfully()
+        sut = nil
+        store.completeInsertion(with: anyNSError())
+        
         XCTAssertTrue(receivedErrors.isEmpty)
         
         
