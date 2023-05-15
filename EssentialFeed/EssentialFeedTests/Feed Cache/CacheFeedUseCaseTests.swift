@@ -139,7 +139,7 @@ final class CacheFeedUseCaseTests: XCTestCase {
         
         enum ReceivedMessage: Equatable {
             case deleteCacheFeed
-            case insert([LocalFeedItem], Date)
+            case insert([LocalFeedImage], Date)
         }
         
         private(set) var receivedMessages = [ReceivedMessage]()
@@ -160,7 +160,7 @@ final class CacheFeedUseCaseTests: XCTestCase {
             deletionCompletion[index](nil)
         }
         
-        public func insert(_ items: [LocalFeedItem], timeStamp: Date, completion: @escaping InsertionCompletion) {
+        public func insert(_ items: [LocalFeedImage], timeStamp: Date, completion: @escaping InsertionCompletion) {
             insertionCompletion.append(completion)
             receivedMessages.append(.insert(items, timeStamp))
         }
@@ -181,13 +181,13 @@ final class CacheFeedUseCaseTests: XCTestCase {
                         imageURL: anyURL())
     }
     
-    private func uniqueItems() -> (model: [FeedItem], local: [LocalFeedItem]) {
+    private func uniqueItems() -> (model: [FeedItem], local: [LocalFeedImage]) {
         let models = [uniqueItem(), uniqueItem()]
         let local = models.map{
-            LocalFeedItem(id: $0.id,
+            LocalFeedImage(id: $0.id,
                           description: $0.description,
                           location: $0.location,
-                          imageURL: $0.imageURL)
+                          url: $0.imageURL)
         }
         return(models, local)
     }
