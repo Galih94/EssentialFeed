@@ -7,15 +7,6 @@
 
 import Foundation
 
-
-
-internal struct RemoteFeedItem: Decodable { // make internal representation from FeedItem so it can map into FeedItem without changing FeedItem Implementation
-    internal let id: UUID
-    internal let description: String?
-    internal let location: String?
-    internal let image: URL
-}
-
 internal final class FeedItemsMapper {
     
     private static var OK_200: Int { return 200 }
