@@ -59,4 +59,8 @@ internal class FeedStoreSpy: FeedStore {
     public func completeRetrieval(with error: Error, at index: Int = 0) {
         retrievalCompletion[index](error)
     }
+    
+    public func completeRetrievalWithEmptyCache(at index: Int = 0) {
+        retrievalCompletion[index](nil)
+    }
 }
