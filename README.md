@@ -29,15 +29,26 @@ This repositories contains learning material on implementing Feed Feature
 5. System delivers image feed.
 
 ### Retrieval Error course (sad path):
-1. System deletes cache.
-2. System delivers invalid error.
+1. System delivers invalid error.
 
 ### Expired cache - error course (sad path):
-1. System deletes cache.
-2. System delivers no image feed.
+1. System delivers no image feed.
 
 ### Empty Cache - error course (sad path):
 1. System delivers no feed items.
+
+### Validate Feed Cache Use Case
+
+### Primary course (happy path):
+1. Execute "Validate Cache" command with above data
+2. System fetches feed data from cache.
+3. System validates cache is less thab seven days old.
+
+### Retrieval Error course (sad path):
+1. System deletes cache.
+
+### Expired cache - error course (sad path):
+1. System deletes cache.
 
 ### Cache Feed Use Case
 
