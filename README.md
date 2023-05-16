@@ -28,12 +28,13 @@ This repositories contains learning material on implementing Feed Feature
 4. System create image feed from cached data.
 5. System delivers image feed.
 
-### Error course (sad path):
-1. System delivers invalid error.
+### Retrieval Error course (sad path):
+1. System deletes cache.
+2. System delivers invalid error.
 
 ### Expired cache - error course (sad path):
 1. System deletes cache.
-1. System delivers no image feed.
+2. System delivers no image feed.
 
 ### Empty Cache - error course (sad path):
 1. System delivers no feed items.
