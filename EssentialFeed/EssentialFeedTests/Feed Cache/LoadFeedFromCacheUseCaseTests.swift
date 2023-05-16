@@ -79,8 +79,6 @@ final class LoadFeedFromCacheUseCaseTests: XCTestCase {
     
     func test_load_doesNotDeleteCacheOnEmptyCache() {
         let (sut, store) = makeSUT()
-        let feed = uniqueImageFeed()
-        let fixedCurrentDate = Date()
         
         sut.load { _ in }
         store.completeRetrievalWithEmptyCache()
