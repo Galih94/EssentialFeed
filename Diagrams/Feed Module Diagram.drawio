@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2023-05-16T08:29:00.769Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.4 Safari/605.1.15" etag="vdwTyn6zZs7-AkQGqDdA" version="21.3.0" type="device">
+<mxfile host="app.diagrams.net" modified="2023-05-17T06:43:00.509Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.4 Safari/605.1.15" etag="Ccr3hZT1hxIM8nAk1C34" version="21.3.2" type="device">
   <diagram name="Page-1" id="5tE9PvvC92MBVU3yv-TN">
-    <mxGraphModel dx="1781" dy="622" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="2261" dy="732" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -59,7 +59,7 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="0OMT_AVmc9sH3o9Od09E-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="wkb4X_CLZkG0QTCTbJi_-4" target="wkb4X_CLZkG0QTCTbJi_-19">
+        <mxCell id="0OMT_AVmc9sH3o9Od09E-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="wkb4X_CLZkG0QTCTbJi_-4" target="wkb4X_CLZkG0QTCTbJi_-19" edge="1">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="230" y="480" />
@@ -90,7 +90,7 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="0OMT_AVmc9sH3o9Od09E-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="wkb4X_CLZkG0QTCTbJi_-5" target="0OMT_AVmc9sH3o9Od09E-3">
+        <mxCell id="0OMT_AVmc9sH3o9Od09E-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="wkb4X_CLZkG0QTCTbJi_-5" target="0OMT_AVmc9sH3o9Od09E-3" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="wkb4X_CLZkG0QTCTbJi_-5" value="LocalFeedLoader" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" parent="1" vertex="1">
@@ -139,7 +139,7 @@
           <mxGeometry x="810" y="290" width="120" height="60" as="geometry" />
         </mxCell>
         <mxCell id="mt7t5qOtKBUCOaAIjQfM-3" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#7EA6E0;" parent="1" vertex="1">
-          <mxGeometry x="630" y="200" width="350" height="240" as="geometry" />
+          <mxGeometry x="640" y="200" width="350" height="240" as="geometry" />
         </mxCell>
         <mxCell id="mt7t5qOtKBUCOaAIjQfM-4" value="&lt;font&gt;Feed Cache module&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontColor=#7EA6E0;" parent="1" vertex="1">
           <mxGeometry x="850" y="180" width="130" height="30" as="geometry" />
@@ -153,8 +153,28 @@
         <mxCell id="9Ri4bayZUHAKm8TNs4ZH-9" value="LocalFeedImage" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" parent="1" vertex="1">
           <mxGeometry x="810" y="218" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="0OMT_AVmc9sH3o9Od09E-3" value="FeedCachePolicy" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1">
+        <mxCell id="0OMT_AVmc9sH3o9Od09E-3" value="FeedCachePolicy" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" parent="1" vertex="1">
           <mxGeometry x="660" y="370" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="Hn1VHcXJhqi3CJG2FeUN-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.992;entryY=0.4;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="Hn1VHcXJhqi3CJG2FeUN-1" target="9Ri4bayZUHAKm8TNs4ZH-9">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="950" y="400" />
+              <mxPoint x="950" y="242" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Hn1VHcXJhqi3CJG2FeUN-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="Hn1VHcXJhqi3CJG2FeUN-1" target="Hn1VHcXJhqi3CJG2FeUN-3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Hn1VHcXJhqi3CJG2FeUN-6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;endArrow=block;endFill=0;" edge="1" parent="1" source="Hn1VHcXJhqi3CJG2FeUN-1" target="mt7t5qOtKBUCOaAIjQfM-1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Hn1VHcXJhqi3CJG2FeUN-1" value="CodableFeedStore" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1">
+          <mxGeometry x="810" y="390" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="Hn1VHcXJhqi3CJG2FeUN-3" value="FileSystem" style="html=1;verticalLabelPosition=bottom;align=center;labelBackgroundColor=#ffffff;verticalAlign=top;strokeWidth=2;strokeColor=#0080F0;shadow=0;dashed=0;shape=mxgraph.ios7.icons.folder;" vertex="1" parent="1">
+          <mxGeometry x="815" y="500" width="110" height="79.5" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
