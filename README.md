@@ -72,7 +72,7 @@ This repositories contains learning material on implementing Feed Feature
 ### Inbox Cache Specs:
 - Retrieve
     ✅ Empty cache return nil / empty
-    - Empty cache twice return nil / empty (no side-effects)
+    ✅ Empty cache twice return nil / empty (no side-effects)
     - Non-empty cache returns data
     - Non-empty cache twice returns same data (no side-effects)
     - Error returns error (if applicable, e.g., invalid data)
