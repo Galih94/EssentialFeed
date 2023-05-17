@@ -37,6 +37,21 @@ class CodableFeedStore {
 
 final class CodableFeedStoreTests: XCTestCase {
     
+    override func setUp() {
+        super.setUp()
+        let storeURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!.appending(path: "image-feed.store")
+        
+        try? FileManager.default.removeItem(at: storeURL)
+    }
+    
+    override class func tearDown() {
+        super.tearDown()
+        let storeURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!.appending(path: "image-feed.store")
+        
+        try? FileManager.default.removeItem(at: storeURL)
+        
+    }
+    
     func test_retrieve_deliversEmptyOnEmptyCache() {
          let sut = CodableFeedStore()
         
