@@ -9,8 +9,28 @@ import XCTest
 import EssentialFeed
 
 class CodableFeedStore {
+    
+    private struct Cache: Codable {
+        let feed: [LocalFeedImage]
+        let timeStamp: Date
+    }
+    
+    private let storeURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!.appending(path: "image-feed.store")
+    
+    func insert(_ feed: [LocalFeedImage], timeStamp: Date, completion: @escaping FeedStore.InsertionCompletion) {
+        let encoder = JSONEncoder()
+        let encoded = try! encoder.encode(Cache(feed: feed, timeStamp: timeStamp))
+        try! encoded.write(to: storeURL)
+        
+        completion(nil)
+    }
     func retrieve(completion: @escaping FeedStore.RetrievalCompletion) {
-        completion(.empty)
+        guard let data = try? Data(contentsOf: storeURL) else {
+            return completion(.empty)
+        }
+        let decode = JSONDecoder()
+        let cache = try! decode.decode(Cache.self, from: data)
+        completion(.found(feed: cache.feed, timeStamp: cache.timeStamp))
     }
     
 }
