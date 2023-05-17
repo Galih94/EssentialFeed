@@ -88,4 +88,27 @@ final class CodableFeedStoreTests: XCTestCase {
         wait(for: [exp], timeout: 1.0)
     }
 
+    func test_retrieveAfterInsertingFromEmptyCache_deliversInsertedValue() {
+        let sut = CodableFeedStore()
+        let timeStamp = Date()
+        let feed  = uniqueImageFeed().local
+
+        let exp = expectation(description: "Waiting for retrieval")
+        sut.insert(feed, timeStamp: timeStamp){ insertionError in
+            XCTAssertNil(insertionError, "Expected no error")
+            sut.retrieve { retrieveResult in
+                switch retrieveResult {
+                case let .found(retrievedFeed, retrievedTimeStamp):
+                    XCTAssertEqual(retrievedFeed, feed)
+                    XCTAssertEqual(retrievedTimeStamp, timeStamp)
+                default:
+                    XCTFail("Expected found result with \(feed) and \(timeStamp), got \(retrieveResult) instead")
+                }
+                exp.fulfill()
+            }
+        }
+
+        wait(for: [exp], timeout: 1.0)
+    }
+
 }
