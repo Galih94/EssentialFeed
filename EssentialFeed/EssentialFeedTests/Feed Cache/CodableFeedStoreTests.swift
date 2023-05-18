@@ -183,6 +183,22 @@ final class CodableFeedStoreTests: XCTestCase {
         XCTAssertNil(deletionError, "Expect deletion success")
     }
     
+    func test_delete_emptiesPreviouslyInsertedCache() {
+        let sut = makeSUT()
+        var deletionError: Error?
+        
+        insert((uniqueImageFeed().local, Date()), to: sut)
+        
+        let exp = expectation(description: "Waiting for deletion")
+        sut.deleteCachedFeed { receivedDeletionError in
+            deletionError = receivedDeletionError
+            exp.fulfill()
+        }
+        
+        wait(for: [exp], timeout: 1.0)
+        XCTAssertNil(deletionError, "Expect deletion success")
+    }
+    
     // MARK: Helpers
     
     private func makeSUT(storeURL: URL? = nil, file: StaticString = #filePath, line: UInt = #line) -> CodableFeedStore {
