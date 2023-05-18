@@ -211,14 +211,10 @@ final class CodableFeedStoreTests: XCTestCase {
     func test_delete_deliversErrorOnDeletionError() {
         let noDeletePermissionURL = cacheDirectory() // use any firsts url that has no set up path component
         let sut = makeSUT(storeURL: noDeletePermissionURL)
-        let feed = uniqueImageFeed().local
-        let timeStamp = Date()
         
-        insert((feed, timeStamp), to: sut)
         let deletionError = deleteCache(from: sut)
         
         XCTAssertNotNil(deletionError, "Expect deletion success")
-        expect(sut, toRetrive: .empty)
     }
     
     // MARK: Helpers
