@@ -116,13 +116,22 @@ final class CodableFeedStoreTests: XCTestCase {
         expect(sut, toRetriveTwice: .found(feed: feed, timeStamp: timeStamp))
     }
     
-    func test_retrieve_deliversFailureOnReetrievalError() {
+    func test_retrieve_deliversFailureOnRetrievalError() {
         let storeURL = testSpesificStoreURL()
         let sut = makeSUT(storeURL: storeURL)
         
         try! "invalid json".write(to: storeURL, atomically: false, encoding: .utf8)
         
         expect(sut, toRetrive: .failure(anyNSError()))
+    }
+    
+    func test_retrieve_hasNoSdeEffectsOnFailure() {
+        let storeURL = testSpesificStoreURL()
+        let sut = makeSUT(storeURL: storeURL)
+        
+        try! "invalid json".write(to: storeURL, atomically: false, encoding: .utf8)
+        
+        expect(sut, toRetriveTwice: .failure(anyNSError()))
     }
     
     // MARK: Helpers
