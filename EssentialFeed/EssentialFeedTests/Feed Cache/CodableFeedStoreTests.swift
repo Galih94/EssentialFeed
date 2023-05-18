@@ -175,6 +175,7 @@ final class CodableFeedStoreTests: XCTestCase {
         let deletionError = deleteCache(from: sut)
         
         XCTAssertNil(deletionError, "Expect deletion success")
+        expect(sut, toRetrive: .empty)
     }
     
     func test_delete_emptiesPreviouslyInsertedCache() {
