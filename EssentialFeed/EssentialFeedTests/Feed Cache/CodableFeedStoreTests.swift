@@ -193,6 +193,18 @@ final class CodableFeedStoreTests: XCTestCase {
         expect(sut, toRetrive: .empty)
     }
     
+    func test_delete_twiceEmptiesPreviouslyInsertedCache() {
+        let sut = makeSUT()
+        
+        insert((uniqueImageFeed().local, Date()), to: sut)
+        let firstDeletionError = deleteCache(from: sut)
+        let secondDeletionError = deleteCache(from: sut)
+        
+        XCTAssertNil(firstDeletionError, "Expect deletion success")
+        XCTAssertNil(firstDeletionError, "Expect deletion success")
+        expect(sut, toRetrive: .empty)
+    }
+    
     // MARK: Helpers
     
     private func makeSUT(storeURL: URL? = nil, file: StaticString = #filePath, line: UInt = #line) -> CodableFeedStore {

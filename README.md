@@ -82,8 +82,8 @@ This repositories contains learning material on implementing Feed Feature
     ✅ To non-empty cache overrides previous data with new data
     ✅ Error (if applicable, e.g., invalid data, no write permission, no empty space)
 - Delete
-    - Empty cache does nothing (cache stays empty and does not fail)
-    - Non-empty cache leaves cache empty
+    ✅ Empty cache does nothing (cache stays empty and does not fail)
+    ✅ Non-empty cache leaves cache empty
     - Non-empty cache more than once leaves cache empty
     - Error (if applicable, e.g., no delete permission)
 - Side-effects must run serially to avoid race-conditions
