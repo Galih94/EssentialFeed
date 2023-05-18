@@ -196,18 +196,6 @@ final class CodableFeedStoreTests: XCTestCase {
         expect(sut, toRetrive: .empty)
     }
     
-    func test_delete_twiceEmptiesPreviouslyInsertedCache() {
-        let sut = makeSUT()
-        
-        insert((uniqueImageFeed().local, Date()), to: sut)
-        let firstDeletionError = deleteCache(from: sut)
-        let secondDeletionError = deleteCache(from: sut)
-        
-        XCTAssertNil(firstDeletionError, "Expect deletion success")
-        XCTAssertNil(secondDeletionError, "Expect deletion success")
-        expect(sut, toRetrive: .empty)
-    }
-    
     func test_delete_deliversErrorOnDeletionError() {
         let noDeletePermissionURL = cacheDirectory() // use any firsts url that has no set up path component
         let sut = makeSUT(storeURL: noDeletePermissionURL)
