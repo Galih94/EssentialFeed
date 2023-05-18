@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2A0592872A0F3D5D00981F5B /* CacheFeedUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A0592862A0F3D5D00981F5B /* CacheFeedUseCaseTests.swift */; };
+		2A0607C92A160347005E66DD /* CodableFeedStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A0607C82A160347005E66DD /* CodableFeedStore.swift */; };
 		2A214C9C2A11E4AB00D542C4 /* RemoteFeedItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A214C9B2A11E4AB00D542C4 /* RemoteFeedItem.swift */; };
 		2A214C9E2A11E51700D542C4 /* LocalFeedImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A214C9D2A11E51700D542C4 /* LocalFeedImage.swift */; };
 		2A214CA02A11E88100D542C4 /* FeedItemsMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A214C9F2A11E88100D542C4 /* FeedItemsMapper.swift */; };
@@ -56,6 +57,7 @@
 
 /* Begin PBXFileReference section */
 		2A0592862A0F3D5D00981F5B /* CacheFeedUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheFeedUseCaseTests.swift; sourceTree = "<group>"; };
+		2A0607C82A160347005E66DD /* CodableFeedStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodableFeedStore.swift; sourceTree = "<group>"; };
 		2A214C9B2A11E4AB00D542C4 /* RemoteFeedItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteFeedItem.swift; sourceTree = "<group>"; };
 		2A214C9D2A11E51700D542C4 /* LocalFeedImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalFeedImage.swift; sourceTree = "<group>"; };
 		2A214C9F2A11E88100D542C4 /* FeedItemsMapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedItemsMapper.swift; sourceTree = "<group>"; };
@@ -140,6 +142,7 @@
 				2A217AEA2A10C06900F73ADD /* FeedStore.swift */,
 				2A214C9D2A11E51700D542C4 /* LocalFeedImage.swift */,
 				2AC1B2F42A136B5400363376 /* FeedCachePolicy.swift */,
+				2A0607C82A160347005E66DD /* CodableFeedStore.swift */,
 			);
 			path = "Feed Cache";
 			sourceTree = "<group>";
@@ -380,6 +383,7 @@
 				3091709E2A08D0D900E0623A /* HTTPClient.swift in Sources */,
 				308410A82A034EC600B0351E /* FeedLoader.swift in Sources */,
 				2A214C9C2A11E4AB00D542C4 /* RemoteFeedItem.swift in Sources */,
+				2A0607C92A160347005E66DD /* CodableFeedStore.swift in Sources */,
 				2AC1B2F52A136B5400363376 /* FeedCachePolicy.swift in Sources */,
 				308410A62A034B5600B0351E /* FeedImage.swift in Sources */,
 				2A217AE92A10BF2E00F73ADD /* LocalFeedLoader.swift in Sources */,
