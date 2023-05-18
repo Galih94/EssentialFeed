@@ -78,9 +78,12 @@ class CodableFeedStore {
         guard FileManager.default.fileExists(atPath: storeURL.path()) else {
             return completion(nil)
         }
-        
-        try! FileManager.default.removeItem(at: storeURL)
-        completion(nil)
+        do {
+            try FileManager.default.removeItem(at: storeURL)
+            completion(nil)
+        } catch {
+            completion(error)
+        }
         
     }
     
@@ -201,7 +204,20 @@ final class CodableFeedStoreTests: XCTestCase {
         let secondDeletionError = deleteCache(from: sut)
         
         XCTAssertNil(firstDeletionError, "Expect deletion success")
-        XCTAssertNil(firstDeletionError, "Expect deletion success")
+        XCTAssertNil(secondDeletionError, "Expect deletion success")
+        expect(sut, toRetrive: .empty)
+    }
+    
+    func test_delete_deliversErrorOnDeletionError() {
+        let noDeletePermissionURL = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first! // use any firsts url that has no set up path component
+        let sut = makeSUT(storeURL: noDeletePermissionURL)
+        let feed = uniqueImageFeed().local
+        let timeStamp = Date()
+        
+        insert((feed, timeStamp), to: sut)
+        let deletionError = deleteCache(from: sut)
+        
+        XCTAssertNotNil(deletionError, "Expect deletion success")
         expect(sut, toRetrive: .empty)
     }
     
