@@ -85,4 +85,4 @@ This repositories contains learning material on implementing Feed Feature
     ✅ Empty cache does nothing (cache stays empty and does not fail)
     ✅ Non-empty cache leaves cache empty
     ✅ Error (if applicable, e.g., no delete permission)
-- Side-effects must run serially to avoid race-conditions
+✅ Side-effects must run serially to avoid race-conditions
