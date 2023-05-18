@@ -138,11 +138,13 @@ final class CodableFeedStoreTests: XCTestCase {
         let sut = makeSUT()
         
         let firstCache = (uniqueImageFeed().local, Date())
-        insert(firstCache, to: sut)
+        let firstInsertionError = insert(firstCache, to: sut)
+        XCTAssertNil(firstInsertionError, "Expect insert success")
         
         let latestFeed = uniqueImageFeed().local
         let latestDate = Date()
-        insert((latestFeed, latestDate), to: sut)
+        let latestInsertionError = insert((latestFeed, latestDate), to: sut)
+        XCTAssertNil(latestInsertionError, "Expect insert success")
         
         expect(sut, toRetrive: .found(feed: latestFeed, timeStamp: latestDate))
     }
@@ -159,13 +161,17 @@ final class CodableFeedStoreTests: XCTestCase {
         return FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first!.appending(path: "\(type(of: self)).store")
     }
     
-    private func insert(_ cache: (feed: [LocalFeedImage], timeStamp: Date), to sut: CodableFeedStore) {
+    @discardableResult
+    private func insert(_ cache: (feed: [LocalFeedImage], timeStamp: Date), to sut: CodableFeedStore) -> Error? {
         let exp = expectation(description: "Waiting for insertion")
-        sut.insert(cache.feed, timeStamp: cache.timeStamp){ insertionError in
-            XCTAssertNil(insertionError, "Expected no error")
+        var insertionError: Error?
+        sut.insert(cache.feed, timeStamp: cache.timeStamp){ receivedInsertionError in
+            insertionError = receivedInsertionError
             exp.fulfill()
         }
         wait(for: [exp], timeout: 1.0)
+        
+        return insertionError
     }
     
     private func expect(_ sut: CodableFeedStore, toRetriveTwice expectedResult: RetrievedCachedFeedResult, file: StaticString = #filePath, line: UInt = #line) {
