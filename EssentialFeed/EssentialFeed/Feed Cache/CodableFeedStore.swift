@@ -42,14 +42,15 @@ public final class CodableFeedStore: FeedStore {
     }
     
     private let storeURL: URL
-    private let queue = DispatchQueue(label: "\(CodableFeedStore.self)Queue", qos: .userInitiated)
+    private let queue = DispatchQueue(label: "\(CodableFeedStore.self)Queue", qos: .userInitiated, attributes: .concurrent)
     public init(storeURL: URL) {
         self.storeURL = storeURL
     }
     
     public func insert(_ feed: [LocalFeedImage], timeStamp: Date, completion: @escaping InsertionCompletion) {
         let storeURL = self.storeURL
-        queue.async {
+        /// put flags `barier` so insert that has concurrency will let thread know that it has a flow that has side effect and let other flow not run before insert ends
+        queue.async(flags: .barrier) {
             do {
                 let codableFeed = feed.map(CodableFeedImage.init)
                 let cache = Cache(feed: codableFeed, timeStamp: timeStamp)
@@ -67,6 +68,7 @@ public final class CodableFeedStore: FeedStore {
     public func retrieve(completion: @escaping RetrievalCompletion) {
         
         let storeURL = self.storeURL
+        /// because retrieve has no side-effects it is safe to run concurrently
         queue.async {
             guard let data = try? Data(contentsOf: storeURL) else {
                 return completion(.empty)
@@ -85,7 +87,8 @@ public final class CodableFeedStore: FeedStore {
     public func deleteCachedFeed(completion: @escaping DeletionCompletion) {
         
         let storeURL = self.storeURL
-        queue.async {
+        /// put flags `barier` so delete that has concurrency will let thread know that it has a flow that has side effect and let other flow not run before delete ends
+        queue.async(flags: .barrier) {
             guard FileManager.default.fileExists(atPath: storeURL.path()) else {
                 return completion(nil)
             }
