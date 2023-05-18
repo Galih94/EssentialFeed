@@ -77,10 +77,10 @@ This repositories contains learning material on implementing Feed Feature
     ✅ Non-empty cache twice returns same data (no side-effects)
     ✅ Error returns error (if applicable, e.g., invalid data)
     ✅ Error twice returns same error (if applicable, e.g., invalid data)
-- Insert
+✅ Insert
     ✅ To empty cache stores data
     ✅ To non-empty cache overrides previous data with new data
-    - Error (if applicable, e.g., invalid data, no write permission, no empty space)
+    ✅ Error (if applicable, e.g., invalid data, no write permission, no empty space)
 - Delete
     - Empty cache does nothing (cache stays empty and does not fail)
     - Non-empty cache leaves cache empty
