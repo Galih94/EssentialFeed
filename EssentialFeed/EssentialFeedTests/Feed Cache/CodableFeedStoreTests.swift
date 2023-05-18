@@ -116,6 +116,14 @@ final class CodableFeedStoreTests: XCTestCase {
         expect(sut, toRetriveTwice: .found(feed: feed, timeStamp: timeStamp))
     }
     
+    func test_retrieve_deliversFailureOnReetrievalError() {
+        let sut = makeSUT()
+        
+        try! "invalid json".write(to: testSpesificStoreURL(), atomically: false, encoding: .utf8)
+        
+        expect(sut, toRetrive: .failure(anyNSError()))
+    }
+    
     // MARK: Helpers
     
     private func makeSUT(file: StaticString = #filePath, line: UInt = #line) -> CodableFeedStore {
@@ -146,7 +154,7 @@ final class CodableFeedStoreTests: XCTestCase {
         let exp = expectation(description: "Waiting for retrieval")
         sut.retrieve { result in
             switch (result, expectedResult) {
-            case (.empty, .empty):
+            case (.empty, .empty), (.failure, .failure):
                 break
             case let (
                 .found(resultFeed, timeStampFeed),
