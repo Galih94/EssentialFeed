@@ -165,19 +165,6 @@ extension FeedStoreSpecs where Self: XCTestCase {
     }
 }
 
-
-extension FailableRetrieveFeedStoreSpecs where Self: XCTestCase {
-    func assertThatRetrieveDeliversFailureOnRetrievalError(on sut: FeedStore, file: StaticString = #filePath, line: UInt = #line) {
-        
-        expect(sut, toRetrive: .failure(anyNSError()))
-    }
-    
-    func assertThatRetrieveHasNoSdeEffectsOnFailure(on sut: FeedStore, file: StaticString = #filePath, line: UInt = #line) {
-        
-        expect(sut, toRetriveTwice: .failure(anyNSError()))
-    }
-}
-
 extension FailableInsertFeedStoreSpecs where Self: XCTestCase {
     func assertThatInsertDeliversErrorOnInsertionError(on sut: FeedStore, file: StaticString = #filePath, line: UInt = #line) {
         let feed = uniqueImageFeed().local
