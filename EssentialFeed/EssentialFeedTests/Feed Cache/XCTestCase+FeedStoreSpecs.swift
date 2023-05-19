@@ -177,3 +177,23 @@ extension FailableRetrieveFeedStoreSpecs where Self: XCTestCase {
         expect(sut, toRetriveTwice: .failure(anyNSError()))
     }
 }
+
+extension FailableInsertFeedStoreSpecs where Self: XCTestCase {
+    func assertThatInsertDeliversErrorOnInsertionError(on sut: FeedStore, file: StaticString = #filePath, line: UInt = #line) {
+        let feed = uniqueImageFeed().local
+        let date = Date()
+        
+        let insertionError = insert((feed, date), to: sut)
+        
+        XCTAssertNotNil(insertionError, "Expect insert failure")
+    }
+    
+    func assertThatInsertHasNoSideEffectOnInsertionError(on sut: FeedStore, file: StaticString = #filePath, line: UInt = #line) {
+        let feed = uniqueImageFeed().local
+        let date = Date()
+        
+        insert((feed, date), to: sut)
+        
+        expect(sut, toRetrive: .empty)
+    }
+}
