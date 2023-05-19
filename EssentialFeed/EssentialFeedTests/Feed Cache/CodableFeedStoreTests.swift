@@ -42,7 +42,7 @@ final class CodableFeedStoreTests: XCTestCase, FailableFeedStore {
         expect(sut, toRetrive: .found(feed: feed, timeStamp: timeStamp)) // expect after exp.fulfill so expect runs after insert callback done
     }
     
-    func test_retrieve_hasNoSdeEffectsOnNonEmptyCache() {
+    func test_retrieve_hasNoSideEffectsOnNonEmptyCache() {
         let sut = makeSUT()
         let timeStamp = Date()
         let feed  = uniqueImageFeed().local
