@@ -164,3 +164,16 @@ extension FeedStoreSpecs where Self: XCTestCase {
         wait(for: [exp], timeout: 3.0)
     }
 }
+
+
+extension FailableRetrieveFeedStoreSpecs where Self: XCTestCase {
+    func assertRetrieveDeliversFailureOnRetrievalError(on sut: FeedStore, file: StaticString = #filePath, line: UInt = #line) {
+        
+        expect(sut, toRetrive: .failure(anyNSError()))
+    }
+    
+    func assertRetrieveHasNoSdeEffectsOnFailure(on sut: FeedStore, file: StaticString = #filePath, line: UInt = #line) {
+        
+        expect(sut, toRetriveTwice: .failure(anyNSError()))
+    }
+}

@@ -50,7 +50,7 @@ final class CodableFeedStoreTests: XCTestCase, FailableFeedStore {
         
         try! "invalid json".write(to: storeURL, atomically: false, encoding: .utf8)
         
-        expect(sut, toRetrive: .failure(anyNSError()))
+        assertRetrieveDeliversFailureOnRetrievalError(on: sut)
     }
     
     func test_retrieve_hasNoSdeEffectsOnFailure() {
@@ -59,7 +59,7 @@ final class CodableFeedStoreTests: XCTestCase, FailableFeedStore {
         
         try! "invalid json".write(to: storeURL, atomically: false, encoding: .utf8)
         
-        expect(sut, toRetriveTwice: .failure(anyNSError()))
+        assertRetrieveHasNoSdeEffectsOnFailure(on: sut)
     }
     
     func test_insert_deliversNoErrorOnEmptyCache() {
