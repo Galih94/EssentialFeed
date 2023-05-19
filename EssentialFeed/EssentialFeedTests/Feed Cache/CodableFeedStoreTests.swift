@@ -50,7 +50,7 @@ final class CodableFeedStoreTests: XCTestCase, FailableFeedStore {
         
         try! "invalid json".write(to: storeURL, atomically: false, encoding: .utf8)
         
-        assertRetrieveDeliversFailureOnRetrievalError(on: sut)
+        assertThatRetrieveDeliversFailureOnRetrievalError(on: sut)
     }
     
     func test_retrieve_hasNoSdeEffectsOnFailure() {
@@ -59,7 +59,7 @@ final class CodableFeedStoreTests: XCTestCase, FailableFeedStore {
         
         try! "invalid json".write(to: storeURL, atomically: false, encoding: .utf8)
         
-        assertRetrieveHasNoSdeEffectsOnFailure(on: sut)
+        assertThatRetrieveHasNoSdeEffectsOnFailure(on: sut)
     }
     
     func test_insert_deliversNoErrorOnEmptyCache() {
@@ -108,19 +108,19 @@ final class CodableFeedStoreTests: XCTestCase, FailableFeedStore {
     func test_delete_deliversNoErrorOnNonEmptyCache() {
         let sut = makeSUT()
         
-        assertDeleteDeliversNoErrorOnNonEmptyCache(on: sut)
+        assertThatDeleteDeliversNoErrorOnNonEmptyCache(on: sut)
     }
     
     func test_delete_hasNoSideEffectsOnEmptyCache() {
         let sut = makeSUT()
         
-        assertDeleteHasNoSideEffectsOnEmptyCache(on: sut)
+        assertThatDeleteHasNoSideEffectsOnEmptyCache(on: sut)
     }
     
     func test_delete_emptiesPreviouslyInsertedCache() {
         let sut = makeSUT()
         
-        assertDeleteEmptiesPreviouslyInsertedCache(on: sut)
+        assertThatDeleteEmptiesPreviouslyInsertedCache(on: sut)
     }
     
     func test_delete_deliversErrorOnDeletionError() {

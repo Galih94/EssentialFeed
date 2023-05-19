@@ -62,13 +62,13 @@ extension FeedStoreSpecs where Self: XCTestCase {
         expect(sut, toRetrive: .found(feed: latestFeed, timeStamp: latestDate), file: file, line: line)
     }
     
-    func assertDeleteHasNoSideEffectsOnEmptyCache(on sut: FeedStore, file: StaticString = #filePath, line: UInt = #line) {
+    func assertThatDeleteHasNoSideEffectsOnEmptyCache(on sut: FeedStore, file: StaticString = #filePath, line: UInt = #line) {
         deleteCache(from: sut)
         
         expect(sut, toRetrive: .empty, file: file, line: line)
     }
     
-    func assertDeleteDeliversNoErrorOnNonEmptyCache(on sut: FeedStore, file: StaticString = #filePath, line: UInt = #line) {
+    func assertThatDeleteDeliversNoErrorOnNonEmptyCache(on sut: FeedStore, file: StaticString = #filePath, line: UInt = #line) {
         insert((uniqueImageFeed().local, Date()), to: sut)
         
         let deletionError = deleteCache(from: sut)
@@ -76,7 +76,7 @@ extension FeedStoreSpecs where Self: XCTestCase {
         XCTAssertNil(deletionError, "Expect delete success", file: file, line: line)
     }
     
-    func assertDeleteEmptiesPreviouslyInsertedCache(on sut: FeedStore, file: StaticString = #filePath, line: UInt = #line) {
+    func assertThatDeleteEmptiesPreviouslyInsertedCache(on sut: FeedStore, file: StaticString = #filePath, line: UInt = #line) {
         insert((uniqueImageFeed().local, Date()), to: sut)
         
         deleteCache(from: sut)
@@ -167,12 +167,12 @@ extension FeedStoreSpecs where Self: XCTestCase {
 
 
 extension FailableRetrieveFeedStoreSpecs where Self: XCTestCase {
-    func assertRetrieveDeliversFailureOnRetrievalError(on sut: FeedStore, file: StaticString = #filePath, line: UInt = #line) {
+    func assertThatRetrieveDeliversFailureOnRetrievalError(on sut: FeedStore, file: StaticString = #filePath, line: UInt = #line) {
         
         expect(sut, toRetrive: .failure(anyNSError()))
     }
     
-    func assertRetrieveHasNoSdeEffectsOnFailure(on sut: FeedStore, file: StaticString = #filePath, line: UInt = #line) {
+    func assertThatRetrieveHasNoSdeEffectsOnFailure(on sut: FeedStore, file: StaticString = #filePath, line: UInt = #line) {
         
         expect(sut, toRetriveTwice: .failure(anyNSError()))
     }
