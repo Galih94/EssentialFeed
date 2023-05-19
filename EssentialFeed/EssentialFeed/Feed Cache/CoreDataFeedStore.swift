@@ -34,7 +34,15 @@ public final class CoreDataFeedStore: FeedStore {
     }
     
     public func deleteCachedFeed(completion: @escaping DeletionCompletion) {
-        completion(nil)
+        let context = self.context
+        context.perform {
+            do {
+                try ManagedCache.find(in: context).map( context.delete(_:) ).map( context.save )
+                completion(nil)
+            } catch {
+                completion(error)
+            }
+        }
     }
     
     public func retrieve(completion: @escaping RetrievalCompletion) {
@@ -80,7 +88,7 @@ extension NSPersistentContainer {
         return container
     }
 }
-            
+
 extension NSManagedObject {
     static func with(name: String, in bundle: Bundle) -> NSManagedObjectModel? {
         return bundle
