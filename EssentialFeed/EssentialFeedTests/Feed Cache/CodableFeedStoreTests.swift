@@ -217,60 +217,6 @@ final class CodableFeedStoreTests: XCTestCase, FailableFeedStore {
         return FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first!
     }
     
-    @discardableResult
-    private func deleteCache(from sut: FeedStore) -> Error? {
-        var deletionError: Error?
-        
-        let exp = expectation(description: "Waiting for deletion")
-        sut.deleteCachedFeed { receivedDeletionError in
-            deletionError = receivedDeletionError
-            exp.fulfill()
-        }
-        
-        wait(for: [exp], timeout: 3.0)
-        return deletionError
-    }
-    
-    @discardableResult
-    private func insert(_ cache: (feed: [LocalFeedImage], timeStamp: Date), to sut: FeedStore) -> Error? {
-        let exp = expectation(description: "Waiting for insertion")
-        var insertionError: Error?
-        sut.insert(cache.feed, timeStamp: cache.timeStamp){ receivedInsertionError in
-            insertionError = receivedInsertionError
-            exp.fulfill()
-        }
-        wait(for: [exp], timeout: 3.0)
-        
-        return insertionError
-    }
-    
-    private func expect(_ sut: FeedStore, toRetriveTwice expectedResult: RetrievedCachedFeedResult, file: StaticString = #filePath, line: UInt = #line) {
-        expect(sut, toRetrive: expectedResult, file: file, line: line)
-        expect(sut, toRetrive: expectedResult, file: file, line: line)
-    }
-    
-    private func expect(_ sut: FeedStore, toRetrive expectedResult: RetrievedCachedFeedResult, file: StaticString = #filePath, line: UInt = #line) {
-        let exp = expectation(description: "Waiting for retrieval")
-        sut.retrieve { result in
-            switch (result, expectedResult) {
-            case (.empty, .empty), (.failure, .failure):
-                break
-            case let (
-                .found(resultFeed, timeStampFeed),
-                .found(expectedResultFeed, expectedResultTimeStamp)):
-                
-                XCTAssertEqual(resultFeed, expectedResultFeed, file: file, line: line)
-                XCTAssertEqual(timeStampFeed, expectedResultTimeStamp, file: file, line: line)
-                
-            default:
-                XCTFail("Expected \(expectedResult) got \(result) instead", file: file, line: line)
-            }
-            exp.fulfill()
-        }
-        
-        wait(for: [exp], timeout: 3.0)
-    }
-    
     private func setupEmptyStoreState() {
         deleteStoreArtifacts()
     }
