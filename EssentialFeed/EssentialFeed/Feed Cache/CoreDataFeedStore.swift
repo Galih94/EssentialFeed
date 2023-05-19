@@ -23,15 +23,7 @@ public final class CoreDataFeedStore: FeedStore {
             do {
                 let managedCache = ManagedCache(context: context)
                 managedCache.timeStamp = timeStamp
-                managedCache.feed = NSOrderedSet(array: feed.map { local in
-                    let managed = ManagedFeedImage(context: context)
-                    managed.id = local.id
-                    managed.imageDescription = local.description
-                    managed.location = local.location
-                    managed.url = local.url
-                    
-                    return managed
-                })
+                managedCache.feed = ManagedFeedImage.image(from: feed, in: context)
                 
                 try context.save()
                 completion(nil)
@@ -51,12 +43,7 @@ public final class CoreDataFeedStore: FeedStore {
                 let request = NSFetchRequest<ManagedCache>(entityName: ManagedCache.entity().name!)
                 request.returnsObjectsAsFaults = false
                 if let cache = try context.fetch(request).first {
-                    let feed = cache.feed
-                        .compactMap { ($0 as? ManagedFeedImage)}
-                        .map { LocalFeedImage(id: $0.id,
-                                              description: $0.imageDescription,
-                                              location: $0.location,
-                                              url: $0.url) }
+                    let feed = cache.localFeed
                     let timeStamp = cache.timeStamp
                     completion(.found(feed: feed, timeStamp: timeStamp))
                 } else {
@@ -107,6 +94,10 @@ extension NSManagedObject {
 private class ManagedCache: NSManagedObject {
     @NSManaged var timeStamp: Date
     @NSManaged var feed: NSOrderedSet
+    
+    var localFeed: [LocalFeedImage] {
+        return feed.compactMap { ($0 as? ManagedFeedImage)?.local }
+    }
 }
 
 @objc(ManagedFeedImage)  // set name ManagedFeedImage.entity().name
@@ -116,4 +107,24 @@ private class ManagedFeedImage: NSManagedObject {
     @NSManaged var location: String?
     @NSManaged var url: URL
     @NSManaged var cache: ManagedCache
+    
+    var local: LocalFeedImage {
+        return LocalFeedImage(id: id,
+                              description: imageDescription,
+                              location: location,
+                              url: url)
+    }
+    
+    static func image(from localFeed: [LocalFeedImage], in context: NSManagedObjectContext) -> NSOrderedSet {
+        return NSOrderedSet(array: localFeed.map { local in
+            let managed = ManagedFeedImage(context: context)
+            managed.id = local.id
+            managed.imageDescription = local.description
+            managed.location = local.location
+            managed.url = local.url
+            
+            return managed
+            
+        })
+    }
 }
