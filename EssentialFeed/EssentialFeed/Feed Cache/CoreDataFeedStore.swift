@@ -6,15 +6,18 @@
 //
 
 import Foundation
+import CoreData
 
-final class CoreDataFeedStore: FeedStore {
-    func insert(_ feed: [EssentialFeed.LocalFeedImage], timeStamp: Date, completion: @escaping InsertionCompletion) {
+public final class CoreDataFeedStore: FeedStore {
+    public init() {}
+    
+    public func insert(_ feed: [EssentialFeed.LocalFeedImage], timeStamp: Date, completion: @escaping InsertionCompletion) {
     }
     
-    func deleteCachedFeed(completion: @escaping DeletionCompletion) {
+    public func deleteCachedFeed(completion: @escaping DeletionCompletion) {
     }
     
-    func retrieve(completion: @escaping RetrievalCompletion) {
+    public func retrieve(completion: @escaping RetrievalCompletion) {
         completion(.empty)
     }
     

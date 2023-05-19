@@ -160,9 +160,9 @@
 				2A217AEA2A10C06900F73ADD /* FeedStore.swift */,
 				2A214C9D2A11E51700D542C4 /* LocalFeedImage.swift */,
 				2AC1B2F42A136B5400363376 /* FeedCachePolicy.swift */,
+				2A95EEE12A1775F500CAA700 /* CoreDataFeedStore.swift */,
 				2A0607C82A160347005E66DD /* CodableFeedStore.swift */,
 				2A95EEDE2A1766DB00CAA700 /* FeedStore.xcdatamodeld */,
-				2A95EEE12A1775F500CAA700 /* CoreDataFeedStore.swift */,
 			);
 			path = "Feed Cache";
 			sourceTree = "<group>";
