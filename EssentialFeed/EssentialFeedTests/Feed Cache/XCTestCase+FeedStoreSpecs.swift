@@ -165,26 +165,6 @@ extension FeedStoreSpecs where Self: XCTestCase {
     }
 }
 
-extension FailableInsertFeedStoreSpecs where Self: XCTestCase {
-    func assertThatInsertDeliversErrorOnInsertionError(on sut: FeedStore, file: StaticString = #filePath, line: UInt = #line) {
-        let feed = uniqueImageFeed().local
-        let date = Date()
-        
-        let insertionError = insert((feed, date), to: sut)
-        
-        XCTAssertNotNil(insertionError, "Expect insert failure")
-    }
-    
-    func assertThatInsertHasNoSideEffectOnInsertionError(on sut: FeedStore, file: StaticString = #filePath, line: UInt = #line) {
-        let feed = uniqueImageFeed().local
-        let date = Date()
-        
-        insert((feed, date), to: sut)
-        
-        expect(sut, toRetrive: .empty)
-    }
-}
-
 extension FailableDeleteFeedStoreSpecs where Self: XCTestCase {
     func assertThatDeleteDeliversErrorOnDeletionError(on sut: FeedStore, file: StaticString = #filePath, line: UInt = #line) {
         let deletionError = deleteCache(from: sut)
