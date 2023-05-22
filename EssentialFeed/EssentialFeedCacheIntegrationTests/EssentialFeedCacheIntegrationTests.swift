@@ -31,12 +31,7 @@ final class EssentialFeedCacheIntegrationTests: XCTestCase {
         let sutToPerformLoad = makeSUT()
         let feed = uniqueImageFeed().model
         
-        let saveExp = expectation(description: "Wait for save completion")
-        sutToPerformSave.save(feed) { saveError in
-            XCTAssertNil(saveError, "Expected save successfully")
-            saveExp.fulfill()
-        }
-        wait(for: [saveExp], timeout: 20.0)
+        save(feed, with: sutToPerformSave)
         
         expect(sutToPerformLoad, toLoad: feed)
     }
@@ -48,25 +43,23 @@ final class EssentialFeedCacheIntegrationTests: XCTestCase {
         let firstFeed = uniqueImageFeed().model
         let latestFeed = uniqueImageFeed().model
         
-        let saveExp1 = expectation(description: "Wait for save completion")
-        sutToPerformFirstSave.save(firstFeed) { saveError in
-            XCTAssertNil(saveError, "Expected save successfully")
-            saveExp1.fulfill()
-        }
-        wait(for: [saveExp1], timeout: 20.0)
-        
-        let saveExp2 = expectation(description: "Wait for save completion")
-        sutToPerformLastSave.save(latestFeed) { saveError in
-            XCTAssertNil(saveError, "Expected save successfully")
-            saveExp2.fulfill()
-        }
-        wait(for: [saveExp2], timeout: 20.0)
+        save(firstFeed, with: sutToPerformFirstSave)
+        save(latestFeed, with: sutToPerformLastSave)
         
         expect(sutToPerformLoad, toLoad: latestFeed)
         
     }
     
     // MARK: Helpers
+    private func save(_ feed: [FeedImage], with loader: LocalFeedLoader, file: StaticString = #filePath, line: UInt = #line) {
+        let saveExp = expectation(description: "Wait for save completion")
+        loader.save(feed) { receivedError in
+            XCTAssertNil(receivedError, file: file, line: line)
+            saveExp.fulfill()
+        }
+        wait(for: [saveExp], timeout: 20.0)
+    }
+    
     private func expect(_ sut: LocalFeedLoader, toLoad expectedFeed: [FeedImage], file: StaticString = #filePath, line: UInt = #line) {
         let exp = expectation(description: "Wait for load completion")
         sut.load { result in
