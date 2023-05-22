@@ -23,19 +23,7 @@ final class EssentialFeedCacheIntegrationTests: XCTestCase {
     func test_load_deliversNoItemsOnEmptyCache() {
         let sut = makeSUT()
         
-        let exp = expectation(description: "Wait for load completion")
-        sut.load { result in
-            switch result {
-            case let .success(imageFeed):
-                XCTAssertEqual(imageFeed, [], "Expected empty feed")
-                break
-            case .failure(_):
-                XCTFail("Expect success got \(result) instead")
-            }
-            exp.fulfill()
-        }
-        
-        wait(for: [exp], timeout: 20.0)
+        expect(sut, toLoad: [])
     }
     
     func test_load_deliversItemsSavedOnASeparateInstance() {
@@ -50,21 +38,26 @@ final class EssentialFeedCacheIntegrationTests: XCTestCase {
         }
         wait(for: [saveExp], timeout: 20.0)
         
-        let loadExp = expectation(description: "Wait for load completion")
-        sutToPerformLoad.load { result in
-            switch result {
-            case let .success(receivedFeed):
-                XCTAssertEqual(receivedFeed, feed)
-            case .failure(_):
-                XCTFail("Expected success got \(result) instead")
-            }
-            loadExp.fulfill()
-        }
-        
-        wait(for: [loadExp], timeout: 20.0)
+        expect(sutToPerformLoad, toLoad: feed)
     }
     
     // MARK: Helpers
+    private func expect(_ sut: LocalFeedLoader, toLoad expectedFeed: [FeedImage], file: StaticString = #filePath, line: UInt = #line) {
+        let exp = expectation(description: "Wait for load completion")
+        sut.load { result in
+            switch result {
+            case let .success(receivedFeed):
+                XCTAssertEqual(receivedFeed, expectedFeed, file: file, line: line)
+                break
+            case .failure(_):
+                XCTFail("Expect success got \(result) instead", file: file, line: line)
+            }
+            exp.fulfill()
+        }
+        
+        wait(for: [exp], timeout: 20.0)
+    }
+    
     private func makeSUT(file: StaticString = #filePath, line: UInt = #line) -> LocalFeedLoader {
         let storeBundle = Bundle(for: CoreDataFeedStore.self)
         let storeURL = testSpesificStoreURL()
