@@ -9,8 +9,6 @@ import Foundation
 import EssentialFeed
 
 class FeedStoreSpy: FeedStore {
-    typealias DeletionCompletion = (Error?) -> Void
-    typealias InsertionCompletion = (Error?) -> Void
     typealias RetrievalCompletion = (RetrievalResult) -> Void
     
     enum ReceivedMessage: Equatable {
@@ -31,24 +29,24 @@ class FeedStoreSpy: FeedStore {
     }
     
     public func completeDeletion(with error: Error, at index: Int = 0) {
-        deletionCompletion[index](error)
+        deletionCompletion[index](.failure(error))
     }
     
     public func completeDeletionSuccessfully(at index: Int = 0) {
-        deletionCompletion[index](nil)
+        deletionCompletion[index](.success(()))
     }
     
-    public func insert(_ feed: [LocalFeedImage], timeStamp: Date, completion: @escaping InsertionCompletion) {
+    public func insert(_ feed: [EssentialFeed.LocalFeedImage], timeStamp: Date, completion: @escaping InsertionCompletion) {
         insertionCompletion.append(completion)
         receivedMessages.append(.insert(feed, timeStamp))
     }
     
     public func completeInsertion(with error: Error, at index: Int = 0) {
-        insertionCompletion[index](error)
+        insertionCompletion[index](.failure(error))
     }
     
     public func completeInsertionSuccessfully(at index: Int = 0) {
-        insertionCompletion[index](nil)
+        insertionCompletion[index](.success(()))
     }
     
     public func retrieve(completion: @escaping RetrievalCompletion) {
