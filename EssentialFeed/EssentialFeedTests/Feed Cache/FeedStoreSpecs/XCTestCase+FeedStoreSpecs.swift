@@ -11,11 +11,11 @@ import EssentialFeed
 extension FeedStoreSpecs where Self: XCTestCase {
     
     func assertThatRetrieveDeliversEmptyOnEmptyCache(on sut: FeedStore, file: StaticString = #filePath, line: UInt = #line) {
-        expect(sut, toRetrive: .empty, file: file, line: line)
+        expect(sut, toRetrive: .success(.empty), file: file, line: line)
     }
     
     func assertThatRetrieveHasNoSideEffectsOnEmptyCache(on sut: FeedStore, file: StaticString = #filePath, line: UInt = #line) {
-        expect(sut, toRetriveTwice: .empty, file: file, line: line)
+        expect(sut, toRetriveTwice: .success(.empty), file: file, line: line)
     }
     
     func assertThatRetrieveDeliversFoundValuesOnNonEmptyCache(on sut: FeedStore, file: StaticString = #filePath, line: UInt = #line) {
@@ -24,7 +24,7 @@ extension FeedStoreSpecs where Self: XCTestCase {
 
         insert((feed, timeStamp), to: sut)
         
-        expect(sut, toRetrive: .found(feed: feed, timeStamp: timeStamp), file: file, line: line) // expect after exp.fulfill so expect runs after insert callback done
+        expect(sut, toRetrive: .success(.found(feed: feed, timeStamp: timeStamp)), file: file, line: line) // expect after exp.fulfill so expect runs after insert callback done
     }
     
     func assertThatRetrieveHasNoSideEffectsOnNonEmptyCache(on sut: FeedStore, file: StaticString = #filePath, line: UInt = #line) {
@@ -33,7 +33,7 @@ extension FeedStoreSpecs where Self: XCTestCase {
 
         insert((feed, timeStamp), to: sut)
         
-        expect(sut, toRetriveTwice: .found(feed: feed, timeStamp: timeStamp), file: file, line: line)
+        expect(sut, toRetriveTwice: .success(.found(feed: feed, timeStamp: timeStamp)), file: file, line: line)
     }
     
     func assertThatRetrieveDeliversFailureOnRetrievalError(on sut: FeedStore, file: StaticString = #filePath, line: UInt = #line) {
@@ -42,7 +42,7 @@ extension FeedStoreSpecs where Self: XCTestCase {
 
         insert((feed, timeStamp), to: sut)
         
-        expect(sut, toRetriveTwice: .found(feed: feed, timeStamp: timeStamp), file: file, line: line)
+        expect(sut, toRetriveTwice: .success(.found(feed: feed, timeStamp: timeStamp)), file: file, line: line)
     }
     
     func assertThatInsertDeliversNoErrorOnEmptyCache(on sut: FeedStore, file: StaticString = #filePath, line: UInt = #line) {
@@ -59,13 +59,13 @@ extension FeedStoreSpecs where Self: XCTestCase {
         let latestDate = Date()
         insert((latestFeed, latestDate), to: sut)
         
-        expect(sut, toRetrive: .found(feed: latestFeed, timeStamp: latestDate), file: file, line: line)
+        expect(sut, toRetrive: .success(.found(feed: latestFeed, timeStamp: latestDate)), file: file, line: line)
     }
     
     func assertThatDeleteHasNoSideEffectsOnEmptyCache(on sut: FeedStore, file: StaticString = #filePath, line: UInt = #line) {
         deleteCache(from: sut)
         
-        expect(sut, toRetrive: .empty, file: file, line: line)
+        expect(sut, toRetrive: .success(.empty), file: file, line: line)
     }
     
     func assertThatDeleteDeliversNoErrorOnNonEmptyCache(on sut: FeedStore, file: StaticString = #filePath, line: UInt = #line) {
@@ -81,7 +81,7 @@ extension FeedStoreSpecs where Self: XCTestCase {
         
         deleteCache(from: sut)
         
-        expect(sut, toRetrive: .empty, file: file, line: line)
+        expect(sut, toRetrive: .success(.empty), file: file, line: line)
     }
     
     func assertThatSideEffectsRunSerially(on sut: FeedStore, file: StaticString = #filePath, line: UInt = #line) {
@@ -137,20 +137,20 @@ extension FeedStoreSpecs where Self: XCTestCase {
         return insertionError
     }
     
-    func expect(_ sut: FeedStore, toRetriveTwice expectedResult: RetrievedCachedFeedResult, file: StaticString = #filePath, line: UInt = #line) {
+    func expect(_ sut: FeedStore, toRetriveTwice expectedResult: FeedStore.RetrievalResult, file: StaticString = #filePath, line: UInt = #line) {
         expect(sut, toRetrive: expectedResult, file: file, line: line)
         expect(sut, toRetrive: expectedResult, file: file, line: line)
     }
     
-    func expect(_ sut: FeedStore, toRetrive expectedResult: RetrievedCachedFeedResult, file: StaticString = #filePath, line: UInt = #line) {
+    func expect(_ sut: FeedStore, toRetrive expectedResult: FeedStore.RetrievalResult, file: StaticString = #filePath, line: UInt = #line) {
         let exp = expectation(description: "Waiting for retrieval")
         sut.retrieve { result in
             switch (result, expectedResult) {
-            case (.empty, .empty), (.failure, .failure):
+            case (.success(.empty), .success(.empty)), (.failure, .failure):
                 break
             case let (
-                .found(resultFeed, timeStampFeed),
-                .found(expectedResultFeed, expectedResultTimeStamp)):
+                .success(.found(resultFeed, timeStampFeed)),
+                .success(.found(expectedResultFeed, expectedResultTimeStamp))):
                 
                 XCTAssertEqual(resultFeed, expectedResultFeed, file: file, line: line)
                 XCTAssertEqual(timeStampFeed, expectedResultTimeStamp, file: file, line: line)
