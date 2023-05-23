@@ -186,7 +186,7 @@ final class LoadFeedFromRemoteUseCaseTests: XCTestCase {
                 statusCode: code,
                 httpVersion: nil,
                 headerFields: nil)!
-            messages[index].completion(.success(data, response))
+            messages[index].completion(.success((data, response)))
         }
     }
 
