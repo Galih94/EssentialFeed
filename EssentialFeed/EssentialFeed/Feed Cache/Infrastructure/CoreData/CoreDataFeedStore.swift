@@ -45,14 +45,11 @@ public final class CoreDataFeedStore: FeedStore {
     
     public func retrieve(completion: @escaping RetrievalCompletion) {
         perform { context in
-            Result(catching: <#T##() throws -> _#>)
             completion(Result(catching: {
-                if let cache = try ManagedCache.find(in: context) {
-                    let feed = cache.localFeed
-                    let timeStamp = cache.timeStamp
+                try ManagedCache.find(in: context).map {
+                    let feed = $0.localFeed
+                    let timeStamp = $0.timeStamp
                     return (CachedFeed(feed: feed, timeStamp: timeStamp))
-                } else {
-                    return .none
                 }
             }))
         }
