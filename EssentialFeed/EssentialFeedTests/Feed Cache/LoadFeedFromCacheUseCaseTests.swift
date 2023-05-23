@@ -125,7 +125,7 @@ final class LoadFeedFromCacheUseCaseTests: XCTestCase {
     func test_load_doesNotDeliverResultAfterSUTInstanceHasBeenDeallocated() {
         let store = FeedStoreSpy()
         var sut: LocalFeedLoader? = LocalFeedLoader(store: store, currentDate: Date.init)
-        var capturedResults = [LoadFeedResult]()
+        var capturedResults = [FeedLoader.Result]()
         sut?.load { result in
             capturedResults.append(result)
         }
