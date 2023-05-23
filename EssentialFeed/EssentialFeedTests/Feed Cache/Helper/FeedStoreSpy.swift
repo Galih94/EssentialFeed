@@ -8,7 +8,7 @@
 import Foundation
 import EssentialFeed
 
-internal class FeedStoreSpy: FeedStore {
+class FeedStoreSpy: FeedStore {
     typealias DeletionCompletion = (Error?) -> Void
     typealias InsertionCompletion = (Error?) -> Void
     typealias RetrievalCompletion = (RetrievedCachedFeedResult) -> Void

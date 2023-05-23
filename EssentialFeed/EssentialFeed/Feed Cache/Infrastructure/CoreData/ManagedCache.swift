@@ -8,7 +8,7 @@
 import CoreData
 
 @objc(ManagedCache) // set name ManagedCache.entity().name
-internal class ManagedCache: NSManagedObject {
+class ManagedCache: NSManagedObject {
     @NSManaged var timeStamp: Date
     @NSManaged var feed: NSOrderedSet
     
