@@ -15,6 +15,11 @@
           "containerPath" : "container:EssentialFeed.xcodeproj",
           "identifier" : "2ABC708F2A1B0F730029E4BC",
           "name" : "EssentialFeedCacheIntegrationTests"
+        },
+        {
+          "containerPath" : "container:EssentialFeed.xcodeproj",
+          "identifier" : "3084108A2A034B0A00B0351E",
+          "name" : "EssentialFeed"
         }
       ]
     },
