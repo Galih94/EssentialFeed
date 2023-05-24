@@ -37,7 +37,7 @@
                                             <rect key="frame" x="20" y="17" width="353" height="546"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" alignment="top" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="7Mc-Qo-X8j" userLabel="Location Container">
-                                                    <rect key="frame" x="0.0" y="0.0" width="83" height="58.333333333333336"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="353" height="58.333333333333336"/>
                                                     <subviews>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9Kl-WT-ukh" userLabel="Pin Container">
                                                             <rect key="frame" x="0.0" y="0.0" width="10" height="50"/>
@@ -57,12 +57,17 @@
                                                             </constraints>
                                                         </view>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Location,  Location" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wfb-dc-H3x">
-                                                            <rect key="frame" x="16" y="0.0" width="67" height="36"/>
+                                                            <rect key="frame" x="16" y="0.0" width="337" height="36"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                             <color key="textColor" red="0.60784313725490191" green="0.60784313725490191" blue="0.60784313725490191" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                     </subviews>
+                                                    <constraints>
+                                                        <constraint firstAttribute="trailing" secondItem="wfb-dc-H3x" secondAttribute="trailing" id="06M-ud-rWC"/>
+                                                        <constraint firstItem="wfb-dc-H3x" firstAttribute="top" secondItem="7Mc-Qo-X8j" secondAttribute="top" id="PpW-vf-pKu"/>
+                                                        <constraint firstItem="wfb-dc-H3x" firstAttribute="leading" secondItem="7Mc-Qo-X8j" secondAttribute="leading" constant="16" id="RC8-Aj-vOD"/>
+                                                    </constraints>
                                                 </stackView>
                                                 <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1fh-6G-UAs" userLabel="Image Container">
                                                     <rect key="frame" x="0.0" y="68.333333333333314" width="353" height="353"/>
@@ -95,7 +100,8 @@
                                                 </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="7Mc-Qo-X8j" firstAttribute="width" secondItem="pcv-18-lsq" secondAttribute="width" multiplier="0.235127" id="Aai-V5-Xk1"/>
+                                                <constraint firstItem="7Mc-Qo-X8j" firstAttribute="leading" secondItem="pcv-18-lsq" secondAttribute="leading" id="I0N-u8-TXk"/>
+                                                <constraint firstAttribute="trailing" secondItem="7Mc-Qo-X8j" secondAttribute="trailing" id="NHS-PX-OhK"/>
                                                 <constraint firstItem="1fh-6G-UAs" firstAttribute="width" secondItem="pcv-18-lsq" secondAttribute="width" id="aAE-Bv-PAY"/>
                                             </constraints>
                                         </stackView>
