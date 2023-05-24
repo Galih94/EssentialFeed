@@ -13,6 +13,8 @@
 		2AF9085C2A1DB326000864B3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2AF9085B2A1DB326000864B3 /* Assets.xcassets */; };
 		2AF9085F2A1DB326000864B3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2AF9085D2A1DB326000864B3 /* LaunchScreen.storyboard */; };
 		2AF908672A1DC848000864B3 /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AF908662A1DC848000864B3 /* FeedViewController.swift */; };
+		2AF908692A1DCB99000864B3 /* FeedImageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AF908682A1DCB99000864B3 /* FeedImageViewModel.swift */; };
+		2AF9086B2A1DCBD8000864B3 /* FeedImageViewModel+PrototypeData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AF9086A2A1DCBD7000864B3 /* FeedImageViewModel+PrototypeData.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +26,8 @@
 		2AF9085E2A1DB326000864B3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2AF908602A1DB326000864B3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2AF908662A1DC848000864B3 /* FeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
+		2AF908682A1DCB99000864B3 /* FeedImageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedImageViewModel.swift; sourceTree = "<group>"; };
+		2AF9086A2A1DCBD7000864B3 /* FeedImageViewModel+PrototypeData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FeedImageViewModel+PrototypeData.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +64,8 @@
 				2AF908542A1DB325000864B3 /* SceneDelegate.swift */,
 				2AF908582A1DB325000864B3 /* Main.storyboard */,
 				2AF908662A1DC848000864B3 /* FeedViewController.swift */,
+				2AF908682A1DCB99000864B3 /* FeedImageViewModel.swift */,
+				2AF9086A2A1DCBD7000864B3 /* FeedImageViewModel+PrototypeData.swift */,
 				2AF9085B2A1DB326000864B3 /* Assets.xcassets */,
 				2AF9085D2A1DB326000864B3 /* LaunchScreen.storyboard */,
 				2AF908602A1DB326000864B3 /* Info.plist */,
@@ -138,8 +144,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2AF9086B2A1DCBD8000864B3 /* FeedImageViewModel+PrototypeData.swift in Sources */,
 				2AF908532A1DB325000864B3 /* AppDelegate.swift in Sources */,
 				2AF908672A1DC848000864B3 /* FeedViewController.swift in Sources */,
+				2AF908692A1DCB99000864B3 /* FeedImageViewModel.swift in Sources */,
 				2AF908552A1DB325000864B3 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
