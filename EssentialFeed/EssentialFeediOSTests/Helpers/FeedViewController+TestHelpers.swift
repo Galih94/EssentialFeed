@@ -1,0 +1,65 @@
+//
+//  FeedViewController+TestHelpers.swift
+//  EssentialFeediOSTests
+//
+//  Created by Galih Samudra on 31/05/23.
+//
+
+import UIKit
+import EssentialFeediOS
+
+extension FeedViewController {
+    var isShowingLoadingIndicator: Bool? {
+        return refreshControl?.isRefreshing
+    }
+    
+    private var feedImagesSection: Int {
+        return 0
+    }
+    
+    func simulateInitiatedFeedReload() {
+        refreshControl?.simulatePullToRefresh()
+    }
+    
+    func simulateFeedImageViewNotVisible(at row: Int) {
+        guard let view = simulateFeedImageViewVisible(at: row) else { return }
+        
+        let delegate = tableView.delegate
+        let index = IndexPath(row: row, section: feedImagesSection)
+        delegate?.tableView?(tableView, didEndDisplaying: view, forRowAt: index)
+        
+    }
+    
+    func simulateFeedImageViewNotNearVisible(at row: Int) {
+        simulateFeedImageViewNearVisible(at: row)
+        
+        let ds = tableView.prefetchDataSource
+        let index = IndexPath(row: row, section: feedImagesSection)
+        
+        ds?.tableView?(tableView, cancelPrefetchingForRowsAt: [index])
+    }
+    
+    func simulateFeedImageViewNearVisible(at row: Int) {
+        let ds = tableView.prefetchDataSource
+        let index = IndexPath(row: row, section: feedImagesSection)
+        
+        ds?.tableView(tableView, prefetchRowsAt: [index])
+    }
+    
+    @discardableResult
+    func simulateFeedImageViewVisible(at index: Int) -> FeedImageCell? {
+        return feedImageView(at: index) as? FeedImageCell
+    }
+    
+    func numberOfRenderedFeedImageViews() -> Int {
+        return tableView.numberOfRows(inSection: feedImagesSection)
+    }
+    
+    @discardableResult
+    func feedImageView(at row: Int) -> UITableViewCell? {
+        let ds = tableView.dataSource
+        let index = IndexPath(row: row, section: feedImagesSection)
+        
+        return ds?.tableView(tableView, cellForRowAt: index)
+    }
+}
