@@ -91,8 +91,8 @@ This repositories contains learning material on implementing Feed Feature
 
 [✅] Load feed automatically when view is presented
 [✅] Allow customer to manually reload feed (pull to refresh)
-[✅ ] Show a loading indicator while loading feed 
-[ ] Render all loaded feed items (location image, description)
+[✅] Show a loading indicator while loading feed 
+[✅] Render all loaded feed items (location image, description)
 [ ] Image loading experience
     [✅] Load when image is visible (on screen)
     [✅] Cancel when image view is out of screen
