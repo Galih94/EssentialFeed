@@ -12,7 +12,7 @@ final class FeedImageViewModel {
     private var task: FeedImageLoaderTask?
     private let model: FeedImage
     private let imageLoader: FeedImageLoader
-    var onImageLoad: ((UIImage?) -> Void)?
+    var onImageLoad: ((UIImage) -> Void)?
     var onImageLoadingStateChange: ((Bool) -> Void)?
     var onShouldRetryImageLoadStateChange: ((Bool) -> Void)?
     
