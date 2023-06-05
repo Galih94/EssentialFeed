@@ -34,24 +34,28 @@ final class FeedImageViewModel {
         self.model = model
         self.imageLoader = imageLoader
     }
+    
     func loadImageData() {
         onImageLoadingStateChange?(true)
         onShouldRetryImageLoadStateChange?(false)
         task = self.imageLoader.loadImageData(from: self.model.url, completion: { [weak self] result in
-            let data = try? result.get()
-            let dataImage = data.flatMap(UIImage.init) ?? nil
-            if let image = dataImage {
-                self?.onImageLoad?(image)
-            } else {
-                self?.onShouldRetryImageLoadStateChange?(true)
-            }
-            self?.onImageLoadingStateChange?(false)
+            self?.handle(result)
         })
     }
     
     func cancelImageDataLoad() {
         task?.cancel()
         task = nil
+    }
+    
+    // MARK: -- Helper
+    private func handle(_ result: FeedImageLoader.Result) {
+        if let image = (try? result.get()).flatMap(UIImage.init) {
+            onImageLoad?(image)
+        } else {
+            onShouldRetryImageLoadStateChange?(true)
+        }
+        onImageLoadingStateChange?(false)
     }
     
 }
