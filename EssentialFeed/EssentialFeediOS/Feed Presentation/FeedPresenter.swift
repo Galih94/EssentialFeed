@@ -6,14 +6,6 @@
 //
 import EssentialFeed
 
-struct FeedLoadingViewModel {
-    let isLoading: Bool
-}
-
-struct FeedViewModel {
-    let feed: [FeedImage]
-}
-
 protocol FeedView {
     func display(_ viewModel: FeedViewModel)
 }
