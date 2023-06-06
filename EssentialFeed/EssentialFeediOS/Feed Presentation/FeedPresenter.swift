@@ -10,7 +10,7 @@ protocol FeedView {
     func display(feed: [FeedImage])
 }
 
-protocol FeedLoadingView: AnyObject {
+protocol FeedLoadingView {
     func display(isLoading: Bool)
 }
 
@@ -18,7 +18,7 @@ final class FeedPresenter {
     typealias Observer<T> = (T) -> Void
     private let feedLoader: FeedLoader?
     var feedView: FeedView?
-    weak var loadingView: FeedLoadingView?
+    var loadingView: FeedLoadingView?
     
     init(feedLoader: FeedLoader? = nil) {
         self.feedLoader = feedLoader
