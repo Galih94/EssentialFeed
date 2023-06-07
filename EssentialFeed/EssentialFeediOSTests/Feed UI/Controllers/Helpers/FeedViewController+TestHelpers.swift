@@ -21,13 +21,14 @@ extension FeedViewController {
         refreshControl?.simulatePullToRefresh()
     }
     
-    func simulateFeedImageViewNotVisible(at row: Int) {
-        guard let view = simulateFeedImageViewVisible(at: row) else { return }
+    @discardableResult
+    func simulateFeedImageViewNotVisible(at row: Int) -> FeedImageCell? {
+        guard let view = simulateFeedImageViewVisible(at: row) else { return nil }
         
         let delegate = tableView.delegate
         let index = IndexPath(row: row, section: feedImagesSection)
         delegate?.tableView?(tableView, didEndDisplaying: view, forRowAt: index)
-        
+        return view
     }
     
     func simulateFeedImageViewNotNearVisible(at row: Int) {
