@@ -42,6 +42,7 @@
 		2A73E34D2A30701B007EC4A0 /* UITableView+Dequeueing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A73E34C2A30701B007EC4A0 /* UITableView+Dequeueing.swift */; };
 		2A73E34F2A307195007EC4A0 /* UIImageView+Animations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A73E34E2A307195007EC4A0 /* UIImageView+Animations.swift */; };
 		2A73E3512A308304007EC4A0 /* Feed.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2A73E3502A308304007EC4A0 /* Feed.strings */; };
+		2A73E3532A3086EC007EC4A0 /* FeedViewControllerTests+Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A73E3522A3086EC007EC4A0 /* FeedViewControllerTests+Localization.swift */; };
 		2A95EEE02A1766DB00CAA700 /* FeedStore.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 2A95EEDE2A1766DB00CAA700 /* FeedStore.xcdatamodeld */; };
 		2A95EEE22A1775F500CAA700 /* CoreDataFeedStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A95EEE12A1775F500CAA700 /* CoreDataFeedStore.swift */; };
 		2A95EEE72A17C92F00CAA700 /* CoreDataHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A95EEE62A17C92F00CAA700 /* CoreDataHelpers.swift */; };
@@ -169,6 +170,7 @@
 		2A73E34C2A30701B007EC4A0 /* UITableView+Dequeueing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+Dequeueing.swift"; sourceTree = "<group>"; };
 		2A73E34E2A307195007EC4A0 /* UIImageView+Animations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Animations.swift"; sourceTree = "<group>"; };
 		2A73E3502A308304007EC4A0 /* Feed.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Feed.strings; sourceTree = "<group>"; };
+		2A73E3522A3086EC007EC4A0 /* FeedViewControllerTests+Localization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FeedViewControllerTests+Localization.swift"; sourceTree = "<group>"; };
 		2A95EEDF2A1766DB00CAA700 /* FeedStore.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = FeedStore.xcdatamodel; sourceTree = "<group>"; };
 		2A95EEE12A1775F500CAA700 /* CoreDataFeedStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataFeedStore.swift; sourceTree = "<group>"; };
 		2A95EEE62A17C92F00CAA700 /* CoreDataHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataHelpers.swift; sourceTree = "<group>"; };
@@ -373,6 +375,7 @@
 				2A37AC252A27414F00C59708 /* FeedImageCell+TestHelpers.swift */,
 				2A37AC272A2741B700C59708 /* FeedViewControllerTests+LoaderSpy.swift */,
 				2A37AC292A27426400C59708 /* FeedViewControllerTests+Assertions.swift */,
+				2A73E3522A3086EC007EC4A0 /* FeedViewControllerTests+Localization.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -825,6 +828,7 @@
 				2A37AC1A2A273C5300C59708 /* UIImage+TestHelpers.swift in Sources */,
 				2A37AC2A2A27426400C59708 /* FeedViewControllerTests+Assertions.swift in Sources */,
 				2A37AC1E2A273CDC00C59708 /* UIButton+TestHelpers.swift in Sources */,
+				2A73E3532A3086EC007EC4A0 /* FeedViewControllerTests+Localization.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
