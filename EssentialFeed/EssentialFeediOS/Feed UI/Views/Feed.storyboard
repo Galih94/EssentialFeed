@@ -82,6 +82,9 @@
                                                             <buttonConfiguration key="configuration" style="plain" title="⟳">
                                                                 <fontDescription key="titleFontDescription" type="system" pointSize="60"/>
                                                             </buttonConfiguration>
+                                                            <connections>
+                                                                <action selector="retryButtonTapped" destination="mbV-Og-J9l" eventType="touchUpInside" id="tAJ-5r-Lwf"/>
+                                                            </connections>
                                                         </button>
                                                     </subviews>
                                                     <color key="backgroundColor" red="0.89019607840000003" green="0.89019607840000003" blue="0.89019607840000003" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -125,6 +128,14 @@
                                         <constraint firstAttribute="bottomMargin" secondItem="7iO-Yo-4hA" secondAttribute="bottom" priority="999" constant="6" id="wzy-It-rzb"/>
                                     </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="descriptionLabel" destination="DCx-47-Ta6" id="jfD-Ya-7U0"/>
+                                    <outlet property="feedImageContainer" destination="Dj6-RJ-6lS" id="r0C-37-BU8"/>
+                                    <outlet property="feedImageRetryButton" destination="hl7-fu-Z8L" id="TKG-dS-K4Y"/>
+                                    <outlet property="feedImageView" destination="3Ex-G6-jSq" id="PcI-uO-LOC"/>
+                                    <outlet property="locationContainer" destination="t1v-fz-wmT" id="Iox-rl-Owz"/>
+                                    <outlet property="locationLabel" destination="JGl-cY-gau" id="IIb-rw-oB9"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
