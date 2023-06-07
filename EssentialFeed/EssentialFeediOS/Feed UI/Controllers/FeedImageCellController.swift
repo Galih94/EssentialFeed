@@ -28,7 +28,9 @@ final class FeedImageCellController: FeedImageView {
         cell?.locationContainer.isHidden = !model.hasLocation
         cell?.locationLabel.text = model.location
         cell?.descriptionLabel.text = model.description
-        cell?.onRetry = delegate.didRequestImage
+        cell?.onRetry = { [weak self] in
+            self?.delegate.didRequestImage()
+        }
         
         cell?.feedImageView.setImageAnimated(model.image)
         cell?.feedImageContainer.isShimmering = model.isLoading
