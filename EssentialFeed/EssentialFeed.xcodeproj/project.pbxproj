@@ -380,19 +380,11 @@
 			path = Helpers;
 			sourceTree = "<group>";
 		};
-		2A37AC212A27408C00C59708 /* Controllers */ = {
+		2A37AC2B2A27444900C59708 /* Feed UI */ = {
 			isa = PBXGroup;
 			children = (
 				2A29FCF42A247A2B0073F74C /* FeedUIIntegrationTests.swift */,
 				2A37AC182A273C3700C59708 /* Helpers */,
-			);
-			path = Controllers;
-			sourceTree = "<group>";
-		};
-		2A37AC2B2A27444900C59708 /* Feed UI */ = {
-			isa = PBXGroup;
-			children = (
-				2A37AC212A27408C00C59708 /* Controllers */,
 			);
 			path = "Feed UI";
 			sourceTree = "<group>";
