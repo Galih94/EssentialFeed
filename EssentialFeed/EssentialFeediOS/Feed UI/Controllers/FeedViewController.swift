@@ -15,7 +15,7 @@ public final class ErrorView: UIView {
     public var message: String?
 }
 
-public final class FeedViewController: UITableViewController, UITableViewDataSourcePrefetching, FeedLoadingView {
+public final class FeedViewController: UITableViewController, UITableViewDataSourcePrefetching, FeedLoadingView, FeedErrorView {
     public let errorView = ErrorView()
     var delegate: FeedViewControllerDelegate?
     var tableModel = [FeedImageCellController]() {
@@ -58,6 +58,12 @@ public final class FeedViewController: UITableViewController, UITableViewDataSou
             refreshControl?.endRefreshing()
         }
     }
+    
+    // MARK: -- FeedErrorView
+    func display(_ viewModel: FeedErrorViewModel) {
+        errorView.message = viewModel.message
+    }
+    
     
     // MARK: -- IBAction
     @IBAction private func refresh() {
