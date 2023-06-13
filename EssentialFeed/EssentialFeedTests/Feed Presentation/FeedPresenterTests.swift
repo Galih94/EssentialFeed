@@ -74,10 +74,10 @@ final class FeedPresenterTests: XCTestCase {
         XCTAssertEqual(view.messages, [
             .display(errorMessage: .none),
             .display(isLoading: true)
-        ], "Expected no Error messsages")
+        ], "Expected no Error messsages and start loading")
     }
     
-    func test_didFinishLoadingFeedWithFeed_displayFeedMessageAndEndLoading() {
+    func test_didFinishLoadingFeedWithFeed_displayFeedMessageAndStopLoading() {
         let (sut, view) = makeSUT()
         let feed = uniqueImageFeed().model
         
@@ -86,7 +86,7 @@ final class FeedPresenterTests: XCTestCase {
         XCTAssertEqual(view.messages, [
             .display(feed: feed),
             .display(isLoading: false)
-        ], "Expected no Error messsages")
+        ], "Expected deisplay feed messsages and stop loading")
     }
     
     // MARK: -- Helpers
