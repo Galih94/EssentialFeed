@@ -1,0 +1,8 @@
+/* 
+  Feed.strings
+  EssentialFeed
+
+  Created by Galih Samudra on 13/06/23.
+  
+*/
+"FEED_VIEW_CONNECTION_ERROR" = "Não foi possível conectar com o servidor";
