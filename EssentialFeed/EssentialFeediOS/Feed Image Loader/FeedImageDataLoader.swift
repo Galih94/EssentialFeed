@@ -5,11 +5,11 @@
 //  Created by Galih Samudra on 31/05/23.
 //
 
-public protocol FeedImageLoaderTask {
+public protocol FeedImageDataLoaderTask {
     func cancel()
 }
 
 public protocol FeedImageDataLoader {
     typealias Result = Swift.Result<Data, Error>
-    func loadImageData(from url: URL, completion: @escaping(Result) -> Void) -> FeedImageLoaderTask
+    func loadImageData(from url: URL, completion: @escaping(Result) -> Void) -> FeedImageDataLoaderTask
 }
