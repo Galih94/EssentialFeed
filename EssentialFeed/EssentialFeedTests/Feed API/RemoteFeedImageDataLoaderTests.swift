@@ -10,14 +10,20 @@ import EssentialFeed
 
 public final class RemoteFeedImageDataLoader {
     private let client: HTTPClient
+    
     init(client: HTTPClient) {
         self.client = client
     }
-    public func loadImageData(from url: URL, completion: @escaping (Any) -> Void) {
-        client.get(from: url) { _ in }
+    
+    public func loadImageData(from url: URL, completion: @escaping (FeedImageDataLoader.Result) -> Void) {
+        client.get(from: url) { result in
+            switch result {
+            case let .failure(error):
+                completion(.failure(error))
+            default: break
+            }
+        }
     }
-    
-    
 }
 
 final class RemoteFeedImageDataLoaderTests: XCTestCase {
@@ -47,6 +53,29 @@ final class RemoteFeedImageDataLoaderTests: XCTestCase {
         XCTAssertEqual(client.requestedURLs, [url, url])
     }
     
+    func test_loadImageData_deliversErrorOnClientError() {
+        let (sut, client) = makeSUT()
+        let url = anyURL()
+        let error = anyNSError()
+        
+        let exp = expectation(description: "Wait for load image")
+        var receivedError: Error?
+        sut.loadImageData(from: url) { result in
+            switch result {
+            case let .failure(error):
+                receivedError = error
+            default:
+                XCTFail("Expected failure")
+            }
+            exp.fulfill()
+        }
+        client.complete(with: error)
+        
+        wait(for: [exp], timeout: 1.0)
+        
+        XCTAssertEqual(receivedError as? NSError, error)
+    }
+    
     // MARK: - Helpers
     private func makeSUT(file: StaticString = #filePath, line: UInt = #line) -> (RemoteFeedImageDataLoader, HTTPClientSpy) {
         let client = HTTPClientSpy()
@@ -57,10 +86,17 @@ final class RemoteFeedImageDataLoaderTests: XCTestCase {
     }
     
     private class HTTPClientSpy: HTTPClient {
-        var requestedURLs = [URL]()
+        private var messages = [(url: URL, completion: (HTTPClient.Result) -> Void)]()
+        var requestedURLs : [URL] {
+            return messages.map{ $0.url }
+        }
         
         func get(from url: URL, completion: @escaping (HTTPClient.Result) -> Void) {
-            requestedURLs.append(url)
+            messages.append((url, completion))
+        }
+        
+        func complete(with error: Error, at index: Int = 0) {
+            messages[index].completion(.failure(error))
         }
     }
 }
