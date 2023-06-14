@@ -10,7 +10,7 @@ import EssentialFeediOS
 
 extension FeedUIIntegrationTests {
     
-    class LoaderSpy: FeedLoader, FeedImageLoader {
+    class LoaderSpy: FeedLoader, FeedImageDataLoader {
         // MARK: -- FeedLoader
         private var feedRequests = [(FeedLoader.Result) -> ()]()
         var loadFeedCallCount: Int {
@@ -43,10 +43,10 @@ extension FeedUIIntegrationTests {
             return imageRequests.map{ $0.url }
         }
         
-        private var imageRequests = [(url: URL, completion: (FeedImageLoader.Result) -> Void)]()
+        private var imageRequests = [(url: URL, completion: (FeedImageDataLoader.Result) -> Void)]()
         private(set) var cancelledImageURLs = [URL]()
         
-        func loadImageData(from url: URL, completion: @escaping(FeedImageLoader.Result) -> Void) -> FeedImageLoaderTask {
+        func loadImageData(from url: URL, completion: @escaping(FeedImageDataLoader.Result) -> Void) -> FeedImageLoaderTask {
             
             imageRequests.append((url, completion))
             return TaskSpy { [weak self] in
