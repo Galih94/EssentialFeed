@@ -6,5 +6,24 @@
 //
 
 import XCTest
+import EssentialFeed
 
-final class RemoteFeedImageDataLoaderTests: XCTestCase {}
+public final class RemoteFeedImageDataLoader {
+    init(client: Any) {}
+    
+}
+
+final class RemoteFeedImageDataLoaderTests: XCTestCase {
+    
+    func test_init_doesNotPerformAnyURLRequest() {
+        let client = HTTPClientSpy()
+        let sut = RemoteFeedImageDataLoader(client: client)
+        
+        XCTAssertEqual(client.requestedURLs, [])
+    }
+    
+    // MARK: - Helpers
+    private class HTTPClientSpy {
+        var requestedURLs = [URL]()
+    }
+}
