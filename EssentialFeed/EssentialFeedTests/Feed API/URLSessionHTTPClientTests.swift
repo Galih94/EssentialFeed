@@ -34,20 +34,9 @@ final class URLSessionHTTPClientTests: XCTestCase {
     }
     
     func test_cancelGetFromURLTask_cancelsURLRequest() {
-        let url = anyURL()
-        let exp = expectation(description: "Wait for request")
+        let receivedError = resultErrorFor( taskHandler: { $0.cancel() } ) as? NSError
         
-        let task = makeSUT().get(from: url) { result in
-            switch result {
-            case let .failure(error as NSError) where error.code == URLError.cancelled.rawValue:
-                break
-            default: XCTFail("Expected cancelled result, got \(result) instead")
-            }
-            exp.fulfill()
-        }
-        
-        task.cancel()
-        wait(for: [exp], timeout: 1.0)
+        XCTAssertEqual(receivedError?.code, URLError.cancelled.rawValue)
     }
     
     func test_getFromURL_failsOnRequestError() {
@@ -99,9 +88,9 @@ final class URLSessionHTTPClientTests: XCTestCase {
         return sut
     }
     
-    private func resultErrorFor(_ values: (data: Data?, response: URLResponse?, error: Error?)? = nil, file: StaticString = #filePath, line: UInt = #line) -> Error? {
+    private func resultErrorFor(_ values: (data: Data?, response: URLResponse?, error: Error?)? = nil, taskHandler: (HTTPClientTask) -> Void = { _ in }, file: StaticString = #filePath, line: UInt = #line) -> Error? {
         
-        let result = resultFor(values, file: file, line: line)
+        let result = resultFor(values, taskHandler: taskHandler, file: file, line: line)
         switch result {
         case let .failure(error):
             return error
@@ -122,16 +111,16 @@ final class URLSessionHTTPClientTests: XCTestCase {
         }
     }
     
-    private func resultFor(_ values: (data: Data?, response: URLResponse?, error: Error?)?, file: StaticString = #filePath, line: UInt = #line) -> HTTPClient.Result {
+    private func resultFor(_ values: (data: Data?, response: URLResponse?, error: Error?)?, taskHandler: (HTTPClientTask) -> Void = { _ in }, file: StaticString = #filePath, line: UInt = #line) -> HTTPClient.Result {
         values.map{ URLProtocolStub.stub(data: $0, response: $1, error: $2) }
         let sut = makeSUT(file: file, line: line)
         let exp = expectation(description: "Wait for get from url")
         var receivedResult: HTTPClient.Result?
-        sut.get(from: anyURL()) { result in
+        let task = sut.get(from: anyURL()) { result in
             receivedResult = result
             exp.fulfill()
         }
-        
+        taskHandler(task)
         wait(for: [exp], timeout: 1.0)
         return receivedResult!
     }
