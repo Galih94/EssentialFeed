@@ -22,8 +22,12 @@ public final class RemoteFeedImageDataLoader {
         }
         
         func cancel() {
-            completion = nil
+            preventFurtherCompletions()
             wrapped?.cancel()
+        }
+        
+        private func preventFurtherCompletions() {
+            completion = nil
         }
     }
     
