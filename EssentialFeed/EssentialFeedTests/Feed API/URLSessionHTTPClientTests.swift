@@ -34,7 +34,7 @@ final class URLSessionHTTPClientTests: XCTestCase {
     }
     
     func test_cancelGetFromURLTask_cancelsURLRequest() {
-        let receivedError = resultErrorFor( taskHandler: { $0.cancel() } ) as? NSError
+        let receivedError = resultErrorFor( taskHandler: { $0.cancel() } ) as NSError?
         
         XCTAssertEqual(receivedError?.code, URLError.cancelled.rawValue)
     }
@@ -180,14 +180,16 @@ final class URLSessionHTTPClientTests: XCTestCase {
                 return requestObserver(request)
             }
             
-            if let data = URLProtocolStub.stub?.data {
+            guard let stub = URLProtocolStub.stub else { return }
+            
+            if let data = stub.data {
                 client?.urlProtocol(self, didLoad: data)
             }
             
-            if let response = URLProtocolStub.stub?.response {
+            if let response = stub.response {
                 client?.urlProtocol(self, didReceive: response, cacheStoragePolicy: .notAllowed)
             }
-            if let error = URLProtocolStub.stub?.error {
+            if let error = stub.error {
                 client?.urlProtocol(self, didFailWithError: error) // stub our error into URLProtocol if exist
             }
             
