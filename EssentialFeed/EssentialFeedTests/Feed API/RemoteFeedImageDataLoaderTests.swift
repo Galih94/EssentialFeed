@@ -69,11 +69,11 @@ final class RemoteFeedImageDataLoaderTests: XCTestCase {
     
     func test_loadImageData_deliversInvalidDataErrorOnNon200HTTPResponse() {
         let (sut, client) = makeSUT()
-        let error: RemoteFeedImageDataLoader.Error = .invalidData
+        let error = failure(.invalidData)
         let data = Data("any data".utf8)
         let code = 199
         
-        expect(sut: sut, toCompeteWith: .failure(error)) {
+        expect(sut: sut, toCompeteWith: error) {
             client.complete(with: data, code: code, at: 0)
         }
     }
@@ -85,6 +85,10 @@ final class RemoteFeedImageDataLoaderTests: XCTestCase {
         trackForMemoryLeaks(client, file: file, line: line)
         trackForMemoryLeaks(sut, file: file, line: line)
         return (sut, client)
+    }
+    
+    private func failure(_ error: RemoteFeedImageDataLoader.Error) -> FeedImageDataLoader.Result {
+        return .failure(error)
     }
     
     private func expect(sut: RemoteFeedImageDataLoader, toCompeteWith expectedResult: FeedImageDataLoader.Result, action: @escaping () -> Void, file: StaticString = #filePath, line: UInt = #line) {
