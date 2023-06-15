@@ -9,14 +9,13 @@ import Foundation
 
 final class FeedItemsMapper {
     
-    private static var OK_200: Int { return 200 }
     private struct Root: Decodable {
         let items: [RemoteFeedItem]
     }
     
     static func map(_ data: Data, from response: HTTPURLResponse) throws -> [RemoteFeedItem] {
         guard let root = try? JSONDecoder().decode(Root.self, from: data),
-                response.statusCode == OK_200 else {
+              response.isOK else {
             throw RemoteFeedLoader.Error.invalidData
         }
         
