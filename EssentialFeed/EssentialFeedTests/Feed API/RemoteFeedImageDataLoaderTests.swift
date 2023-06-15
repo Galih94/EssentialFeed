@@ -9,10 +9,21 @@ import XCTest
 import EssentialFeed
 
 public final class RemoteFeedImageDataLoader {
-    private struct HTTPTaskWrappper: FeedImageDataLoaderTask {
-        let wrapped: HTTPClientTask
+    private final class HTTPClientTaskWrappper: FeedImageDataLoaderTask {
+        var wrapped: HTTPClientTask?
+        private var completion: ((FeedImageDataLoader.Result) -> Void)?
+        
+        init(_ completion: (@escaping (FeedImageDataLoader.Result) -> Void) ) {
+            self.completion = completion
+        }
+        
+        func complete(with result: FeedImageDataLoader.Result) {
+            completion?(result)
+        }
+        
         func cancel() {
-            wrapped.cancel()
+            completion = nil
+            wrapped?.cancel()
         }
     }
     
@@ -28,20 +39,21 @@ public final class RemoteFeedImageDataLoader {
     
     @discardableResult
     public func loadImageData(from url: URL, completion: @escaping (FeedImageDataLoader.Result) -> Void) -> FeedImageDataLoaderTask {
-        let task = client.get(from: url) { [weak self] result in
+        let task = HTTPClientTaskWrappper(completion)
+        task.wrapped = client.get(from: url) { [weak self] result in
             guard self != nil else { return }
             switch result {
             case let .success((data, response)):
                 if response.statusCode == 200, !data.isEmpty {
-                    completion(.success(data))
+                    task.complete(with: .success(data))
                 } else {
-                    completion(.failure(Error.invalidData))
+                    task.complete(with: .failure(Error.invalidData))
                 }
             case let .failure(error):
-                completion(.failure(error))
+                task.complete(with: .failure(error))
             }
         }
-        return HTTPTaskWrappper(wrapped: task)
+        return task
     }
 }
 
@@ -124,6 +136,23 @@ final class RemoteFeedImageDataLoaderTests: XCTestCase {
         
         task.cancel()
         XCTAssertEqual(client.cancelledURLs, [url], "Expected cancelled URL request after task is cancelled")
+    }
+    
+    func test_loadImageData_doesNotDeloverResultAfterCancellingTask() {
+        let (sut, client) = makeSUT()
+        let nonEmptyData = Data("non-empty data".utf8)
+        
+        var receivedResult = [FeedImageDataLoader.Result]()
+        let task = sut.loadImageData(from: anyURL()) { result in
+            receivedResult.append(result)
+        }
+        task.cancel()
+        
+        client.complete(with: anyData(), code: 404)
+        client.complete(with: nonEmptyData, code: 200)
+        client.complete(with: anyNSError())
+        
+        XCTAssertTrue(receivedResult.isEmpty, "Expected no received results after cancelling task")
     }
     
     func test_loadImageData_doesNotDeliversResultAfterSUTInstanceHasBeenDeallocated() {
