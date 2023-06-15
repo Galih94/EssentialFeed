@@ -138,21 +138,25 @@ final class URLSessionHTTPClientTests: XCTestCase {
     }
     
     private class URLProtocolStub: URLProtocol {
-        private static var stub: Stub?
-        private static var requestObserver: ((URLRequest) -> Void)?
-        
         private struct Stub {
             let data: Data?
             let response: URLResponse?
             let error: Error?
+            let requestObserver: ((URLRequest) -> Void)?
+        }
+        private static let queue = DispatchQueue(label: "URLProtocolStub.queue")
+        private static var _stub: Stub?
+        private static var stub: Stub? {
+            get { return queue.sync { _stub }}
+            set { queue.sync { _stub = newValue }}
         }
         
         static func stub(data: Data?, response: URLResponse?, error: Error?) {
-            stub = Stub(data: data, response: response, error: error)
+            stub = Stub(data: data, response: response, error: error, requestObserver: nil)
         }
         
         static func observeRequests(observer: @escaping (URLRequest) -> Void) {
-            requestObserver = observer
+            stub = Stub(data: nil, response: nil, error: nil, requestObserver: observer)
         }
 
         
@@ -163,7 +167,6 @@ final class URLSessionHTTPClientTests: XCTestCase {
         static func stopInterceptingRequests() {
             URLProtocol.unregisterClass(URLProtocolStub.self)
             stub = nil
-            requestObserver = nil
         }
                 
         override class func canInit(with request: URLRequest) -> Bool { // need to override canInit to make sure we are the one who set the request return success or fails
@@ -175,11 +178,6 @@ final class URLSessionHTTPClientTests: XCTestCase {
         }
         
         override func startLoading() {
-            if let requestObserver = URLProtocolStub.requestObserver { // guard here if requestObserver is still exist just return to avoid race condition when using URLProtocolStub
-                client?.urlProtocolDidFinishLoading(self)
-                return requestObserver(request)
-            }
-            
             guard let stub = URLProtocolStub.stub else { return }
             
             if let data = stub.data {
@@ -192,7 +190,7 @@ final class URLSessionHTTPClientTests: XCTestCase {
             if let error = stub.error {
                 client?.urlProtocol(self, didFailWithError: error) // stub our error into URLProtocol if exist
             }
-            
+            stub.requestObserver?(request)
             client?.urlProtocolDidFinishLoading(self)
         }
         
