@@ -70,7 +70,7 @@ final class RemoteFeedImageDataLoaderTests: XCTestCase {
     func test_loadImageData_deliversInvalidDataErrorOnNon200HTTPResponse() {
         let (sut, client) = makeSUT()
         let error = failure(.invalidData)
-        let data = Data("any data".utf8)
+        let data = anyData()
         let codes = [199, 201, 300, 400, 500]
         
         codes.enumerated().forEach { index, code in
@@ -87,6 +87,10 @@ final class RemoteFeedImageDataLoaderTests: XCTestCase {
         trackForMemoryLeaks(client, file: file, line: line)
         trackForMemoryLeaks(sut, file: file, line: line)
         return (sut, client)
+    }
+    
+    private func anyData() -> Data {
+        return Data("any data".utf8)
     }
     
     private func failure(_ error: RemoteFeedImageDataLoader.Error) -> FeedImageDataLoader.Result {
