@@ -5,7 +5,7 @@
 //  Created by Galih Samudra on 15/06/23.
 //
 
-public final class RemoteFeedImageDataLoader {
+public final class RemoteFeedImageDataLoader: FeedImageDataLoader {
     private final class HTTPClientTaskWrappper: FeedImageDataLoaderTask {
         var wrapped: HTTPClientTask?
         private var completion: ((FeedImageDataLoader.Result) -> Void)?
