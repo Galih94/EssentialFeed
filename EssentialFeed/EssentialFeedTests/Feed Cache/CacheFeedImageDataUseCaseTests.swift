@@ -28,7 +28,7 @@ final class CacheFeedImageDataUseCaseTests: XCTestCase {
     func test_saveImageData_failsOnStoreInsertionError() {
         let (sut, store) = makeSUT()
         
-        expect(sut, toCompleteWith: .failure(LocalFeedImageDataLoader.SaveError.failed)) {
+        expect(sut, toCompleteWith: failed()) {
             store.completeInsertion(with: anyNSError())
         }
     }
@@ -41,6 +41,10 @@ final class CacheFeedImageDataUseCaseTests: XCTestCase {
         trackForMemoryLeaks(store, file: file, line: line)
         
         return (sut, store)
+    }
+    
+    private func failed() -> LocalFeedImageDataLoader.SaveResult {
+        return .failure(LocalFeedImageDataLoader.SaveError.failed)
     }
     
     private func expect(_ sut: LocalFeedImageDataLoader, toCompleteWith expectedResult: LocalFeedImageDataLoader.SaveResult, when action: @escaping () -> Void, file: StaticString = #filePath, line: UInt = #line) {
