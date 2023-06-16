@@ -28,6 +28,10 @@ final class LocalFeedImageDataLoader: FeedImageDataLoader {
         }
         
         func cancel() {
+            preventFurtherCompletion()
+        }
+        
+        private func preventFurtherCompletion() {
             completion = nil
         }
     }
@@ -43,7 +47,7 @@ final class LocalFeedImageDataLoader: FeedImageDataLoader {
     }
     
     func loadImageData(from url: URL, completion: @escaping (FeedImageDataLoader.Result) -> Void) -> FeedImageDataLoaderTask {
-        var task = Task(completion)
+        let task = Task(completion)
         store.retrieve(dataForURL: url) { result in
             task.complete(with: result
                 .mapError{ _ in Error.failed }
