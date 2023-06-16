@@ -17,13 +17,19 @@ final class LocalFeedImageDataLoader: FeedImageDataLoader {
         func cancel() {}
     }
     
+    public enum Error: Swift.Error {
+        case failed
+    }
+    
     private let store: FeedImageDataStore
     init(store: FeedImageDataStore) {
         self.store = store
     }
     
     func loadImageData(from url: URL, completion: @escaping (FeedImageDataLoader.Result) -> Void) -> FeedImageDataLoaderTask {
-        store.retrieve(dataForURL: url, completion: completion)
+        store.retrieve(dataForURL: url) { result in
+            completion(.failure(Error.failed))
+        }
         return Task()
     }
 }
@@ -48,13 +54,13 @@ final class LocalFeedImageDataLoaderTests: XCTestCase {
     func test_loadImageData_failOnStoreError() {
         let (sut, store) = makeSUT()
         let url = anyURL()
-        let expectedError = anyNSError()
+        let expectedError = LocalFeedImageDataLoader.Error.failed
         
         let exp = expectation(description: "Wait for completion")
         _ = sut.loadImageData(from: url) { result in
             switch result {
             case let .failure(error):
-                XCTAssertEqual(error as NSError, expectedError)
+                XCTAssertEqual(error as? LocalFeedImageDataLoader.Error, expectedError)
             default: XCTFail()
             }
             exp.fulfill()
