@@ -102,11 +102,11 @@ final class LocalFeedImageDataLoaderTests: XCTestCase {
     }
     
     private func failed() -> FeedImageDataLoader.Result {
-        return .failure(LocalFeedImageDataLoader.Error.failed)
+        return .failure(LocalFeedImageDataLoader.LoadError.failed)
     }
     
     private func notFound() -> FeedImageDataLoader.Result {
-        return .failure(LocalFeedImageDataLoader.Error.notFound)
+        return .failure(LocalFeedImageDataLoader.LoadError.notFound)
     }
     
     private func expect(_ sut: LocalFeedImageDataLoader, toCompleteWith expectedResult: FeedImageDataLoader.Result, when action: () -> Void, file: StaticString = #filePath, line: UInt = #line) {
@@ -118,8 +118,8 @@ final class LocalFeedImageDataLoaderTests: XCTestCase {
                 
                 XCTAssertEqual(receivedData, expectedData, file: file, line: line)
                 
-            case let (.failure(receivedError as LocalFeedImageDataLoader.Error ),
-                      .failure(expectedError as LocalFeedImageDataLoader.Error)):
+            case let (.failure(receivedError as LocalFeedImageDataLoader.LoadError ),
+                      .failure(expectedError as LocalFeedImageDataLoader.LoadError)):
                 XCTAssertEqual(receivedError, expectedError)
                 break
                 

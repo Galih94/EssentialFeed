@@ -41,7 +41,7 @@ extension LocalFeedImageDataLoader: FeedImageDataLoader {
         }
     }
     
-    public enum Error: Swift.Error {
+    public enum LoadError: Swift.Error {
         case failed
         case notFound
     }
@@ -51,8 +51,8 @@ extension LocalFeedImageDataLoader: FeedImageDataLoader {
         store.retrieve(dataForURL: url) { [weak self] result in
             guard self != nil else { return }
             task.complete(with: result
-                .mapError{ _ in Error.failed }
-                .flatMap{ data in data.map { .success($0) } ?? .failure(Error.notFound)})
+                .mapError{ _ in LoadError.failed }
+                .flatMap{ data in data.map { .success($0) } ?? .failure(LoadError.notFound)})
         }
         return task
     }
