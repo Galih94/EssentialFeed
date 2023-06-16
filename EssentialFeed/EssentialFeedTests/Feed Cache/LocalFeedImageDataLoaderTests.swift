@@ -55,7 +55,7 @@ final class LocalFeedImageDataLoaderTests: XCTestCase {
     
     func test_loadImageData_failOnStoreError() {
         let (sut, store) = makeSUT()
-        expect(sut, toCOmpleteWith: failed()) {
+        expect(sut, toCompleteWith: failed()) {
             let retrievalError = anyNSError()
             store.complete(with: retrievalError)
         }
@@ -74,7 +74,7 @@ final class LocalFeedImageDataLoaderTests: XCTestCase {
         return .failure(LocalFeedImageDataLoader.Error.failed)
     }
     
-    private func expect(_ sut: LocalFeedImageDataLoader, toCOmpleteWith expectedResult: FeedImageDataLoader.Result, when action: () -> Void, file: StaticString = #filePath, line: UInt = #line) {
+    private func expect(_ sut: LocalFeedImageDataLoader, toCompleteWith expectedResult: FeedImageDataLoader.Result, when action: () -> Void, file: StaticString = #filePath, line: UInt = #line) {
         let url = anyURL()
         let exp = expectation(description: "Wait for completion")
         _ = sut.loadImageData(from: url) { receivedResult in
