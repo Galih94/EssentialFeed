@@ -5,8 +5,22 @@
 //  Created by Galih Samudra on 16/06/23.
 //
 
-public final class LocalFeedImageDataLoader: FeedImageDataLoader {
-    private final class Task: FeedImageDataLoaderTask {
+public final class LocalFeedImageDataLoader {
+    
+    private let store: FeedImageDataStore
+    public init(store: FeedImageDataStore) {
+        self.store = store
+    }
+    
+    public typealias SaveResult = Result<Void, Swift.Error>
+    
+    public func save(_ data: Data,for url: URL, completion: @escaping (SaveResult) -> Void) {
+        store.insert(data, for: url) { _ in }
+    }
+}
+
+extension LocalFeedImageDataLoader: FeedImageDataLoader {
+    private final class LoadImageDataTask: FeedImageDataLoaderTask {
         
         private var completion: ((FeedImageDataLoader.Result) -> Void )?
         
@@ -32,19 +46,8 @@ public final class LocalFeedImageDataLoader: FeedImageDataLoader {
         case notFound
     }
     
-    private let store: FeedImageDataStore
-    public init(store: FeedImageDataStore) {
-        self.store = store
-    }
-    
-    public typealias SaveResult = Result<Void, Swift.Error>
-    
-    public func save(_ data: Data,for url: URL, completion: @escaping (SaveResult) -> Void) {
-        store.insert(data, for: url) { _ in }
-    }
-    
     public func loadImageData(from url: URL, completion: @escaping (FeedImageDataLoader.Result) -> Void) -> FeedImageDataLoaderTask {
-        let task = Task(completion)
+        let task = LoadImageDataTask(completion)
         store.retrieve(dataForURL: url) { [weak self] result in
             guard self != nil else { return }
             task.complete(with: result
