@@ -9,7 +9,9 @@ import XCTest
 import EssentialFeed
 
 protocol FeedImageDataStore {
-    func retrieve(dataForURL url: URL, completion: @escaping (FeedImageDataLoader.Result) -> Void)
+    typealias Result = Swift.Result<Data?, Error>
+    
+    func retrieve(dataForURL url: URL, completion: @escaping (Result) -> Void)
 }
 
 final class LocalFeedImageDataLoader: FeedImageDataLoader {
@@ -85,10 +87,10 @@ final class LocalFeedImageDataLoaderTests: XCTestCase {
             case retrieve(dataFor: URL)
         }
         
-        private var completions = [(FeedImageDataLoader.Result) -> Void]()
+        private var completions = [(FeedImageDataStore.Result) -> Void]()
         private(set) var receivedMessages = [Message]()
         
-        func retrieve(dataForURL url: URL, completion: @escaping (FeedImageDataLoader.Result) -> Void) {
+        func retrieve(dataForURL url: URL, completion: @escaping (FeedImageDataStore.Result) -> Void) {
             receivedMessages.append( .retrieve(dataFor: url) )
             completions.append(completion)
         }
