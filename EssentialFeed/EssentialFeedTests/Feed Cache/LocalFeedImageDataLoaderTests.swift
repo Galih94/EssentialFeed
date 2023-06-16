@@ -68,7 +68,7 @@ final class LocalFeedImageDataLoaderTests: XCTestCase {
     func test_loadImageData_deliversNotFoundErrorOnNotFound() {
         let (sut, store) = makeSUT()
         
-        expect(sut, toCompleteWith: .failure(LocalFeedImageDataLoader.Error.notFound)) {
+        expect(sut, toCompleteWith: notFound()) {
             store.complete(with: .none)
         }
     }
@@ -85,6 +85,10 @@ final class LocalFeedImageDataLoaderTests: XCTestCase {
     
     private func failed() -> FeedImageDataLoader.Result {
         return .failure(LocalFeedImageDataLoader.Error.failed)
+    }
+    
+    private func notFound() -> FeedImageDataLoader.Result {
+        return .failure(LocalFeedImageDataLoader.Error.notFound)
     }
     
     private func expect(_ sut: LocalFeedImageDataLoader, toCompleteWith expectedResult: FeedImageDataLoader.Result, when action: () -> Void, file: StaticString = #filePath, line: UInt = #line) {
