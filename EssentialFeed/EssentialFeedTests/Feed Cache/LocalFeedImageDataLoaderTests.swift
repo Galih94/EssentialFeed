@@ -55,8 +55,7 @@ final class LocalFeedImageDataLoaderTests: XCTestCase {
     
     func test_loadImageData_failOnStoreError() {
         let (sut, store) = makeSUT()
-        let expectedError = LocalFeedImageDataLoader.Error.failed
-        expect(sut, toCOmpleteWith: .failure(expectedError)) {
+        expect(sut, toCOmpleteWith: failed()) {
             let retrievalError = anyNSError()
             store.complete(with: retrievalError)
         }
@@ -70,6 +69,9 @@ final class LocalFeedImageDataLoaderTests: XCTestCase {
         trackForMemoryLeaks(store, file: file, line: line)
         
         return (sut, store)
+    }
+    private func failed() -> FeedImageDataLoader.Result {
+        return .failure(LocalFeedImageDataLoader.Error.failed)
     }
     
     private func expect(_ sut: LocalFeedImageDataLoader, toCOmpleteWith expectedResult: FeedImageDataLoader.Result, when action: () -> Void, file: StaticString = #filePath, line: UInt = #line) {
