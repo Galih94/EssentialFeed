@@ -29,7 +29,7 @@ final class LocalFeedImageDataLoaderTests: XCTestCase {
         let (sut, store) = makeSUT()
         expect(sut, toCompleteWith: failed()) {
             let retrievalError = anyNSError()
-            store.complete(with: retrievalError)
+            store.completeRetrieval(with: retrievalError)
         }
     }
     
@@ -37,7 +37,7 @@ final class LocalFeedImageDataLoaderTests: XCTestCase {
         let (sut, store) = makeSUT()
         
         expect(sut, toCompleteWith: notFound()) {
-            store.complete(with: .none)
+            store.completeRetrieval(with: .none)
         }
     }
     
@@ -46,7 +46,7 @@ final class LocalFeedImageDataLoaderTests: XCTestCase {
         let foundData = anyData()
         
         expect(sut, toCompleteWith: .success(foundData)) {
-            store.complete(with: foundData)
+            store.completeRetrieval(with: foundData)
         }
     }
     
@@ -60,9 +60,9 @@ final class LocalFeedImageDataLoaderTests: XCTestCase {
         
         task.cancel()
         
-        store.complete(with: .none)
-        store.complete(with: anyData())
-        store.complete(with: anyNSError())
+        store.completeRetrieval(with: .none)
+        store.completeRetrieval(with: anyData())
+        store.completeRetrieval(with: anyNSError())
         
         XCTAssertTrue(receivedResults.isEmpty, "Expected no received results after cancelling task got \(receivedResults) intead")
     }
@@ -76,7 +76,7 @@ final class LocalFeedImageDataLoaderTests: XCTestCase {
             receivedResults.append(result)
         })
         sut = nil
-        store.complete(with: anyData())
+        store.completeRetrieval(with: anyData())
         
         XCTAssertTrue(receivedResults.isEmpty, "Expected no received results after instance has been deallocated")
     }
@@ -149,11 +149,11 @@ final class LocalFeedImageDataLoaderTests: XCTestCase {
             receivedMessages.append(.insert(data: data, for: url))
         }
         
-        func complete(with error: Error, at index: Int = 0) {
+        func completeRetrieval(with error: Error, at index: Int = 0) {
             completions[index](.failure(error))
         }
         
-        func complete(with data: Data?, at index: Int = 0) {
+        func completeRetrieval(with data: Data?, at index: Int = 0) {
             completions[index](.success(data))
         }
         
