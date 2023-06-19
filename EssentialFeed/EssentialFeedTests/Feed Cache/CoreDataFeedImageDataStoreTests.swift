@@ -19,9 +19,7 @@ extension CoreDataFeedStore: FeedImageDataStore {
 final class CoreDataFeedImageDataStoreTests: XCTestCase {
     
     func test_retrieveImageData_deliversNotFoundWhenEmpty() {
-        let bundle = Bundle(for: CoreDataFeedStore.self)
-        let storeUrl = URL(filePath: "/dev/null")
-        let sut = try! CoreDataFeedStore(storeURL: storeUrl, bundle: bundle)
+        let sut = makeSUT()
         
         
         let url = anyURL()
@@ -37,4 +35,13 @@ final class CoreDataFeedImageDataStoreTests: XCTestCase {
         wait(for: [exp], timeout: 1.0)
     }
 
+    // MARK: Helpers
+    private func makeSUT(file: StaticString = #filePath, line: UInt = #line) -> CoreDataFeedStore {
+        let bundle = Bundle(for: CoreDataFeedStore.self)
+        let storeUrl = URL(filePath: "/dev/null")
+        let sut = try! CoreDataFeedStore(storeURL: storeUrl, bundle: bundle)
+        
+        trackForMemoryLeaks(sut, file: file, line: line)
+        return sut
+    }
 }
