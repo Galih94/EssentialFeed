@@ -45,6 +45,10 @@ final class CoreDataFeedImageDataStoreTests: XCTestCase {
         return sut
     }
     
+    private func localImage(url: URL) -> LocalFeedImage {
+        return LocalFeedImage(id: UUID(), description: "any description", location: "any location", url: url)
+    }
+    
     private func expect(_ sut: CoreDataFeedStore, toCompleteRetrieveWith expectedResult: FeedImageDataStore.RetrievalResult, for url: URL, file: StaticString = #file, line: UInt = #line) {
         let exp = expectation(description: "Wait for retrieval")
         sut.retrieve(dataForURL: url) { receivedResult in
@@ -61,7 +65,7 @@ final class CoreDataFeedImageDataStoreTests: XCTestCase {
     private func insert(_ data: Data, for url: URL, into sut: CoreDataFeedStore, file: StaticString = #file, line: UInt = #line) {
         
         let exp = expectation(description: "Wait for insertion")
-        let image = LocalFeedImage(id: UUID(), description: "any description", location: "any location", url: url)
+        let image = localImage(url: url)
         sut.insert([image], timeStamp: Date()) { insertImageResult in
             switch insertImageResult {
             case let .failure(error): XCTFail("Expected success got \(error) intead")
