@@ -21,7 +21,7 @@ final class CoreDataFeedImageDataStoreTests: XCTestCase {
     func test_retrieveImageData_deliversNotFoundWhenEmpty() {
         let sut = makeSUT()
         
-        expect(sut, toCompleteRetrieveWith: .success(.none), for: anyURL())
+        expect(sut, toCompleteRetrieveWith: notFound(), for: anyURL())
     }
     
     func test_retrieveImageData_deliversNotFoundWhenStoredDataURLDoesNotMatch() {
@@ -32,7 +32,7 @@ final class CoreDataFeedImageDataStoreTests: XCTestCase {
         
         insert(data, for: imageURL, into: sut)
         
-        expect(sut, toCompleteRetrieveWith: .success(.none), for: nonMatchingURL)
+        expect(sut, toCompleteRetrieveWith: notFound(), for: nonMatchingURL)
     }
 
     // MARK: Helpers
@@ -43,6 +43,10 @@ final class CoreDataFeedImageDataStoreTests: XCTestCase {
         
         trackForMemoryLeaks(sut, file: file, line: line)
         return sut
+    }
+    
+    private func notFound() -> FeedImageDataStore.RetrievalResult {
+        return .success(.none)
     }
     
     private func localImage(url: URL) -> LocalFeedImage {
