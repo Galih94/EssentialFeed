@@ -26,6 +26,16 @@ final class CoreDataFeedImageDataStoreTests: XCTestCase {
         
         expect(sut, toCompleteRetrieveWith: notFound(), for: nonMatchingURL)
     }
+    
+    func test_retrieveImageData_deliversFoundDataWhenThereIsAStoredImageDataMatchingURL() {
+        let sut = makeSUT()
+        let storedData = anyData()
+        let matchingURL = URL(string: "http://image-url.com")!
+        
+        insert(storedData, for: matchingURL, into: sut)
+        
+        expect(sut, toCompleteRetrieveWith: .success(storedData), for: matchingURL)
+    }
 
     // MARK: Helpers
     private func makeSUT(file: StaticString = #filePath, line: UInt = #line) -> CoreDataFeedStore {
@@ -53,6 +63,7 @@ final class CoreDataFeedImageDataStoreTests: XCTestCase {
                 XCTAssertEqual(receivedData, expectedData, file: file, line: line)
             default: XCTFail("Expected \(receivedResult) got \(expectedResult) isntead", file: file, line: line)
             }
+            print("exp called")
             exp.fulfill()
         }
         wait(for: [exp], timeout: 1.0)
