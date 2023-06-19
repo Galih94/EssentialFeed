@@ -41,7 +41,7 @@ final class CacheFeedImageDataUseCaseTests: XCTestCase {
         }
     }
     
-    func test_saveImageData_doesNotDeliversResultAfterInstanceHasBeenDeallocated() {
+    func test_saveImageData_doesNotDeliversResultAfterSUTInstanceHasBeenDeallocated() {
         let store = FeedImageDataStoreSpy()
         var sut: LocalFeedImageDataLoader? = LocalFeedImageDataLoader(store: store)
         
