@@ -34,7 +34,7 @@ final class CoreDataFeedImageDataStoreTests: XCTestCase {
         
         insert(storedData, for: matchingURL, into: sut)
         
-        expect(sut, toCompleteRetrieveWith: .success(storedData), for: matchingURL)
+        expect(sut, toCompleteRetrieveWith: found(storedData), for: matchingURL)
     }
 
     // MARK: Helpers
@@ -49,6 +49,10 @@ final class CoreDataFeedImageDataStoreTests: XCTestCase {
     
     private func notFound() -> FeedImageDataStore.RetrievalResult {
         return .success(.none)
+    }
+    
+    private func found(_ data: Data) -> FeedImageDataStore.RetrievalResult {
+        return .success(data)
     }
     
     private func localImage(url: URL) -> LocalFeedImage {
