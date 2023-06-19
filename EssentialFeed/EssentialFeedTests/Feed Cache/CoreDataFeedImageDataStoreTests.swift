@@ -28,23 +28,9 @@ final class CoreDataFeedImageDataStoreTests: XCTestCase {
         let sut = makeSUT()
         let imageURL = URL(string: "http://image-url.com")!
         let nonMatchingURL = URL(string: "http://another-url.com")!
-        
         let data = anyData()
-        let exp = expectation(description: "Wait for insertion")
-        let image = LocalFeedImage(id: UUID(), description: "any description", location: "any location", url: imageURL)
-        sut.insert([image], timeStamp: Date()) { insertImageResult in
-            switch insertImageResult {
-            case let .failure(error): XCTFail("Expected success got \(error) intead")
-            case .success:
-                sut.insert(data, for: imageURL) { insertResult in
-                    if case let Result.failure(error) = insertResult {
-                        XCTFail("Failed insert data \(data) got \(error) intead")
-                    }
-                }
-            }
-            exp.fulfill()
-        }
-        wait(for: [exp], timeout: 1.0)
+        
+        insert(data, for: imageURL, into: sut)
         
         expect(sut, toCompleteRetrieveWith: .success(.none), for: nonMatchingURL)
     }
@@ -66,6 +52,25 @@ final class CoreDataFeedImageDataStoreTests: XCTestCase {
             case let (.success(receivedData), .success(expectedData)):
                 XCTAssertEqual(receivedData, expectedData, file: file, line: line)
             default: XCTFail("Expected \(receivedResult) got \(expectedResult) isntead", file: file, line: line)
+            }
+            exp.fulfill()
+        }
+        wait(for: [exp], timeout: 1.0)
+    }
+    
+    private func insert(_ data: Data, for url: URL, into sut: CoreDataFeedStore, file: StaticString = #file, line: UInt = #line) {
+        
+        let exp = expectation(description: "Wait for insertion")
+        let image = LocalFeedImage(id: UUID(), description: "any description", location: "any location", url: url)
+        sut.insert([image], timeStamp: Date()) { insertImageResult in
+            switch insertImageResult {
+            case let .failure(error): XCTFail("Expected success got \(error) intead")
+            case .success:
+                sut.insert(data, for: url) { insertResult in
+                    if case let Result.failure(error) = insertResult {
+                        XCTFail("Failed insert data \(data) got \(error) intead")
+                    }
+                }
             }
             exp.fulfill()
         }
