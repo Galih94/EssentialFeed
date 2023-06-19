@@ -105,15 +105,17 @@ final class CoreDataFeedImageDataStoreTests: XCTestCase {
         let image = localImage(url: url)
         sut.insert([image], timeStamp: Date()) { insertImageResult in
             switch insertImageResult {
-            case let .failure(error): XCTFail("Expected success got \(error) intead")
+            case let .failure(error):
+                XCTFail("Expected success got \(error) intead")
+                exp.fulfill()
             case .success:
                 sut.insert(data, for: url) { insertResult in
                     if case let Result.failure(error) = insertResult {
                         XCTFail("Failed insert data \(data) got \(error) intead")
                     }
+                    exp.fulfill()
                 }
             }
-            exp.fulfill()
         }
         wait(for: [exp], timeout: 1.0)
     }
