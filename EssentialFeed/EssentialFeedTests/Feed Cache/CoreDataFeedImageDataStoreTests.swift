@@ -21,18 +21,7 @@ final class CoreDataFeedImageDataStoreTests: XCTestCase {
     func test_retrieveImageData_deliversNotFoundWhenEmpty() {
         let sut = makeSUT()
         
-        
-        let url = anyURL()
-        let exp = expectation(description: "Wait for retrieval")
-        sut.retrieve(dataForURL: url) { result in
-            switch result {
-            case let .success(data):
-                XCTAssertEqual(data, .none)
-            default: XCTFail("Expected found empty data got \(result) isntead")
-            }
-            exp.fulfill()
-        }
-        wait(for: [exp], timeout: 1.0)
+        expect(sut, toCompleteRetrieveWith: .success(.none), for: anyURL())
     }
 
     // MARK: Helpers
@@ -43,5 +32,18 @@ final class CoreDataFeedImageDataStoreTests: XCTestCase {
         
         trackForMemoryLeaks(sut, file: file, line: line)
         return sut
+    }
+    
+    private func expect(_ sut: CoreDataFeedStore, toCompleteRetrieveWith expectedResult: FeedImageDataStore.RetrievalResult, for url: URL, file: StaticString = #file, line: UInt = #line) {
+        let exp = expectation(description: "Wait for retrieval")
+        sut.retrieve(dataForURL: url) { receivedResult in
+            switch (receivedResult, expectedResult) {
+            case let (.success(receivedData), .success(expectedData)):
+                XCTAssertEqual(receivedData, expectedData, file: file, line: line)
+            default: XCTFail("Expected \(receivedResult) got \(expectedResult) isntead", file: file, line: line)
+            }
+            exp.fulfill()
+        }
+        wait(for: [exp], timeout: 1.0)
     }
 }
