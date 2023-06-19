@@ -79,7 +79,6 @@ final class CoreDataFeedImageDataStoreTests: XCTestCase {
                 XCTAssertEqual(receivedData, expectedData, file: file, line: line)
             default: XCTFail("Expected \(receivedResult) got \(expectedResult) isntead", file: file, line: line)
             }
-            print("exp called")
             exp.fulfill()
         }
         wait(for: [exp], timeout: 1.0)
