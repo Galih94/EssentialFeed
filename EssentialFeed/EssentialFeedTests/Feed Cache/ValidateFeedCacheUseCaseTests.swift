@@ -110,15 +110,28 @@ final class ValidateFeedCacheUseCaseTests: XCTestCase {
     
     func test_validateCache_failedOnDeletionErrorOfExpiredCache() {
         let fixedCurrentDate = Date()
-        let expiredCache = fixedCurrentDate.minusFeedCacheMaxAge().adding(seconds: -1)
+        let expiredTimeStamp = fixedCurrentDate.minusFeedCacheMaxAge().adding(seconds: -1)
         let feed = uniqueImageFeed().local
         let (sut, store) = makeSUT(currentDate: { fixedCurrentDate })
         let deletionError = anyNSError()
         
         expect(sut, toCompleteWith: .failure(deletionError)) {
-            store.completeRetrieval(with: feed, timeStamp: expiredCache)
+            store.completeRetrieval(with: feed, timeStamp: expiredTimeStamp)
             store.completeDeletion(with: deletionError)
         }
+    }
+    
+    func test_validateCache_succeedsOnSuccessfulDeletionOfExpiredCache() {
+        let fixedCurrentDate = Date()
+        let expiredTimeStamp = fixedCurrentDate.minusFeedCacheMaxAge().adding(seconds: -1)
+        let feed = uniqueImageFeed().local
+        let (sut, store) = makeSUT(currentDate: { fixedCurrentDate })
+        
+        expect(sut, toCompleteWith: .success(())) {
+            store.completeRetrieval(with: feed, timeStamp: expiredTimeStamp)
+            store.completeDeletionSuccessfully()
+        }
+        
     }
     
     func test_validateCache_doesNotDeliverResultAfterSUTInstanceHasBeenDeallocated() {
