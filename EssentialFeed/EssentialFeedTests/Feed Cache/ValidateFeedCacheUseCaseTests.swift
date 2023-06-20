@@ -74,34 +74,19 @@ final class ValidateFeedCacheUseCaseTests: XCTestCase {
         let (sut, store) =  makeSUT()
         let deletionError = anyNSError()
         
-        let exp = expectation(description: "Wait for validation cache")
-        sut.validateCache { result in
-            switch result {
-            case let .failure(error as NSError):
-                XCTAssertEqual(error, deletionError)
-            default: XCTFail("Expected error")
-            }
-            exp.fulfill()
+        expect(sut, toCompleteWith: .failure(deletionError)) {
+            store.completeRetrieval(with: anyNSError())
+            store.completeDeletion(with: deletionError)
         }
-        store.completeRetrieval(with: anyNSError())
-        store.completeDeletion(with: deletionError)
-        wait(for: [exp], timeout: 1.0)
     }
     
     func test_validateCache_successOnSuccessfullDeletionOfFailedRetrieveal() {
         let (sut, store) =  makeSUT()
         
-        let exp = expectation(description: "Wait for validation completion")
-        sut.validateCache { result in
-            switch result {
-            case .success(()): break
-            default: XCTFail("Expected success")
-            }
-            exp.fulfill()
+        expect(sut, toCompleteWith: .success(())) {
+            store.completeRetrieval(with: anyNSError())
+            store.completeDeletionSuccessfully()
         }
-        store.completeRetrieval(with: anyNSError())
-        store.completeDeletionSuccessfully()
-        wait(for: [exp], timeout: 1.0)
     }
     
     func test_validateCache_doesNotDeliverResultAfterSUTInstanceHasBeenDeallocated() {
@@ -124,5 +109,20 @@ final class ValidateFeedCacheUseCaseTests: XCTestCase {
         trackForMemoryLeaks(sut, file: file, line: line)
         
         return (sut, store)
+    }
+    
+    private func expect(_ sut: LocalFeedLoader, toCompleteWith expectedResult: LocalFeedLoader.ValidationResult, when action: () -> Void, file: StaticString = #filePath, line: UInt = #line) {
+        let exp = expectation(description: "Wait for validation completion")
+        sut.validateCache { receivedResult in
+            switch (receivedResult, expectedResult) {
+            case (.success, .success) : break
+            case let (.failure(receivedError as NSError), .failure(expectedError as NSError)):
+                XCTAssertEqual(receivedError, expectedError)
+            default: XCTFail("Expected \(expectedResult) got \(receivedResult) instead")
+            }
+            exp.fulfill()
+        }
+        action()
+        wait(for: [exp], timeout: 1.0)
     }
 }
