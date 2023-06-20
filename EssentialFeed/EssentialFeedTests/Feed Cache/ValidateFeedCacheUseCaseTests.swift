@@ -88,6 +88,22 @@ final class ValidateFeedCacheUseCaseTests: XCTestCase {
         wait(for: [exp], timeout: 1.0)
     }
     
+    func test_validateCache_successOnSuccessfullDeletionOfFailedRetrieveal() {
+        let (sut, store) =  makeSUT()
+        
+        let exp = expectation(description: "Wait for validation completion")
+        sut.validateCache { result in
+            switch result {
+            case .success(()): break
+            default: XCTFail("Expected success")
+            }
+            exp.fulfill()
+        }
+        store.completeRetrieval(with: anyNSError())
+        store.completeDeletionSuccessfully()
+        wait(for: [exp], timeout: 1.0)
+    }
+    
     func test_validateCache_doesNotDeliverResultAfterSUTInstanceHasBeenDeallocated() {
         let store = FeedStoreSpy()
         var sut: LocalFeedLoader? = LocalFeedLoader(store: store, currentDate: Date.init)
