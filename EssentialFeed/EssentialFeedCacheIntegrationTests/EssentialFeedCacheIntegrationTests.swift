@@ -26,6 +26,7 @@ final class EssentialFeedCacheIntegrationTests: XCTestCase {
         expect(sut, toLoad: [])
     }
     
+    // MARK: - LocalFeedLoader Tests
     func test_load_deliversItemsSavedOnASeparateInstance() {
         let sutToPerformSave = makeFeedLoader()
         let sutToPerformLoad = makeFeedLoader()
@@ -50,6 +51,7 @@ final class EssentialFeedCacheIntegrationTests: XCTestCase {
         
     }
     
+    // MARK: - LocalFeedImageDataLoader Tests
     func test_loadImageData_deliversSavedDataOnASeparateInstance() {
         let imageLoaderToPerformSave = makeImageLoader()
         let imageLoaderToPerformLoad = makeImageLoader()
