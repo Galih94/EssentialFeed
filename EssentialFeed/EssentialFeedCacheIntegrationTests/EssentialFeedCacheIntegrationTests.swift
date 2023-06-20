@@ -57,7 +57,6 @@ final class EssentialFeedCacheIntegrationTests: XCTestCase {
         let image = uniqueImage()
         let dataToSave = anyData()
         let url = image.url
-        print("url is: \(url)")
         
         save([image], with: feedLoader)
         save(dataToSave, for: url, with: imageLoaderToPerformSave)

@@ -6,12 +6,12 @@
 //
 
 extension CoreDataFeedStore: FeedImageDataStore {
-    public func insert(_ data: Data, for url: URL, completion: @escaping (InsertionResult) -> Void) {
+    public func insert(_ data: Data, for url: URL, completion: @escaping (FeedImageDataStore.InsertionResult) -> Void) {
         perform { context in
             completion( Result {
-                _ = try ManagedFeedImage.first(with: url, in: context)
+                try ManagedFeedImage.first(with: url, in: context)
                     .map { $0.data = data }
-                    .map { context.save }
+                    .map ( context.save )
             })
         }
     }
