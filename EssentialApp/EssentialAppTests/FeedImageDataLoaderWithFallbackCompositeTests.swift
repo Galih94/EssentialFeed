@@ -96,35 +96,20 @@ final class FeedImageDataLoaderWithFallbackCompositeTests: XCTestCase {
         let primaryData = anyData()
         let (sut, primaryLoader, _) = makeSUT()
         
-        let exp = expectation(description: "Wait for loadImageData completion")
-        _ = sut.loadImageData(from: anyURL()) { receivedResult in
-            switch receivedResult {
-            case let .success(receivedData):
-                XCTAssertEqual(receivedData, primaryData)
-            default: XCTFail("Expected \(primaryData) got \(receivedResult) instead")
-            }
-            exp.fulfill()
+        expect(sut, toCompleteWith: .success(primaryData)) {
+            primaryLoader.complete(with: primaryData)
         }
-        primaryLoader.complete(with: primaryData)
-        wait(for: [exp], timeout: 1.0)
     }
     
     func test_loadImageData_deliversFallbackDataOnFallbackLoaderSuccess() {
         let fallbackData = anyData()
+        let error = anyNSError()
         let (sut, primaryLoader, fallbackLoader) = makeSUT()
         
-        let exp = expectation(description: "Wait for loadImageData completion")
-        _ = sut.loadImageData(from: anyURL()) { receivedResult in
-            switch receivedResult {
-            case let .success(receivedData):
-                XCTAssertEqual(receivedData, fallbackData)
-            default: XCTFail("Expected \(fallbackData) got \(receivedResult) instead")
-            }
-            exp.fulfill()
+        expect(sut, toCompleteWith: .success(fallbackData)) {
+            primaryLoader.complete(with: error)
+            fallbackLoader.complete(with: fallbackData)
         }
-        primaryLoader.complete(with: anyNSError())
-        fallbackLoader.complete(with: fallbackData)
-        wait(for: [exp], timeout: 1.0)
     }
     
     // MARK: Helpers
@@ -136,6 +121,22 @@ final class FeedImageDataLoaderWithFallbackCompositeTests: XCTestCase {
         trackForMemoryLeaks(primaryLoader, file: file, line: line)
         trackForMemoryLeaks(fallbackLoader, file: file, line: line)
         return (sut, primaryLoader, fallbackLoader)
+    }
+    
+    private func expect(_ sut: FeedImageDataLoaderWithFallbackComposite, toCompleteWith expectedResult: FeedImageDataLoader.Result, when action: @escaping () -> Void, file: StaticString = #filePath, line: UInt = #line) {
+        
+        let exp = expectation(description: "Wait for loadImageData completion")
+        _ = sut.loadImageData(from: anyURL()) { receivedResult in
+            switch (receivedResult, expectedResult) {
+            case let ( .success(receivedData), .success(expectedData)):
+                XCTAssertEqual(receivedData, expectedData, file: file, line: line)
+            case (.failure, .failure): break
+            default: XCTFail("Expected \(expectedResult) got \(receivedResult) instead", file: file, line: line)
+            }
+            exp.fulfill()
+        }
+        action()
+        wait(for: [exp], timeout: 1.0)
     }
     
     private func trackForMemoryLeaks(_ instance: AnyObject, file: StaticString = #filePath, line: UInt = #line) {
