@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2A0511D52A42A6D300AF4682 /* EssentialFeed.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A0511D32A42A6D300AF4682 /* EssentialFeed.framework */; };
+		2A0511D62A42A6D300AF4682 /* EssentialFeed.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2A0511D32A42A6D300AF4682 /* EssentialFeed.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2A0511D72A42A6D300AF4682 /* EssentialFeediOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A0511D42A42A6D300AF4682 /* EssentialFeediOS.framework */; };
+		2A0511D82A42A6D300AF4682 /* EssentialFeediOS.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2A0511D42A42A6D300AF4682 /* EssentialFeediOS.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2A77AAD82A41BF1500985F69 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A77AAD72A41BF1500985F69 /* AppDelegate.swift */; };
 		2A77AADA2A41BF1500985F69 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A77AAD92A41BF1500985F69 /* SceneDelegate.swift */; };
 		2A77AADC2A41BF1500985F69 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A77AADB2A41BF1500985F69 /* ViewController.swift */; };
@@ -35,7 +39,24 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		2A0511D92A42A6D300AF4682 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				2A0511D62A42A6D300AF4682 /* EssentialFeed.framework in Embed Frameworks */,
+				2A0511D82A42A6D300AF4682 /* EssentialFeediOS.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		2A0511D32A42A6D300AF4682 /* EssentialFeed.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = EssentialFeed.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2A0511D42A42A6D300AF4682 /* EssentialFeediOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = EssentialFeediOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2A77AAD42A41BF1500985F69 /* EssentialApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EssentialApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2A77AAD72A41BF1500985F69 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2A77AAD92A41BF1500985F69 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -56,6 +77,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2A0511D52A42A6D300AF4682 /* EssentialFeed.framework in Frameworks */,
+				2A0511D72A42A6D300AF4682 /* EssentialFeediOS.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -76,6 +99,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2A0511D22A42A6D300AF4682 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				2A0511D32A42A6D300AF4682 /* EssentialFeed.framework */,
+				2A0511D42A42A6D300AF4682 /* EssentialFeediOS.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		2A77AACB2A41BF1500985F69 = {
 			isa = PBXGroup;
 			children = (
@@ -83,6 +115,7 @@
 				2A77AAED2A41BF1700985F69 /* EssentialAppTests */,
 				2A77AAF72A41BF1700985F69 /* EssentialAppUITests */,
 				2A77AAD52A41BF1500985F69 /* Products */,
+				2A0511D22A42A6D300AF4682 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -137,6 +170,7 @@
 				2A77AAD02A41BF1500985F69 /* Sources */,
 				2A77AAD12A41BF1500985F69 /* Frameworks */,
 				2A77AAD22A41BF1500985F69 /* Resources */,
+				2A0511D92A42A6D300AF4682 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
