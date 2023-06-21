@@ -42,7 +42,7 @@ final class FeedImageDataLoaderWithFallbackCompositeTests: XCTestCase {
     }
     
     func test_loadImageData_loadsFromPrimaryLoaderFirst() {
-        let url = URL(string: "http://a-url.com")!
+        let url = anyURL()
         let primaryLoader = LoaderSpy()
         let fallbackLoader = LoaderSpy()
         let sut = FeedImageDataLoaderWithFallbackComposite(primaryLoader: primaryLoader, fallbackLoader: fallbackLoader)
@@ -54,6 +54,10 @@ final class FeedImageDataLoaderWithFallbackCompositeTests: XCTestCase {
     }
     
     // MARK: Helpers
+    
+    private func anyURL() -> URL {
+        return URL(string: "http://a-url.com")!
+    }
     
     private class LoaderSpy: FeedImageDataLoader {
         private var message = [(url: URL, completion: (FeedImageDataLoader.Result) -> Void)]()
