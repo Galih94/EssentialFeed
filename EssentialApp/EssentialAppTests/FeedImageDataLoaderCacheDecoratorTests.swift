@@ -23,7 +23,7 @@ final class FeedImageDataLoaderCacheDecorator: FeedImageDataLoader {
     
 }
 
-final class FeedImageDataLoaderCacheDecoratorTests: XCTestCase {
+final class FeedImageDataLoaderCacheDecoratorTests: XCTestCase, FeedImageDataLoaderTestCase {
     func test_init_doesNotLoadImageData() {
         let ( _, loader) = makeSUT()
         
@@ -74,20 +74,5 @@ final class FeedImageDataLoaderCacheDecoratorTests: XCTestCase {
         trackForMemoryLeaks(sut, file: file, line: line)
         trackForMemoryLeaks(loader, file: file, line: line)
         return (sut, loader)
-    }
-    
-    private func expect(_ sut: FeedImageDataLoaderCacheDecorator, toCompleteWith expectedResult: FeedImageDataLoader.Result, when action: () -> Void, file: StaticString = #file, line: UInt = #line ) {
-        let exp = expectation(description: "Waiting for completion")
-        _ = sut.loadImageData(from: anyURL(), completion: { receivedResult in
-            switch (receivedResult, expectedResult) {
-            case let (.success(receivedData), .success(expectedData)):
-                XCTAssertEqual(receivedData, expectedData)
-            case (.failure, .failure): break
-            default: XCTFail("Expected \(expectedResult) got \(receivedResult) instead")
-            }
-            exp.fulfill()
-        })
-        action()
-        wait(for: [exp], timeout: 1.0)
     }
 }
