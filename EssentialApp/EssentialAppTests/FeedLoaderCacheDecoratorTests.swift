@@ -24,12 +24,8 @@ final class FeedLoaderCacheDecorator: FeedLoader {
     
     func load(completion: @escaping (FeedLoader.Result) -> Void) {
         decoratee.load { [weak self] result in
-            switch result {
-            case let .success(feed):
-                self?.cache.save(feed, completion: { _ in })
-                completion(result)
-            default: completion(result)
-            }
+            self?.cache.save( (try? result.get()) ?? [] , completion: { _ in })
+            completion(result)
         }
     }
 }
