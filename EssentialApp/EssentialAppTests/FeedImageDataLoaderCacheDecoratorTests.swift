@@ -25,15 +25,13 @@ final class FeedImageDataLoaderCacheDecorator: FeedImageDataLoader {
 
 final class FeedImageDataLoaderCacheDecoratorTests: XCTestCase {
     func test_init_doesNotLoadImageData() {
-        let loader = LoaderSpy()
-        let sut = FeedImageDataLoaderCacheDecorator(decoratee: loader)
+        let ( _, loader) = makeSUT()
         
         XCTAssertTrue(loader.messages.isEmpty, "Expected not send messages on init")
     }
     
     func test_loadImageData_deliversDataOnLoaderSuccess() {
-        let loader = LoaderSpy()
-        let sut = FeedImageDataLoaderCacheDecorator(decoratee: loader)
+        let ( sut, loader) = makeSUT()
         let data = anyData()
         
         let exp = expectation(description: "Waiting for completion")
@@ -50,6 +48,14 @@ final class FeedImageDataLoaderCacheDecoratorTests: XCTestCase {
     }
     
     // MARK: Helper
+    private func makeSUT(file: StaticString = #file, line: UInt = #line) -> (FeedImageDataLoaderCacheDecorator, LoaderSpy) {
+        let loader = LoaderSpy()
+        let sut = FeedImageDataLoaderCacheDecorator(decoratee: loader)
+        trackForMemoryLeaks(sut, file: file, line: line)
+        trackForMemoryLeaks(loader, file: file, line: line)
+        return (sut, loader)
+    }
+    
     private final class LoaderSpy: FeedImageDataLoader {
         private struct Task: EssentialFeed.FeedImageDataLoaderTask {
             func cancel() {}
