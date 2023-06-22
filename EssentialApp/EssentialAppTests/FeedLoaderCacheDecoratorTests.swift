@@ -23,7 +23,7 @@ final class FeedLoaderCacheDecorator: FeedLoader {
 final class FeedLoaderCacheDecoratorTests: XCTestCase {
     func test_load_deliversFeedOnLoaderSuccess() {
         let feed = uniqueFeed()
-        let decoratee = LoaderStub(result: .success(feed))
+        let decoratee = FeedLoaderStub(result: .success(feed))
         let sut = FeedLoaderCacheDecorator(decoratee: decoratee)
 
         expect(sut, toCompleteWith: .success(feed))
@@ -31,23 +31,13 @@ final class FeedLoaderCacheDecoratorTests: XCTestCase {
     
     func test_load_deliversFeedOnLoaderFailure() {
         let error = anyNSError()
-        let decoratee = LoaderStub(result: .failure(error))
+        let decoratee = FeedLoaderStub(result: .failure(error))
         let sut = FeedLoaderCacheDecorator(decoratee: decoratee)
 
         expect(sut, toCompleteWith: .failure(error))
     }
     
     // MARK: Helper
-    private final class LoaderStub: FeedLoader {
-        private let result: FeedLoader.Result
-        init(result: FeedLoader.Result) {
-            self.result = result
-        }
-        func load(completion: @escaping (FeedLoader.Result) -> Void) {
-            completion(result)
-        }
-    }
-    
     private func expect(_ sut: FeedLoaderCacheDecorator, toCompleteWith expectedResult: FeedLoader.Result, file: StaticString = #filePath, line: UInt = #line) {
         let exp = expectation(description: "Wait for completion")
         sut.load { receivedResult in
