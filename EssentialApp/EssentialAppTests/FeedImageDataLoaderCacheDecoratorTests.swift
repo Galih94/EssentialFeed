@@ -34,32 +34,17 @@ final class FeedImageDataLoaderCacheDecoratorTests: XCTestCase {
         let ( sut, loader) = makeSUT()
         let data = anyData()
         
-        let exp = expectation(description: "Waiting for completion")
-        _ = sut.loadImageData(from: anyURL(), completion: { receivedResult in
-            switch receivedResult {
-            case let .success(receivedData):
-                XCTAssertEqual(receivedData, data)
-            default: XCTFail("Expected success got \(receivedResult) instead")
-            }
-            exp.fulfill()
-        })
-        loader.complete(with: data)
-        wait(for: [exp], timeout: 1.0)
+        expect(sut, toCompleteWith: .success(data)) {
+            loader.complete(with: data)
+        }
     }
     
     func test_loadImageData_deliversErrorOnLoadDataFailure() {
         let ( sut, loader) = makeSUT()
         
-        let exp = expectation(description: "Waiting for completion")
-        _ = sut.loadImageData(from: anyURL(), completion: { receivedResult in
-            switch receivedResult {
-            case .failure: break
-            default: XCTFail("Expected failure got \(receivedResult) instead")
-            }
-            exp.fulfill()
-        })
-        loader.complete(with: anyNSError())
-        wait(for: [exp], timeout: 1.0)
+        expect(sut, toCompleteWith: .failure(anyNSError())) {
+            loader.complete(with: anyNSError())
+        }
     }
     
     // MARK: Helper
@@ -71,8 +56,23 @@ final class FeedImageDataLoaderCacheDecoratorTests: XCTestCase {
         return (sut, loader)
     }
     
+    private func expect(_ sut: FeedImageDataLoaderCacheDecorator, toCompleteWith expectedResult: FeedImageDataLoader.Result, when action: () -> Void, file: StaticString = #file, line: UInt = #line ) {
+        let exp = expectation(description: "Waiting for completion")
+        _ = sut.loadImageData(from: anyURL(), completion: { receivedResult in
+            switch (receivedResult, expectedResult) {
+            case let (.success(receivedData), .success(expectedData)):
+                XCTAssertEqual(receivedData, expectedData)
+            case (.failure, .failure): break
+            default: XCTFail("Expected \(expectedResult) got \(receivedResult) instead")
+            }
+            exp.fulfill()
+        })
+        action()
+        wait(for: [exp], timeout: 1.0)
+    }
+    
     private final class LoaderSpy: FeedImageDataLoader {
-        private struct Task: EssentialFeed.FeedImageDataLoaderTask {
+        private struct Task: FeedImageDataLoaderTask {
             func cancel() {}
         }
         private(set) var messages = [(url: URL, completion: (FeedImageDataLoader.Result) -> Void)]()
