@@ -26,6 +26,7 @@
 		2A77AAE12A41BF1700985F69 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2A77AAE02A41BF1700985F69 /* Assets.xcassets */; };
 		2A77AAE42A41BF1700985F69 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2A77AAE22A41BF1700985F69 /* LaunchScreen.storyboard */; };
 		2A77AAEF2A41BF1700985F69 /* EssentialAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A77AAEE2A41BF1700985F69 /* EssentialAppTests.swift */; };
+		2A8412FF2A440BBD009A7B1D /* FeedLoaderCacheDecoratorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A8412FE2A440BBD009A7B1D /* FeedLoaderCacheDecoratorTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -82,6 +83,7 @@
 		2A77AAF42A41BF1700985F69 /* EssentialAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EssentialAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2A77AAF82A41BF1700985F69 /* EssentialAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EssentialAppUITests.swift; sourceTree = "<group>"; };
 		2A77AAFA2A41BF1700985F69 /* EssentialAppUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EssentialAppUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		2A8412FE2A440BBD009A7B1D /* FeedLoaderCacheDecoratorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedLoaderCacheDecoratorTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -173,6 +175,7 @@
 				2A77AAEE2A41BF1700985F69 /* EssentialAppTests.swift */,
 				2A0511DA2A42CE8400AF4682 /* FeedLoaderWithFallbackCompositeTests.swift */,
 				2A0511E02A42EA1F00AF4682 /* FeedImageDataLoaderWithFallbackCompositeTests.swift */,
+				2A8412FE2A440BBD009A7B1D /* FeedLoaderCacheDecoratorTests.swift */,
 			);
 			path = EssentialAppTests;
 			sourceTree = "<group>";
@@ -335,6 +338,7 @@
 				2A0511E82A4311C100AF4682 /* SharedTestHelpers.swift in Sources */,
 				2A0511E12A42EA1F00AF4682 /* FeedImageDataLoaderWithFallbackCompositeTests.swift in Sources */,
 				2A77AAEF2A41BF1700985F69 /* EssentialAppTests.swift in Sources */,
+				2A8412FF2A440BBD009A7B1D /* FeedLoaderCacheDecoratorTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
