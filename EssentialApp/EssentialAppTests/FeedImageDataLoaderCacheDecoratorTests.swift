@@ -27,6 +27,8 @@ final class FeedImageDataLoaderCacheDecoratorTests: XCTestCase {
     func test_init_doesNotLoadImageData() {
         let loader = LoaderSpy()
         let sut = FeedImageDataLoaderCacheDecorator(decoratee: loader)
+        
+        XCTAssertTrue(loader.messages.isEmpty, "Expected not send messages on init")
     }
     
     // MARK: Helper
@@ -34,7 +36,7 @@ final class FeedImageDataLoaderCacheDecoratorTests: XCTestCase {
         private struct Task: EssentialFeed.FeedImageDataLoaderTask {
             func cancel() {}
         }
-        private var messages = [(url: URL, completion: (FeedImageDataLoader.Result) -> Void)]()
+        private(set) var messages = [(url: URL, completion: (FeedImageDataLoader.Result) -> Void)]()
         func loadImageData(from url: URL, completion: @escaping (FeedImageDataLoader.Result) -> Void) -> EssentialFeed.FeedImageDataLoaderTask {
             messages.append((url, completion))
             return Task()
