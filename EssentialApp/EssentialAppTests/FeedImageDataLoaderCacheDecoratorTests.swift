@@ -31,6 +31,24 @@ final class FeedImageDataLoaderCacheDecoratorTests: XCTestCase {
         XCTAssertTrue(loader.messages.isEmpty, "Expected not send messages on init")
     }
     
+    func test_loadImageData_deliversDataOnLoaderSuccess() {
+        let loader = LoaderSpy()
+        let sut = FeedImageDataLoaderCacheDecorator(decoratee: loader)
+        let data = anyData()
+        
+        let exp = expectation(description: "Waiting for completion")
+        _ = sut.loadImageData(from: anyURL(), completion: { receivedResult in
+            switch receivedResult {
+            case let .success(receivedData):
+                XCTAssertEqual(receivedData, data)
+            default: XCTFail("Expected success got \(receivedResult) instead")
+            }
+            exp.fulfill()
+        })
+        loader.complete(with: data)
+        wait(for: [exp], timeout: 1.0)
+    }
+    
     // MARK: Helper
     private final class LoaderSpy: FeedImageDataLoader {
         private struct Task: EssentialFeed.FeedImageDataLoaderTask {
@@ -42,6 +60,9 @@ final class FeedImageDataLoaderCacheDecoratorTests: XCTestCase {
             return Task()
         }
         
+        func complete(with data: Data, at index: Int = 0) {
+            messages[index].completion(.success(data))
+        }
         
     }
 }
