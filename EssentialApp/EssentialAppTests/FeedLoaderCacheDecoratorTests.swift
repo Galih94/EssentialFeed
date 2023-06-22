@@ -26,16 +26,7 @@ final class FeedLoaderCacheDecoratorTests: XCTestCase {
         let decoratee = LoaderStub(result: .success(feed))
         let sut = FeedLoaderCacheDecorator(decoratee: decoratee)
 
-        let exp = expectation(description: "Wait for completion")
-        sut.load { result in
-            switch result {
-            case let .success(feedResult):
-                XCTAssertEqual(feedResult, feed)
-            default: XCTFail("Expected success got \(result) instead")
-            }
-            exp.fulfill()
-        }
-        wait(for: [exp], timeout: 1.0)
+        expect(sut, toCompleteWith: .success(feed))
     }
     
     func test_load_deliversFeedOnLoaderFailure() {
@@ -43,15 +34,7 @@ final class FeedLoaderCacheDecoratorTests: XCTestCase {
         let decoratee = LoaderStub(result: .failure(error))
         let sut = FeedLoaderCacheDecorator(decoratee: decoratee)
 
-        let exp = expectation(description: "Wait for completion")
-        sut.load { result in
-            switch result {
-            case .failure: break
-            default: XCTFail("Expected failure got \(result) instead")
-            }
-            exp.fulfill()
-        }
-        wait(for: [exp], timeout: 1.0)
+        expect(sut, toCompleteWith: .failure(error))
     }
     
     // MARK: Helper
@@ -63,5 +46,19 @@ final class FeedLoaderCacheDecoratorTests: XCTestCase {
         func load(completion: @escaping (FeedLoader.Result) -> Void) {
             completion(result)
         }
+    }
+    
+    private func expect(_ sut: FeedLoaderCacheDecorator, toCompleteWith expectedResult: FeedLoader.Result, file: StaticString = #filePath, line: UInt = #line) {
+        let exp = expectation(description: "Wait for completion")
+        sut.load { receivedResult in
+            switch (receivedResult, expectedResult) {
+            case let (.success(receivedFeed), .success(expectedFeed)):
+                XCTAssertEqual(receivedFeed, expectedFeed, file: file, line: line)
+            case (.failure, .failure): break
+            default: XCTFail("Expected \(expectedResult) got \(receivedResult) instead", file: file, line: line)
+            }
+            exp.fulfill()
+        }
+        wait(for: [exp], timeout: 1.0)
     }
 }
