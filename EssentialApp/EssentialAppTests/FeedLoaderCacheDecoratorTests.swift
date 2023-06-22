@@ -38,6 +38,22 @@ final class FeedLoaderCacheDecoratorTests: XCTestCase {
         wait(for: [exp], timeout: 1.0)
     }
     
+    func test_load_deliversFeedOnLoaderFailure() {
+        let error = anyNSError()
+        let decoratee = LoaderStub(result: .failure(error))
+        let sut = FeedLoaderCacheDecorator(decoratee: decoratee)
+
+        let exp = expectation(description: "Wait for completion")
+        sut.load { result in
+            switch result {
+            case .failure: break
+            default: XCTFail("Expected failure got \(result) instead")
+            }
+            exp.fulfill()
+        }
+        wait(for: [exp], timeout: 1.0)
+    }
+    
     // MARK: Helper
     private final class LoaderStub: FeedLoader {
         private let result: FeedLoader.Result
