@@ -2,7 +2,29 @@
 This repositories contains learning material on implementing Feed Feature
 
 ---
-### Load Feed Image Data From Remote Use Case
+# BDD Specs
+## Story: Customer requests to see their image feed
+
+## Narative #1
+As an online customer
+I want the app to automatically load my latest image feed
+So i can always enjoy the newest images of my friends
+
+### Scenarios (Acceptance criteria)
+Given the customer has connectivity
+When the customer requests to see their feed
+Then the app should display the latest feed from remote
+And replace the cache with new feed
+
+## Narrative #2
+As an offline customer 
+Iwant the app to show latest saved version of my image feed
+So i can always enjoy images of my friends
+
+
+
+---
+## Load Feed Image Data From Remote Use Case
 
 ### Data:
 - URL
@@ -23,7 +45,7 @@ This repositories contains learning material on implementing Feed Feature
 1. System delivers connectivity error.
 
 ---
-### Load Feed From Remote Use Case
+## Load Feed From Remote Use Case
 
 #### Data:
 - URL
@@ -42,7 +64,7 @@ This repositories contains learning material on implementing Feed Feature
 1. System delivers connectivity error.
 
 ---
-### Load Feed Image Data From Cache Use Case
+## Load Feed Image Data From Cache Use Case
 
 ### Data:
 - URL
@@ -62,7 +84,7 @@ This repositories contains learning material on implementing Feed Feature
 1. System delivers not found error. 
 
 ---
-### Load Feed From Cache Use Case
+## Load Feed From Cache Use Case
 
 ### Primary course (happy path):
 1. Execute "Load Image Feed" command with above data
@@ -81,7 +103,7 @@ This repositories contains learning material on implementing Feed Feature
 1. System delivers no feed items.
 
 ---
-### Validate Feed Cache Use Case
+## Validate Feed Cache Use Case
 
 ### Primary course (happy path):
 1. Execute "Validate Cache" command with above data
@@ -95,7 +117,7 @@ This repositories contains learning material on implementing Feed Feature
 1. System deletes cache.
 
 ---
-### Cache Feed Use Case
+## Cache Feed Use Case
 
 #### Data:
 - Image Feed
@@ -114,7 +136,7 @@ This repositories contains learning material on implementing Feed Feature
 ### Saving error course (sad path):
 1. System delivers error.
 
-### Inbox Cache Specs:
+# Inbox Cache Specs:
 ✅ Retrieve
     ✅ Empty cache return nil / empty
     ✅ Empty cache twice return nil / empty (no side-effects)
@@ -132,7 +154,7 @@ This repositories contains learning material on implementing Feed Feature
     ✅ Error (if applicable, e.g., no delete permission)
 ✅ Side-effects must run serially to avoid race-conditions
 
-### Inbox UX goals for the Feed UI experience
+# Inbox UX goals for the Feed UI experience
 
 [✅] Load feed automatically when view is presented
 [✅] Allow customer to manually reload feed (pull to refresh)
