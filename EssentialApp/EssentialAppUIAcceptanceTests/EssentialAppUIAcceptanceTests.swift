@@ -30,9 +30,19 @@ final class EssentialAppUIAcceptanceTests: XCTestCase {
         offlineApp.launch()
         
         let feedCells = offlineApp.cells.matching(identifier: "feed-image-cell")
-        XCTAssertEqual(feedCells.count, 22) // should found 22
+        XCTAssertEqual(feedCells.count, 22) // should found 22 because found cache
         
         let firstImage = offlineApp.images.matching(identifier: "feed-image-view").firstMatch
-        XCTAssertTrue(firstImage.exists) // should exist
+        XCTAssertTrue(firstImage.exists) // should exist because found cache
+    }
+    
+    func test_onLaunch_displaysEmptyFeedWhenCustomerHasNoConnectivityAndNoCache() {
+        let app = XCUIApplication()
+        app.launchArguments = ["-reset", "-connectivity", "offline"]
+        app.launch()
+        
+        let feedCells = app.cells.matching(identifier: "feed-image-cell")
+        XCTAssertEqual(feedCells.count, 0) // should found 0 because no cache found
+
     }
 }

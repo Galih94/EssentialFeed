@@ -19,12 +19,19 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let _ = (scene as? UIWindowScene) else { return }
         
 
+        // learn UI test
         let remoteURL = URL(string: "https://static1.squarespace.com/static/5891c5b8d1758ec68ef5dbc2/t/5db4155a4fbade21d17ecd28/1572083034355/essential_app_feed.json")!
         let remoteClient = makeRemoteClient()
         let remoteFeedLoader = RemoteFeedLoader(url: remoteURL, client: remoteClient)
         let remoteImageLoader = RemoteFeedImageDataLoader(client: remoteClient)
         
-        let localStoreURL = NSPersistentContainer.defaultDirectoryURL.appending(path: "feed-store.sqlite")
+        let localStoreURL = NSPersistentContainer
+            .defaultDirectoryURL
+            .appending(path: "feed-store.sqlite")
+        
+        if CommandLine.arguments.contains("-reset") {
+            try? FileManager.default.removeItem(at: localStoreURL)
+        }
         let localStore = try! CoreDataFeedStore(storeURL: localStoreURL)
         let localStoreFeedLoader = LocalFeedLoader(store: localStore, currentDate: Date.init)
         let localImageLoader = LocalFeedImageDataLoader(store: localStore)
@@ -41,6 +48,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                     decoratee: remoteImageLoader,
                     cache: localImageLoader)))
         
+        // learn composite
 //        let remoteURL = URL(string: "https://ile-api.essentialdeveloper.com/essential-feed/v1/feed")!
 //        let remoteClient = URLSessionHTTPClient(session: URLSession(configuration: .ephemeral))
 //        let remoteFeedLoader = RemoteFeedLoader(url: remoteURL, client: remoteClient)
