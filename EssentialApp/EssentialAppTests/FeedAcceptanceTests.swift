@@ -25,8 +25,8 @@ final class FeedAcceptanceTests: XCTestCase {
         let feed = nav?.topViewController as! FeedViewController
         
         XCTAssertEqual(feed.numberOfRenderedFeedImageViews(), 2)
-        XCTAssertEqual(feed.simulateFeedImageViewVisible(at: 0)?.renderedImage, makeImageData())
-        XCTAssertEqual(feed.simulateFeedImageViewVisible(at: 1)?.renderedImage, makeImageData())
+        XCTAssertEqual(feed.renderedFeedImageData(at: 0), makeImageData())
+        XCTAssertEqual(feed.renderedFeedImageData(at: 1), makeImageData())
     }
     
     func test_onLaunch_displaysCachedRemoteFeedWhenCustomerHasNoConnectivity() {

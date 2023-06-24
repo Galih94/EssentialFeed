@@ -51,6 +51,10 @@ extension FeedViewController {
         ds?.tableView(tableView, prefetchRowsAt: [index])
     }
     
+    func renderedFeedImageData(at index: Int)-> Data? {
+        return simulateFeedImageViewVisible(at: index)?.renderedImage
+    }
+    
     @discardableResult
     func simulateFeedImageViewVisible(at index: Int) -> FeedImageCell? {
         return feedImageView(at: index) as? FeedImageCell
