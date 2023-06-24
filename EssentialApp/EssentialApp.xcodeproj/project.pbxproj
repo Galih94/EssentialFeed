@@ -51,6 +51,7 @@
 		2AFF43B82A46CDA100834912 /* FeedUIIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AFF43B72A46CDA100834912 /* FeedUIIntegrationTests.swift */; };
 		2AFF43BA2A46D07E00834912 /* FeedAcceptanceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AFF43B92A46D07E00834912 /* FeedAcceptanceTests.swift */; };
 		2AFF43BC2A46F36200834912 /* HTTPClientStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AFF43BB2A46F36200834912 /* HTTPClientStub.swift */; };
+		2AFF43BE2A46F3DE00834912 /* InMemoryStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AFF43BD2A46F3DE00834912 /* InMemoryStore.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -124,6 +125,7 @@
 		2AFF43B72A46CDA100834912 /* FeedUIIntegrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedUIIntegrationTests.swift; sourceTree = "<group>"; };
 		2AFF43B92A46D07E00834912 /* FeedAcceptanceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedAcceptanceTests.swift; sourceTree = "<group>"; };
 		2AFF43BB2A46F36200834912 /* HTTPClientStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPClientStub.swift; sourceTree = "<group>"; };
+		2AFF43BD2A46F3DE00834912 /* InMemoryStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InMemoryStore.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -174,6 +176,7 @@
 				2A8413002A441D53009A7B1D /* FeedLoaderStub.swift */,
 				2A84130A2A444749009A7B1D /* FeedImageDataLoaderSpy.swift */,
 				2AFF43BB2A46F36200834912 /* HTTPClientStub.swift */,
+				2AFF43BD2A46F3DE00834912 /* InMemoryStore.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -361,6 +364,7 @@
 			files = (
 				2A0511DB2A42CE8400AF4682 /* FeedLoaderWithFallbackCompositeTests.swift in Sources */,
 				2A8413012A441D53009A7B1D /* FeedLoaderStub.swift in Sources */,
+				2AFF43BE2A46F3DE00834912 /* InMemoryStore.swift in Sources */,
 				2A0511E62A43115500AF4682 /* XCTestCase+MemoryLeakTracking.swift in Sources */,
 				2AFF43B42A46CD7200834912 /* UIImage+TestHelpers.swift in Sources */,
 				2AFF43AE2A46CD7200834912 /* UIControl+TestHelpers.swift in Sources */,

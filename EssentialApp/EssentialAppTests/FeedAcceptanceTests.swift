@@ -74,50 +74,6 @@ final class FeedAcceptanceTests: XCTestCase {
         return feed
     }
     
-    private class InMemoryStore: FeedStore, FeedImageDataStore {
-        private(set) var feedCache: CachedFeed?
-        private var feedImageDataCache: [URL: Data] = [:]
-        
-        private init(feedCache: CachedFeed? = nil) {
-            self.feedCache = feedCache
-        }
-        
-        func deleteCachedFeed(completion: @escaping FeedStore.DeletionCompletion) {
-            feedCache = nil
-            completion(.success(()))
-        }
-        
-        func insert(_ feed: [LocalFeedImage], timeStamp: Date, completion: @escaping FeedStore.InsertionCompletion) {
-            feedCache = CachedFeed(feed: feed, timeStamp: timeStamp)
-            completion(.success(()))
-        }
-        
-        func retrieve(completion: @escaping FeedStore.RetrievalCompletion) {
-            completion(.success(feedCache))
-        }
-        
-        func insert(_ data: Data, for url: URL, completion: @escaping (FeedImageDataStore.InsertionResult) -> Void) {
-            feedImageDataCache[url] = data
-            completion(.success(()))
-        }
-        
-        func retrieve(dataForURL url: URL, completion: @escaping (FeedImageDataStore.RetrievalResult) -> Void) {
-            completion(.success(feedImageDataCache[url]))
-        }
-        
-        static var empty: InMemoryStore {
-            return InMemoryStore()
-        }
-        
-        static var withExpiredFeedCache: InMemoryStore {
-            return InMemoryStore(feedCache: CachedFeed(feed: [], timeStamp: Date.distantPast))
-        }
-        
-        static var withNonExpiredFeedCache: InMemoryStore {
-            return InMemoryStore(feedCache: CachedFeed(feed: [], timeStamp: Date()))
-        }
-    }
-    
     private func response(for url: URL) -> (Data, HTTPURLResponse) {
         let response = HTTPURLResponse(url: url, statusCode: 200, httpVersion: nil, headerFields: nil)!
         return (makeData(for: url), response)
