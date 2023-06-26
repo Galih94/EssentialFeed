@@ -11,18 +11,25 @@ import EssentialFeediOS
 final class FeedSnapshotTests: XCTestCase {
 
     func test_emptyFeed() {
+        let sut = makeSUT()
+        sut.display([])
+        
+        let snapshot = sut.snapshot()
+        record(snapshot: snapshot, named: "EMPTY_FEED")
+    }
+    
+    // MARK: Helpers
+    private func makeSUT(file: StaticString = #file, line: UInt = #line) -> FeedViewController {
         let bundle = Bundle(for: FeedViewController.self)
         let storyboard = UIStoryboard(name: "Feed", bundle: bundle)
         let controlller = storyboard.instantiateInitialViewController() as! FeedViewController
         controlller.loadViewIfNeeded()
         
-        controlller.display([])
+        trackForMemoryLeaks(controlller, file: file, line: line)
         
-        let snapshot = controlller.snapshot()
-        record(snapshot: snapshot, named: "EMPTY_FEED")
+        return controlller
     }
     
-    // MARK: Helpers
     private func record(snapshot: UIImage, named name: String, file: StaticString = #file, line: UInt = #line) {
         guard let snapshotData = snapshot.pngData() else {
             XCTFail("Failed to generate PNG data representataion from snapshot", file: file, line: line)
