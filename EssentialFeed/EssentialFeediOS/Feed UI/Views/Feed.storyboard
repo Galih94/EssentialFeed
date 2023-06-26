@@ -19,8 +19,8 @@
                             <rect key="frame" x="0.0" y="0.0" width="393" height="34"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vFo-lM-dd1">
-                                    <rect key="frame" x="175" y="-3" width="41.333333333333343" height="38.333333333333336"/>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vFo-lM-dd1">
+                                    <rect key="frame" x="0.0" y="-3" width="393" height="38.333333333333336"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <nil key="highlightedColor"/>
@@ -38,10 +38,10 @@
                             <constraints>
                                 <constraint firstAttribute="trailing" secondItem="nEF-kb-8j0" secondAttribute="trailing" constant="184" id="A8r-MD-n4D"/>
                                 <constraint firstAttribute="bottom" secondItem="vFo-lM-dd1" secondAttribute="bottom" constant="-1.3333333333333321" id="Dup-La-2oc"/>
-                                <constraint firstItem="vFo-lM-dd1" firstAttribute="leading" secondItem="HBU-ok-U0F" secondAttribute="leading" constant="175" id="ENw-Yv-gCK"/>
+                                <constraint firstItem="vFo-lM-dd1" firstAttribute="leading" secondItem="HBU-ok-U0F" secondAttribute="leading" id="ENw-Yv-gCK"/>
                                 <constraint firstItem="nEF-kb-8j0" firstAttribute="leading" secondItem="HBU-ok-U0F" secondAttribute="leading" constant="185" id="Hj6-3F-5Uj"/>
                                 <constraint firstAttribute="bottom" secondItem="nEF-kb-8j0" secondAttribute="bottom" constant="10" id="LkG-zb-xD3"/>
-                                <constraint firstAttribute="trailing" secondItem="vFo-lM-dd1" secondAttribute="trailing" constant="176.66666666666666" id="SOt-iU-mhp"/>
+                                <constraint firstAttribute="trailing" secondItem="vFo-lM-dd1" secondAttribute="trailing" id="SOt-iU-mhp"/>
                                 <constraint firstItem="nEF-kb-8j0" firstAttribute="top" secondItem="HBU-ok-U0F" secondAttribute="top" constant="10" id="bHC-fF-2QN"/>
                                 <constraint firstItem="vFo-lM-dd1" firstAttribute="top" secondItem="HBU-ok-U0F" secondAttribute="top" constant="-3" id="gRl-hA-Krw"/>
                             </constraints>
