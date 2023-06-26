@@ -12,7 +12,7 @@ final class FeedSnapshotTests: XCTestCase {
 
     func test_emptyFeed() {
         let sut = makeSUT()
-        sut.display([])
+        sut.display(emptyFeed())
         
         let snapshot = sut.snapshot()
         record(snapshot: snapshot, named: "EMPTY_FEED")
@@ -28,6 +28,10 @@ final class FeedSnapshotTests: XCTestCase {
         trackForMemoryLeaks(controlller, file: file, line: line)
         
         return controlller
+    }
+    
+    private func emptyFeed() -> [FeedImageCellController] {
+        return []
     }
     
     private func record(snapshot: UIImage, named name: String, file: StaticString = #file, line: UInt = #line) {
