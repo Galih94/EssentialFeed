@@ -21,7 +21,7 @@ final class SceneDelegateTests: XCTestCase {
         XCTAssertFalse(window.isHidden, "Expected window to be visible")
     }
     
-    func test_sceneWillConnectToSession_configureRootsViewController() {
+    func test_configureWindow_configureRootsViewController() {
         let sut = SceneDelegate()
         sut.window = UIWindow()
         
