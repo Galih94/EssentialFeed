@@ -13,6 +13,7 @@
 		2A0511D82A42A6D300AF4682 /* EssentialFeediOS.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2A0511D42A42A6D300AF4682 /* EssentialFeediOS.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2A0511E62A43115500AF4682 /* XCTestCase+MemoryLeakTracking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A0511E52A43115500AF4682 /* XCTestCase+MemoryLeakTracking.swift */; };
 		2A0511E82A4311C100AF4682 /* SharedTestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A0511E72A4311C100AF4682 /* SharedTestHelpers.swift */; };
+		2A2C44902A4E90CB00F43B7A /* CombineHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A2C448F2A4E90CB00F43B7A /* CombineHelpers.swift */; };
 		2A77AAD82A41BF1500985F69 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A77AAD72A41BF1500985F69 /* AppDelegate.swift */; };
 		2A77AADA2A41BF1500985F69 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A77AAD92A41BF1500985F69 /* SceneDelegate.swift */; };
 		2A77AADC2A41BF1500985F69 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A77AADB2A41BF1500985F69 /* ViewController.swift */; };
@@ -70,6 +71,7 @@
 		2A0511D42A42A6D300AF4682 /* EssentialFeediOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = EssentialFeediOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2A0511E52A43115500AF4682 /* XCTestCase+MemoryLeakTracking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+MemoryLeakTracking.swift"; sourceTree = "<group>"; };
 		2A0511E72A4311C100AF4682 /* SharedTestHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedTestHelpers.swift; sourceTree = "<group>"; };
+		2A2C448F2A4E90CB00F43B7A /* CombineHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CombineHelpers.swift; sourceTree = "<group>"; };
 		2A77AAD42A41BF1500985F69 /* EssentialApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EssentialApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2A77AAD72A41BF1500985F69 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2A77AAD92A41BF1500985F69 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -173,6 +175,7 @@
 			children = (
 				2A77AAD72A41BF1500985F69 /* AppDelegate.swift */,
 				2A77AAD92A41BF1500985F69 /* SceneDelegate.swift */,
+				2A2C448F2A4E90CB00F43B7A /* CombineHelpers.swift */,
 				2AFF439B2A46CCFD00834912 /* FeedUIComposer.swift */,
 				2AFF439C2A46CCFD00834912 /* WeakRefVirtualProxy.swift */,
 				2AFF43992A46CCFD00834912 /* FeedImageDataLoaderPresentationAdapter.swift */,
@@ -301,6 +304,7 @@
 			files = (
 				2A77AADC2A41BF1500985F69 /* ViewController.swift in Sources */,
 				2AFF43A32A46CCFD00834912 /* FeedImageDataLoaderPresentationAdapter.swift in Sources */,
+				2A2C44902A4E90CB00F43B7A /* CombineHelpers.swift in Sources */,
 				2A77AAD82A41BF1500985F69 /* AppDelegate.swift in Sources */,
 				2AFF43A02A46CCFD00834912 /* WeakRefVirtualProxy.swift in Sources */,
 				2AFF439F2A46CCFD00834912 /* FeedLoaderPresentationAdapter.swift in Sources */,
