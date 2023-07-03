@@ -167,3 +167,67 @@ So i can always enjoy images of my friends
     [✅] Option to retry on image download error
     [✅] Preload when image view is near visible
 ---
+
+# Essential Feed App – Image Comments Feature
+**Displaying image comments when user taps on an image in the feed.**
+*Important: There's no need to cache comments.*
+---
+
+## Goals
+1. Display a list of comments when the user taps on an image in the feed.
+2. Loading the commnets can fail, so you must handle the UI states accordingly.
+    - Show a loading spinner while loading the comments.
+    - If it fails to load: Show an error message.
+    - If it loads successfully: SHow all loaded comments in the order they were returned by the remote API.
+3. The loading should start automatically when the user navigates to the screen.
+    - The user should also be able to reload the comments manually (Pull-to-refresh).
+4. At all times, the user whould have a back button to return to the feed screen.
+    - Cancle any running comments API requests when the user navigates back.
+5. The comments screen layout should match the UI specs.
+    - Present the comment date using relative date formatting, e.g., "1 day ago."
+6. The comments screen title should be localized in all languages supported in the project.
+7. The Comments screen shpuld support Light and Dark Mode.
+8. Write tests to validate your implementation, including unit, integration, and snapshot tests (aim to write the test first!).
+---
+
+## API Specs
+### Payliad  contract
+``` 
+GET /image/{image-id}/comments
+2xx RESPONSE
+ 
+{
+    "items": [
+        {
+            "id": "a UUID",
+            "message": "a message",
+            "created_at": "2020-5-20T11:24:59+0000",
+            "author": { 
+                "username": "a username"
+            }
+        },
+        {
+            "id": "a UUID",
+            "message": "a message",
+            "created_at": "2020-5-20T11:24:59+0000",
+            "author": { 
+                "username": "a username"
+            }
+        },
+        ...
+    ]
+}
+ 
+```
+### Feed Image Comment
+| Property      | Type                    |
+|---------------|-------------------------|
+| `id`          | `UUID`                  |
+| `message`     | `String`                |
+| `created_at`  | `Date` (ISO8601 STRING) |
+| `author`      | `CommentAuthorObject`   |
+
+### Feed Image Comment Author
+| Property      | Type                    |
+|---------------|-------------------------|
+| `username`    | `String`                |
