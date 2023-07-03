@@ -94,7 +94,7 @@ final class LoadImageCommentFromRemoteUseCaseTests: XCTestCase {
         let items = [item1.model, item2.model]
         
         
-        let samples = [200, 201, 250, 280, 299]
+        let samples = [200, 201,  250, 280, 299]
         
         samples.enumerated().forEach { index, code in
             expect(sut, toCompleteWithResult: .success(items)) {
