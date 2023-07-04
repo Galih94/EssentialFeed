@@ -121,12 +121,4 @@ final class LoadImageCommentFromRemoteUseCaseTests: XCTestCase {
         ]
         return (item, json)
     }
-    
-    private func makeItemsJSON(items: [[String: Any]]) -> Data {
-        let itemsJSON = [
-            "items": items
-        ]
-        
-        return try! JSONSerialization.data(withJSONObject: itemsJSON)
-    }
 }
