@@ -5,9 +5,7 @@
 //  Created by Galih Samudra on 03/07/23.
 //
 
-import Foundation
-
-final class ImageCommentsMapper {
+public final class ImageCommentsMapper {
     
     private struct Root: Decodable {
         private let items: [Item]
@@ -30,7 +28,7 @@ final class ImageCommentsMapper {
         }
     }
     
-    static func map(_ data: Data, from response: HTTPURLResponse) throws -> [ImageComment] {
+    public static func map(_ data: Data, from response: HTTPURLResponse) throws -> [ImageComment] {
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .iso8601
         guard let root = try? decoder.decode(Root.self, from: data),
