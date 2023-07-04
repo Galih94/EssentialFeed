@@ -43,17 +43,19 @@ final class EssentialFeedAPIEndToEndTests: XCTestCase {
     
     // MARK: - Helpers
     private func getFeedResult(file: StaticString = #filePath, line: UInt = #line) -> FeedLoader.Result? {
-        let client = URLSessionHTTPClient(session: URLSession(configuration: .ephemeral)) // set configuration ephemeral so it doesn't store cache on url session
-        // default folder cache is file:///Users/your-mac-username-here/Library/Caches/com.apple.dt.xctest.tool
-        let sut = RemoteLoader(url: feedTestServerURL, client: client, mapper: FeedItemsMapper.map)
-        trackForMemoryLeaks(client, file: file, line: line)
-        trackForMemoryLeaks(sut, file: file, line: line)
+        let client = ephemeralClient()
         var receivedResult: FeedLoader.Result?
         let exp = expectation(description: "Waiting for load")
-        sut.load { result in
-            receivedResult = result
+        client.get(from: feedTestServerURL, completion: { result in
+            receivedResult = result.flatMap({ data, response in
+                do {
+                    return .success(try FeedItemsMapper.map(data, from: response))
+                } catch {
+                    return .failure(error)
+                }
+            })
             exp.fulfill()
-        }
+        })
         wait(for: [exp], timeout: 20.0)
         return receivedResult
     }
@@ -76,6 +78,10 @@ final class EssentialFeedAPIEndToEndTests: XCTestCase {
         wait(for: [exp], timeout: 20.0)
         
         return receivedResult
+    }
+    
+    private func ephemeralClient() -> HTTPClient {
+        return URLSessionHTTPClient(session: URLSession(configuration: .ephemeral))
     }
     
     private var feedTestServerURL: URL {
