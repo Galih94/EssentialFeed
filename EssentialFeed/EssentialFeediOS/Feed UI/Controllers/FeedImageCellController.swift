@@ -13,22 +13,19 @@ public protocol FeedImageCellControllerDelegate {
     func didCancelImage()
 }
 
-public final class FeedImageCellController: FeedImageView {
+public final class FeedImageCellController {
     public typealias ResourceViewModel = UIImage
     private var cell: FeedImageCell?
     private let delegate: FeedImageCellControllerDelegate
-    private let viewModel: FeedImageViewModel<UIImage>
+    private let viewModel: FeedImageViewModel
     
-    public init(viewModel: FeedImageViewModel<UIImage>, delegate: FeedImageCellControllerDelegate) {
+    public init(viewModel: FeedImageViewModel, delegate: FeedImageCellControllerDelegate) {
         self.delegate = delegate
         self.viewModel = viewModel
     }
     
     func preload() {
         delegate.didRequestImage()
-    }
-    
-    public func display(_ model: FeedImageViewModel<UIImage>) {
     }
     
     func view(in tableView: UITableView) -> UITableViewCell {
