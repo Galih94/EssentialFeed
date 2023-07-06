@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import EssentialFeed
+import EssentialFeed 
 import EssentialFeediOS
 
 final class FeedViewAdapter: ResourceView {
