@@ -28,9 +28,14 @@ public final class FeedImageCellController: NSObject {
     private func releaseCellForReuse() {
         cell = nil
     }
+    
+    private func cancelLoad() {
+        releaseCellForReuse()
+        delegate.didCancelImage()
+    }
 }
 
-extension FeedImageCellController: CellController {
+extension FeedImageCellController: UITableViewDataSource {
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1
     }
@@ -49,22 +54,21 @@ extension FeedImageCellController: CellController {
         delegate.didRequestImage()
         return cell!
     }
-    
+}
+
+extension FeedImageCellController: UITableViewDelegate {
+    public func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        cancelLoad()
+    }
+}
+
+extension FeedImageCellController: UITableViewDataSourcePrefetching {
     public func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
         delegate.didRequestImage()
     }
     
-    public func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        cancelLoad()
-    }
-    
     public func tableView(_ tableView: UITableView, cancelPrefetchingForRowsAt indexPaths: [IndexPath]) {
         cancelLoad()
-    }
-    
-    private func cancelLoad() {
-        releaseCellForReuse()
-        delegate.didCancelImage()
     }
 }
 

@@ -15,7 +15,7 @@ public class ImageCommentCellController: NSObject {
     }
 }
 
-extension ImageCommentCellController: CellController {
+extension ImageCommentCellController: UITableViewDataSource {
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int { return 1 }
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -25,6 +25,4 @@ extension ImageCommentCellController: CellController {
         cell.messageLabel.text = model.messsage
         return cell
     }
-    
-    public func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {}
 }
