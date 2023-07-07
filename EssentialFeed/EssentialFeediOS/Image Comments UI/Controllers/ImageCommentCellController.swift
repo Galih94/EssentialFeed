@@ -23,9 +23,4 @@ extension ImageCommentCellController: CellController {
         cell.messageLabel.text = model.messsage
         return cell
     }
-    
-    public func preload() {}
-    
-    public func cancelLoad() {}
-    
 }

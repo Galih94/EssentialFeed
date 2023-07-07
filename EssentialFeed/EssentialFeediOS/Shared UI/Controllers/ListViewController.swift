@@ -14,6 +14,12 @@ public protocol CellController {
     func cancelLoad()
 }
 
+/// create default implementation of preload() and cancelLoad() so it can be not implemented
+public extension CellController {
+    func preload() {}
+    func cancelLoad() {}
+}
+
 public final class ListViewController: UITableViewController, UITableViewDataSourcePrefetching, ResourceLoadingView, ResourceErrorView {
     @IBOutlet private(set) public var errorView: ErrorView?
     public var onRefresh: (() -> Void)?
