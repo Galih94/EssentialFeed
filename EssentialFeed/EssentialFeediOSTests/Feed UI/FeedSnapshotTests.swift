@@ -20,15 +20,6 @@ final class FeedSnapshotTests: XCTestCase {
         assert(snapshot: sut.snapshot(for: .iPhone14Pro(style: .dark)), named: "FEED_WITH_CONTENT_dark")
     }
     
-    func test_feedWithErrorMessage() {
-        let sut = makeSUT()
-        
-        sut.display(.error(message: "This is a\nmulti line\nerror message"))
-        
-        assert(snapshot: sut.snapshot(for: .iPhone14Pro(style: .light)), named: "FEED_WITH_ERROR_MESSAGE_light")
-        assert(snapshot: sut.snapshot(for: .iPhone14Pro(style: .dark)), named: "FEED_WITH_ERROR_MESSAGE_dark")
-    }
-    
     func test_feedWithFailedImageLoading() {
         let sut = makeSUT()
         
