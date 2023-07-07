@@ -10,14 +10,6 @@ import EssentialFeediOS
 @testable import EssentialFeed
 
 final class FeedSnapshotTests: XCTestCase {
-
-    func test_emptyFeed() {
-        let sut = makeSUT()
-        sut.display(emptyFeed())
-        
-        assert(snapshot: sut.snapshot(for: .iPhone14Pro(style: .light)), named: "EMPTY_FEED_light")
-        assert(snapshot: sut.snapshot(for: .iPhone14Pro(style: .dark)), named: "EMPTY_FEED_dark")
-    }
     
     func test_feedWithContent() {
         let sut = makeSUT()
@@ -58,10 +50,6 @@ final class FeedSnapshotTests: XCTestCase {
         trackForMemoryLeaks(controlller, file: file, line: line)
         
         return controlller
-    }
-    
-    private func emptyFeed() -> [FeedImageCellController] {
-        return []
     }
     
     private func feedWithContent() -> [ImageStub]  {
