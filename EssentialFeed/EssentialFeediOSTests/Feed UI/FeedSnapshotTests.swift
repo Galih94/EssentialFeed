@@ -77,7 +77,7 @@ private extension ListViewController {
                 viewModel: stub.viewModel,
                 delegate: stub)
             stub.controller = cellController
-            return CellController(cellController, cellController, cellController)
+            return CellController(cellController)
         }
         display(cells)
     }
