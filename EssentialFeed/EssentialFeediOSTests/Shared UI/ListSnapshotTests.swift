@@ -26,6 +26,7 @@ final class ListSnapshotTests: XCTestCase {
         
         assert(snapshot: sut.snapshot(for: .iPhone14Pro(style: .light)), named: "LIST_WITH_ERROR_MESSAGE_light")
         assert(snapshot: sut.snapshot(for: .iPhone14Pro(style: .dark)), named: "LIST_WITH_ERROR_MESSAGE_dark")
+        assert(snapshot: sut.snapshot(for: .iPhone14Pro(style: .light, contentSize: .extraExtraExtraLarge)), named: "LIST_WITH_ERROR_MESSAGE_dark_extraExtraExtraLarge")
     }
 
     // MARK: Helpers
