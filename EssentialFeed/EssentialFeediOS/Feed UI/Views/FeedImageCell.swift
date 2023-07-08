@@ -2,7 +2,7 @@
 //  FeedImageCell.swift
 //  EssentialFeediOS
 //
-//  Created by Galih Samudra on 30/05/23.
+//  Created by  Galih Samudra on 30/05/23.
 //
 
 import UIKit

@@ -15,48 +15,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <view key="tableHeaderView" contentMode="scaleToFill" id="HBU-ok-U0F" customClass="ErrorView" customModule="EssentialFeediOS" customModuleProvider="target">
-                            <rect key="frame" x="0.0" y="0.0" width="393" height="34"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vFo-lM-dd1">
-                                    <rect key="frame" x="0.0" y="-3" width="393" height="38.333333333333336"/>
-                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    <nil key="highlightedColor"/>
-                                </label>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nEF-kb-8j0">
-                                    <rect key="frame" x="185" y="10" width="24" height="14"/>
-                                    <state key="normal" title="Button"/>
-                                    <buttonConfiguration key="configuration" style="plain"/>
-                                    <connections>
-                                        <action selector="hideMessageAnimated" destination="HBU-ok-U0F" eventType="touchUpInside" id="Rig-jR-DSF"/>
-                                    </connections>
-                                </button>
-                            </subviews>
-                            <color key="backgroundColor" red="0.99951404330000004" green="0.41759261489999999" blue="0.4154433012" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            <constraints>
-                                <constraint firstAttribute="trailing" secondItem="nEF-kb-8j0" secondAttribute="trailing" constant="184" id="A8r-MD-n4D"/>
-                                <constraint firstAttribute="bottom" secondItem="vFo-lM-dd1" secondAttribute="bottom" constant="-1.3333333333333321" id="Dup-La-2oc"/>
-                                <constraint firstItem="vFo-lM-dd1" firstAttribute="leading" secondItem="HBU-ok-U0F" secondAttribute="leading" id="ENw-Yv-gCK"/>
-                                <constraint firstItem="nEF-kb-8j0" firstAttribute="leading" secondItem="HBU-ok-U0F" secondAttribute="leading" constant="185" id="Hj6-3F-5Uj"/>
-                                <constraint firstAttribute="bottom" secondItem="nEF-kb-8j0" secondAttribute="bottom" constant="10" id="LkG-zb-xD3"/>
-                                <constraint firstAttribute="trailing" secondItem="vFo-lM-dd1" secondAttribute="trailing" id="SOt-iU-mhp"/>
-                                <constraint firstItem="nEF-kb-8j0" firstAttribute="top" secondItem="HBU-ok-U0F" secondAttribute="top" constant="10" id="bHC-fF-2QN"/>
-                                <constraint firstItem="vFo-lM-dd1" firstAttribute="top" secondItem="HBU-ok-U0F" secondAttribute="top" constant="-3" id="gRl-hA-Krw"/>
-                            </constraints>
-                            <connections>
-                                <outlet property="label" destination="vFo-lM-dd1" id="RFK-fG-c8E"/>
-                            </connections>
-                        </view>
                         <view key="tableFooterView" contentMode="scaleToFill" id="dnJ-l1-cCH">
-                            <rect key="frame" x="0.0" y="692" width="393" height="16"/>
+                            <rect key="frame" x="0.0" y="658" width="393" height="16"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         </view>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="ImageCommentCell" rowHeight="580" id="mbV-Og-J9l" customClass="ImageCommentCell" customModule="EssentialFeediOS" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="84" width="393" height="580"/>
+                                <rect key="frame" x="0.0" y="50" width="393" height="580"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="mbV-Og-J9l" id="bCF-Xx-dmW">
                                     <rect key="frame" x="0.0" y="0.0" width="393" height="580"/>
@@ -123,9 +89,6 @@
                             <action selector="refresh" destination="zhI-UB-fgY" eventType="valueChanged" id="um5-M6-LBX"/>
                         </connections>
                     </refreshControl>
-                    <connections>
-                        <outlet property="errorView" destination="HBU-ok-U0F" id="TGR-Y7-oiH"/>
-                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qYZ-rX-7SN" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
