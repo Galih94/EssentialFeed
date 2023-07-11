@@ -84,7 +84,7 @@ final class FeedAcceptanceTests: XCTestCase {
         switch lastPath {
         case "/image-1", "/image-2":
             return makeImageData()
-        case "/essential_app_feed.json":
+        case "/feed":
             return makeFeedData()
         default:
             return Data()
