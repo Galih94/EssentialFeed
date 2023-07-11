@@ -87,7 +87,7 @@ final class FeedAcceptanceTests: XCTestCase {
         case "/essential_app_feed.json":
             return makeFeedData()
         default:
-            return makeImageData()
+            return Data()
         }
     }
     
