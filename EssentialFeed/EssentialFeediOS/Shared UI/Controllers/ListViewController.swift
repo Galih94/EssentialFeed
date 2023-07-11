@@ -30,6 +30,7 @@ public final class ListViewController: UITableViewController, UITableViewDataSou
         tableView.sizeTableHeaderToFit()
     }
     
+    /// Display result of ResourceView after mapped into [CellController]
     public func display(_ cellControllers: [CellController]) {
         var snapshot = NSDiffableDataSourceSnapshot<Int, CellController>()
         snapshot.appendSections([0])
@@ -64,12 +65,12 @@ public final class ListViewController: UITableViewController, UITableViewDataSou
         }
     }
      
-    // MARK: -- FeedLoadingView
+    // MARK: -- ResourceLoadingView
     public func display(_ viewModel: ResourceLoadingViewModel) {
         refreshControl?.update(isRefreshing: viewModel.isLoading)
     }
     
-    // MARK: -- FeedErrorView
+    // MARK: -- ResourceErrorView
     public func display(_ viewModel: ResourceErrorViewModel) {
         errorView.message = viewModel.message
     }
