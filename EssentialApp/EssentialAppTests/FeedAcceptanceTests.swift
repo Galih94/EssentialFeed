@@ -54,6 +54,13 @@ final class FeedAcceptanceTests: XCTestCase {
         XCTAssertNotNil(store.feedCache, "Expected to keep non-expired cache")
     }
     
+    func test_onFeedImageSelection_displayComments() {
+        let comments = showCommentsForFirstImage()
+
+        XCTAssertEqual(comments.numberOfRenderedComments(), 1)
+        XCTAssertEqual(comments.commentMessage(at: 0), makeCommentMessage())
+    }
+    
     // MARK: Helpers
     private func enteringBackground(with store: FeedStore & FeedImageDataStore ) {
         let sut = SceneDelegate(httpClient: HTTPClientStub.offline, store: store)
@@ -74,6 +81,16 @@ final class FeedAcceptanceTests: XCTestCase {
         return feed
     }
     
+    private func showCommentsForFirstImage() -> ListViewController {
+        let feed = launch(httpClient: HTTPClientStub.online(response), store: InMemoryStore.empty)
+        
+        feed.simulateTapOnFeedImage(at: 0)
+        RunLoop.current.run(until: Date())
+        
+        let nav = feed.navigationController
+        return nav?.topViewController as! ListViewController
+    }
+    
     private func response(for url: URL) -> (Data, HTTPURLResponse) {
         let response = HTTPURLResponse(url: url, statusCode: 200, httpVersion: nil, headerFields: nil)!
         return (makeData(for: url), response)
@@ -86,6 +103,8 @@ final class FeedAcceptanceTests: XCTestCase {
             return makeImageData()
         case "/feed":
             return makeFeedData()
+        case "/comments":
+            return makeCommentsData()
         default:
             return Data()
         }
@@ -100,5 +119,25 @@ final class FeedAcceptanceTests: XCTestCase {
             ["id": "2AB2AE66-A4B7-4A16-B374-51BBAC8DB086", "image": "http://feed.com/image-1"],
             ["id": "A28F5FE3-27A7-44E9-8DF5-53742D0E4A5A", "image": "http://feed.com/image-2"]
         ]])
+    }
+    
+    private func makeCommentsData() -> Data {
+        let jsonObj = [
+            "items": [
+                [
+                    "id": UUID().uuidString,
+                    "message": makeCommentMessage(),
+                    "created_at": "2020-08-28T15:07:02+00:00",
+                    "author": [
+                        "username": "a username"
+                    ]
+                ] as [String : Any]
+            ]
+        ]
+        return try! JSONSerialization.data(withJSONObject: jsonObj)
+    }
+    
+    private func makeCommentMessage() -> String {
+        return "a message"
     }
 }
