@@ -30,6 +30,18 @@ extension ListViewController {
     func simulateErrorViewTap() {
         errorView.simulateTap()
     }
+    
+    func numberOfRows(in section: Int) -> Int {
+        return tableView.numberOfSections == 0 ? 0 : tableView.numberOfRows(inSection: section)
+    }
+    
+    func cell(for row: Int, in section: Int) -> UITableViewCell? {
+        guard numberOfRows(in: section) > row else { return nil }
+        let ds = tableView.dataSource
+        let index = IndexPath(row: row, section: section)
+        
+        return ds?.tableView(tableView, cellForRowAt: index)
+    }
 }
 
 
@@ -40,7 +52,7 @@ extension ListViewController {
     }
     
     func numberOfRenderedComments() -> Int {
-        return tableView.numberOfSections == 0 ? 0 : tableView.numberOfRows(inSection: commentsSection)
+        return numberOfRows(in: commentsSection)
     }
     
     func commentMessage(at row: Int) -> String? {
@@ -54,11 +66,7 @@ extension ListViewController {
     }
     
     private func commentView(at row: Int) -> ImageCommentCell? {
-        guard numberOfRenderedComments() > row else { return nil }
-        let ds = tableView.dataSource
-        let index = IndexPath(row: row, section: commentsSection)
-        
-        return ds?.tableView(tableView, cellForRowAt: index) as? ImageCommentCell
+        return cell(for: row, in: commentsSection) as? ImageCommentCell
     }
 }
 
@@ -111,15 +119,11 @@ extension ListViewController {
     }
     
     func numberOfRenderedFeedImageViews() -> Int {
-        return tableView.numberOfSections == 0 ? 0 : tableView.numberOfRows(inSection: feedImagesSection)
+        return numberOfRows(in: feedImagesSection)
     }
     
     @discardableResult
     func feedImageView(at row: Int) -> UITableViewCell? {
-        guard numberOfRenderedFeedImageViews() > row else { return nil }
-        let ds = tableView.dataSource
-        let index = IndexPath(row: row, section: feedImagesSection)
-        
-        return ds?.tableView(tableView, cellForRowAt: index)
+        return cell(for: row, in: feedImagesSection)
     }
 }
