@@ -31,6 +31,9 @@ public final class ErrorView: UIButton {
     private func configure() {
         backgroundColor = .errorBackGroundColor
         configuration = .plain()
+        configuration?.titlePadding = 0
+        configuration?.baseForegroundColor = .white
+        configuration?.background.cornerRadius = 0
         configureLabel()
         addTarget(self, action: #selector(hideMessageAnimated), for: .touchUpInside)
         hideMessage()
