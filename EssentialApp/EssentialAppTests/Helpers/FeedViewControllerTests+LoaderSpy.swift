@@ -13,19 +13,19 @@ extension FeedUIIntegrationTests {
     
     class LoaderSpy: FeedImageDataLoader {
         // MARK: -- FeedLoader
-        private var feedRequests = [PassthroughSubject<[FeedImage], Error>]()
+        private var feedRequests = [PassthroughSubject<Paginated<FeedImage>, Error>]()
         var loadFeedCallCount: Int {
             return feedRequests.count
         }
         
-        public func loadPublisher() -> AnyPublisher<[FeedImage], Error> {
-            let publisher = PassthroughSubject<[FeedImage], Error>()
+        public func loadPublisher() -> AnyPublisher<Paginated<FeedImage>, Error> {
+            let publisher = PassthroughSubject<Paginated<FeedImage>, Error>()
             feedRequests.append(publisher)
             return publisher.eraseToAnyPublisher()
         }
         
         func completeFeedLoading(with feed: [FeedImage] = [], at index: Int = 0) {
-            feedRequests[index].send(feed)
+            feedRequests[index].send(Paginated(items: feed))
         }
         
         func completeFeedLoadingWithError(at index: Int = 0) {
