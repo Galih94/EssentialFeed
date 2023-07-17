@@ -47,6 +47,11 @@ public final class ListViewController: UITableViewController, UITableViewDataSou
         delegate?.tableView?(tableView, didSelectRowAt: indexPath)
     }
     
+    public override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        let delegate = cellController(forRowAt: indexPath)?.delegate
+        delegate?.tableView?(tableView, willDisplay: cell, forRowAt: indexPath)
+    }
+    
     // MARK: -- UITableViewDataSourcePrefetching
     public func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
         indexPaths.forEach { indexPath in
