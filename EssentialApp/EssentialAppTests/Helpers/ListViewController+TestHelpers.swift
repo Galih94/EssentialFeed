@@ -76,6 +76,14 @@ extension ListViewController {
         return 0
     }
     
+    private var feedLoadMoreSection: Int {
+        return 1
+    }
+    
+    private var feedFirstRow: Int {
+        return 0
+    }
+    
     @discardableResult
     func simulateFeedImageViewNotVisible(at row: Int) -> FeedImageCell? {
         guard let view = simulateFeedImageViewVisible(at: row) else { return nil }
@@ -125,5 +133,12 @@ extension ListViewController {
     @discardableResult
     func feedImageView(at row: Int) -> UITableViewCell? {
         return cell(for: row, in: feedImagesSection)
+    }
+    
+    func simulateLoadMoreFeedAction() {
+        guard let view = cell(for: feedFirstRow, in: feedLoadMoreSection) else { return }
+        let delegate = tableView.delegate
+        let index = IndexPath(row: feedFirstRow, section: feedLoadMoreSection)
+        delegate?.tableView?(tableView, willDisplay: view, forRowAt: index)
     }
 }
