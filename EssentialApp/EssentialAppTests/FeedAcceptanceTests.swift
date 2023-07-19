@@ -99,10 +99,12 @@ final class FeedAcceptanceTests: XCTestCase {
     private func makeData(for url: URL) -> Data {
         let lastPath = "/\(url.lastPathComponent)"
         switch lastPath {
-        case "/image-1":
+        case "/image-0":
             return makeImageData0()
-        case "/image-2":
+        case "/image-1":
             return makeImageData1()
+        case "/image-2":
+            return makeImageData2()
         case "/feed":
             return makeFeedData()
         case "/comments":
@@ -120,10 +122,14 @@ final class FeedAcceptanceTests: XCTestCase {
         return UIImage.make(withColor: .green).pngData()!
     }
     
+    private func makeImageData2() -> Data {
+        return UIImage.make(withColor: .blue).pngData()!
+    }
+    
     private func makeFeedData() -> Data {
         return try! JSONSerialization.data(withJSONObject: [ "items": [
-            ["id": "2AB2AE66-A4B7-4A16-B374-51BBAC8DB086", "image": "http://feed.com/image-1"],
-            ["id": "A28F5FE3-27A7-44E9-8DF5-53742D0E4A5A", "image": "http://feed.com/image-2"]
+            ["id": "2AB2AE66-A4B7-4A16-B374-51BBAC8DB086", "image": "http://feed.com/image-0"],
+            ["id": "A28F5FE3-27A7-44E9-8DF5-53742D0E4A5A", "image": "http://feed.com/image-1"]
         ]])
     }
     
