@@ -16,8 +16,8 @@ final class FeedAcceptanceTests: XCTestCase {
         let feed = launch(httpClient: HTTPClientStub.online(response), store: InMemoryStore.empty)
         
         XCTAssertEqual(feed.numberOfRenderedFeedImageViews(), 2)
-        XCTAssertEqual(feed.renderedFeedImageData(at: 0), makeImageData())
-        XCTAssertEqual(feed.renderedFeedImageData(at: 1), makeImageData())
+        XCTAssertEqual(feed.renderedFeedImageData(at: 0), makeImageData0())
+        XCTAssertEqual(feed.renderedFeedImageData(at: 1), makeImageData1())
     }
     
     func test_onLaunch_displaysCachedRemoteFeedWhenCustomerHasNoConnectivity() {
@@ -28,8 +28,8 @@ final class FeedAcceptanceTests: XCTestCase {
         
         let offlineFeed = launch(httpClient: .offline, store: sharedStore)
         XCTAssertEqual(offlineFeed.numberOfRenderedFeedImageViews(), 2)
-        XCTAssertEqual(offlineFeed.renderedFeedImageData(at: 0), makeImageData())
-        XCTAssertEqual(offlineFeed.renderedFeedImageData(at: 1), makeImageData())
+        XCTAssertEqual(offlineFeed.renderedFeedImageData(at: 0), makeImageData0())
+        XCTAssertEqual(offlineFeed.renderedFeedImageData(at: 1), makeImageData1())
     }
     
     func test_onLaunch_displaysEmptyFeedWhenCustomerHasNoConnectivityAndNoCache() {
@@ -99,8 +99,10 @@ final class FeedAcceptanceTests: XCTestCase {
     private func makeData(for url: URL) -> Data {
         let lastPath = "/\(url.lastPathComponent)"
         switch lastPath {
-        case "/image-1", "/image-2":
-            return makeImageData()
+        case "/image-1":
+            return makeImageData0()
+        case "/image-2":
+            return makeImageData1()
         case "/feed":
             return makeFeedData()
         case "/comments":
@@ -110,8 +112,12 @@ final class FeedAcceptanceTests: XCTestCase {
         }
     }
     
-    private func makeImageData() -> Data {
+    private func makeImageData0() -> Data {
         return UIImage.make(withColor: .red).pngData()!
+    }
+    
+    private func makeImageData1() -> Data {
+        return UIImage.make(withColor: .green).pngData()!
     }
     
     private func makeFeedData() -> Data {
