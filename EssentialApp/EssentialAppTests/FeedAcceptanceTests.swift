@@ -97,17 +97,17 @@ final class FeedAcceptanceTests: XCTestCase {
     }
     
     private func makeData(for url: URL) -> Data {
-        let lastPath = "/\(url.lastPathComponent)"
-        switch lastPath {
+        let path = url.path()
+        switch path {
         case "/image-0":
             return makeImageData0()
         case "/image-1":
             return makeImageData1()
         case "/image-2":
             return makeImageData2()
-        case "/feed":
+        case "/essential-feed/v1/feed":
             return makeFeedData()
-        case "/comments":
+        case "/essential-feed/v1/image/2AB2AE66-A4B7-4A16-B374-51BBAC8DB086/comments":
             return makeCommentsData()
         default:
             return Data()
