@@ -84,6 +84,10 @@ extension ListViewController {
         return 0
     }
     
+    var loadMoreFeedErrorMessage: String? {
+        return loadMoreFeedCell()?.message
+    }
+    
     var isShowingLoadMoreFeedIndicator: Bool {
         return loadMoreFeedCell()?.isLoading == true
     }
