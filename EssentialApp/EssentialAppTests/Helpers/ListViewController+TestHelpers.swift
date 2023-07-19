@@ -153,4 +153,10 @@ extension ListViewController {
         let index = IndexPath(row: feedFirstRow, section: feedLoadMoreSection)
         delegate?.tableView?(tableView, willDisplay: view, forRowAt: index)
     }
+    
+    func simulateTapOnLoadMoreFeedError() {
+        let delegate = tableView.delegate
+        let index = IndexPath(row: feedFirstRow, section: feedLoadMoreSection)
+        delegate?.tableView?(tableView, didSelectRowAt: index)
+    }
 }
