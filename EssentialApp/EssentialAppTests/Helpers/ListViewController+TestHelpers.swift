@@ -151,11 +151,15 @@ extension ListViewController {
         return cell(for: row, in: feedImagesSection)
     }
     
-    func simulateLoadMoreFeedAction() {
+    func simulateLoadMoreFeedAction(tableView: UITableView? = nil) {
         guard let view = loadMoreFeedCell() else { return }
-        let delegate = tableView.delegate
+        let delegate = self.tableView.delegate
         let index = IndexPath(row: feedFirstRow, section: feedLoadMoreSection)
-        delegate?.tableView?(tableView, willDisplay: view, forRowAt: index)
+        delegate?.tableView?(tableView ?? self.tableView, willDisplay: view, forRowAt: index)
+    }
+    
+    func simulateScrollOnLoaderMoreView(tableView: UITableView) {
+        tableView.setContentOffset(CGPoint(x: 0, y: 100), animated: false)
     }
     
     func simulateTapOnLoadMoreFeedError() {

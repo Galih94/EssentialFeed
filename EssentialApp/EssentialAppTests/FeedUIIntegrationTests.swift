@@ -482,6 +482,23 @@ class FeedUIIntegrationTests: XCTestCase {
         wait(for: [exp], timeout: 1.0)
     }
     
+    func test_scrollLoadMoreView_loadsMore() {
+        let (sut, loader) = makeSUT()
+        let tableView = AlwaysDraggingTableView()
+        
+        sut.loadViewIfNeeded()
+        loader.completeFeedLoading()
+        
+        sut.simulateLoadMoreFeedAction(tableView: tableView)
+        XCTAssertEqual(loader.loadMoreCallCount, 1, "Expect got request load more on will display")
+        
+        loader.completeLoadMoreWithError()
+        XCTAssertEqual(loader.loadMoreCallCount, 1, "Expect no request on complete with error")
+        
+        sut.simulateScrollOnLoaderMoreView(tableView: tableView)
+        XCTAssertEqual(loader.loadMoreCallCount, 2, "Expect got request on scroll load more")
+    }
+    
     // MARK: Helpers
     private func makeSUT(
         selection: @escaping (FeedImage) -> Void = {_ in },
@@ -505,5 +522,11 @@ class FeedUIIntegrationTests: XCTestCase {
     
     private func anyImageData() -> Data {
         return UIImage.make(withColor: .red).pngData()!
+    }
+    
+    private class AlwaysDraggingTableView: UITableView {
+        override var isDragging: Bool {
+            return true
+        }
     }
 }
