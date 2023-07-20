@@ -21,6 +21,7 @@ public final class LoadMoreCellController: NSObject, UITableViewDataSource {
     }
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        cell.selectionStyle = .none
         return cell
     }
 }
