@@ -14,4 +14,8 @@ extension FeedCache {
     public func saveIgnoringResult(_ feed: [FeedImage]) {
         save(feed) { _ in }
     }
+    
+    public func saveIgnoringResult(_ feed: Paginated<FeedImage>) {
+        save(feed.items) { _ in }
+    }
 }
