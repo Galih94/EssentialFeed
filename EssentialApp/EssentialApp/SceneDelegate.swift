@@ -84,25 +84,32 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             .tryMap(FeedItemsMapper.map)
             .caching(to: localFeedLoader)
             .fallback(to: localFeedLoader.loadPublisher)
-            .map { [weak self] items in
-                return Paginated(items: items, loadMorePublisher: self?.makeRemoteLoadMoreLoader(items: items, lastItem: items.last)
-            )}
+            .map(makeFirstPage)
             .eraseToAnyPublisher()
+    }
+    
+    private func makeFirstPage(items: [FeedImage]) -> Paginated<FeedImage>  {
+        return makePage(items: items, lastItem: items.last)
     }
     
     private func makeRemoteLoadMoreLoader(items: [FeedImage], lastItem: FeedImage?) -> (() -> AnyPublisher<Paginated<FeedImage>, Error>)? {
         return lastItem.map { [baseURL, httpClient] lastItem in
             let url = FeedEndpoint.get(after: lastItem).url(baseURL: baseURL)
-            return { [httpClient, localFeedLoader] in
+            return { [httpClient, localFeedLoader, makePage] in
                 httpClient
                     .getPublisher(url: url)
                     .tryMap(FeedItemsMapper.map)
-                    .map { [weak self] newItems in
-                        let allItems = items + newItems
-                        return Paginated(items: allItems, loadMorePublisher: self?.makeRemoteLoadMoreLoader(items: allItems, lastItem: newItems.last))
+                    .map { newItems in
+                        return (items + newItems, newItems.last)
                     }
-                    .caching(to: localFeedLoader)             }
+                    .map(makePage)
+                    .caching(to: localFeedLoader)
+            }
         }
+    }
+    
+    private func makePage(items: [FeedImage], lastItem: FeedImage?) -> Paginated<FeedImage> {
+        return Paginated(items: items, loadMorePublisher: makeRemoteLoadMoreLoader(items: items, lastItem: lastItem))
     }
     
     private func makeLocalImageLoaderWithRemoteFallback(from url: URL) -> FeedImageDataLoader.Publisher {
