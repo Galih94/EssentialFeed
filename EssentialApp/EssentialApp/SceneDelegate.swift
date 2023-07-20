@@ -77,11 +77,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
     
     private func makeRemoteFeedLoaderWithLocalFallback() -> AnyPublisher<Paginated<FeedImage>, Error> {
-        let remoteURL = FeedEndpoint.get().url(baseURL: baseURL)
-
-        return httpClient
-            .getPublisher(url: remoteURL)
-            .tryMap(FeedItemsMapper.map)
+        return makeRemoteFeedLoader()
             .caching(to: localFeedLoader)
             .fallback(to: localFeedLoader.loadPublisher)
             .map(makeFirstPage)
@@ -93,10 +89,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
     
     private func makeRemoteLoadMoreLoader(items: [FeedImage], lastItem: FeedImage?) -> AnyPublisher<Paginated<FeedImage>, Error> {
-        let url = FeedEndpoint.get(after: lastItem).url(baseURL: baseURL)
-        return httpClient
-            .getPublisher(url: url)
-            .tryMap(FeedItemsMapper.map)
+        return makeRemoteFeedLoader(lastItem: lastItem)
             .map { newItems in
                 return (items + newItems, newItems.last)
             }
@@ -112,6 +105,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                     makeRemoteLoadMoreLoader(items, lastItem)
                 }
         })
+    }
+    
+    private func makeRemoteFeedLoader(lastItem: FeedImage? = nil) -> AnyPublisher<[FeedImage], Error>  {
+        let url = FeedEndpoint.get(after: lastItem).url(baseURL: baseURL)
+        return httpClient
+            .getPublisher(url: url)
+            .tryMap(FeedItemsMapper.map)
+            .eraseToAnyPublisher()
     }
     
     private func makeLocalImageLoaderWithRemoteFallback(from url: URL) -> FeedImageDataLoader.Publisher {
