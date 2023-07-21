@@ -132,26 +132,32 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         return localImageLoader
             .loadImageDataPublisher(url)
             .fallback(to: { [logger, httpClient] in
-                var startTime = CACurrentMediaTime()
                 return httpClient.getPublisher(url: url)
-                    .handleEvents(receiveSubscription: { [logger] _ in
-                        logger.trace("Started loading url: \(url)")
-                        startTime = CACurrentMediaTime()
-                    }, receiveCompletion: { [logger] result in
-                        if case let .failure(error) = result {
-                            logger.trace("Failed loading url: \(url) with error: \(error)")
-                        }
-                        let elapsedTime = CACurrentMediaTime() - startTime
-                        logger.trace("Finished loading url: \(url), in \(elapsedTime) seconds")
-                    }, receiveCancel: { [logger] in 
-                        let elapsedTime = CACurrentMediaTime() - startTime
-                        logger.trace("Cancel loading url: \(url) , in \(elapsedTime) seconds")
-                    })
+                    .logElapsedTime(url: url, logger: logger)
                     .tryMap(FeedImageDataMapper.map)
                     .caching(to: localImageLoader, for: url)
             })
     }
     
+}
+
+extension Publisher {
+    func logElapsedTime(url: URL, logger: Logger) -> AnyPublisher<Output, Failure> {
+        var startTime = CACurrentMediaTime()
+        return handleEvents(receiveSubscription: { _ in
+            logger.trace("Started loading url: \(url)")
+            startTime = CACurrentMediaTime()
+        }, receiveCompletion: { result in
+            if case let .failure(error) = result {
+                logger.trace("Failed loading url: \(url) with error: \(error)")
+            }
+            let elapsedTime = CACurrentMediaTime() - startTime
+            logger.trace("Finished loading url: \(url), in \(elapsedTime) seconds")
+        }, receiveCancel: { 
+            let elapsedTime = CACurrentMediaTime() - startTime
+            logger.trace("Cancel loading url: \(url) , in \(elapsedTime) seconds")
+        }).eraseToAnyPublisher()
+    }
 }
 
 //extension RemoteLoader: FeedLoader where Resource == [FeedImage] {}
