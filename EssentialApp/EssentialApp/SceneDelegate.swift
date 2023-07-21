@@ -144,7 +144,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 extension Publisher {
     func logErrors(url: URL, logger: Logger) -> AnyPublisher<Output, Failure> {
-        var startTime = CACurrentMediaTime()
         return handleEvents(receiveCompletion: { result in
             if case let .failure(error) = result {
                 logger.trace("Failed loading url: \(url) with error: \(error)")
