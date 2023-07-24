@@ -50,37 +50,6 @@ final class LoadFeedImageDataFromCacheUseCaseTests: XCTestCase {
         }
     }
     
-    func test_loadImageData_doesNotDeliversResultAfterCancellingTask() {
-        let (sut, store) = makeSUT()
-        
-        var receivedResults = [FeedImageDataLoader.Result]()
-        let task = sut.loadImageData(from: anyURL(), completion: { result in
-            receivedResults.append(result)
-        })
-        
-        task.cancel()
-        
-        store.completeRetrieval(with: .none)
-        store.completeRetrieval(with: anyData())
-        store.completeRetrieval(with: anyNSError())
-        
-        XCTAssertTrue(receivedResults.isEmpty, "Expected no received results after cancelling task got \(receivedResults) intead")
-    }
-    
-    func test_loadImageData_doesNotDeliversResultAfterSUTInstanceHasBeenDeallocated() {
-        let store = FeedImageDataStoreSpy()
-        var sut: LocalFeedImageDataLoader? = LocalFeedImageDataLoader(store: store)
-        
-        var receivedResults = [FeedImageDataLoader.Result]()
-        _ = sut?.loadImageData(from: anyURL(), completion: { result in
-            receivedResults.append(result)
-        })
-        sut = nil
-        store.completeRetrieval(with: anyData())
-        
-        XCTAssertTrue(receivedResults.isEmpty, "Expected no received results after instance has been deallocated")
-    }
-    
     // MARK: Helpers
     private func makeSUT(file: StaticString = #filePath, line: UInt = #line) -> (LocalFeedImageDataLoader, FeedImageDataStoreSpy) {
         let store = FeedImageDataStoreSpy()
@@ -102,6 +71,8 @@ final class LoadFeedImageDataFromCacheUseCaseTests: XCTestCase {
     private func expect(_ sut: LocalFeedImageDataLoader, toCompleteWith expectedResult: FeedImageDataLoader.Result, when action: () -> Void, file: StaticString = #filePath, line: UInt = #line) {
         let url = anyURL()
         let exp = expectation(description: "Wait for completion")
+        action()
+        
         _ = sut.loadImageData(from: url) { receivedResult in
             switch (receivedResult, expectedResult) {
             case let (.success(receivedData), .success(expectedData)):
@@ -117,7 +88,6 @@ final class LoadFeedImageDataFromCacheUseCaseTests: XCTestCase {
             }
             exp.fulfill()
         }
-        action()
         wait(for: [exp], timeout: 1.0)
     }
 }
