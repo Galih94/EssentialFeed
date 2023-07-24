@@ -44,7 +44,7 @@ public final class CoreDataFeedStore {
         }
     }
     
-    func perform(action: @escaping (NSManagedObjectContext) -> Void) {
+    func performAsync(action: @escaping (NSManagedObjectContext) -> Void) {
         let context = self.context
         context.perform {
             action(context)
