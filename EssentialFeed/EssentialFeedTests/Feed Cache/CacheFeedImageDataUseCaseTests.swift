@@ -20,7 +20,7 @@ final class CacheFeedImageDataUseCaseTests: XCTestCase {
         let data = anyData()
         let url = anyURL()
         
-        sut.save(data, for: url) { _ in }
+        try? sut.save(data, for: url)
         
         XCTAssertEqual(store.receivedMessages, [.insert(data: data, for: url)])
     }
@@ -51,26 +51,23 @@ final class CacheFeedImageDataUseCaseTests: XCTestCase {
         return (sut, store)
     }
     
-    private func failed() -> LocalFeedImageDataLoader.SaveResult {
+    private func failed() -> Result<Void, Error> {
         return .failure(LocalFeedImageDataLoader.SaveError.failed)
     }
     
-    private func expect(_ sut: LocalFeedImageDataLoader, toCompleteWith expectedResult: LocalFeedImageDataLoader.SaveResult, when action: @escaping () -> Void, file: StaticString = #filePath, line: UInt = #line) {
-        let exp = expectation(description: "Wait for completion")
+    private func expect(_ sut: LocalFeedImageDataLoader, toCompleteWith expectedResult: Result<Void, Error>, when action: @escaping () -> Void, file: StaticString = #filePath, line: UInt = #line) {
         action()
-        
-        sut.save(anyData(), for: anyURL()) { receivedResult in
-            switch (receivedResult, expectedResult) {
-            case (.success(()), .success(())): break
-            case let (.failure(receivedError as LocalFeedImageDataLoader.SaveError),
-                      .failure(expectedError as LocalFeedImageDataLoader.SaveError) ):
-                XCTAssertEqual(receivedError, expectedError, file: file, line: line)
-            default: XCTFail("Expected result \(expectedResult), got \(receivedResult) instead", file: file, line: line)
-            }
-            exp.fulfill()
+        let receivedResult = Result {
+            try sut.save(anyData(), for: anyURL())
+        }
+        switch (receivedResult, expectedResult) {
+        case (.success(()), .success(())): break
+        case let (.failure(receivedError as LocalFeedImageDataLoader.SaveError),
+                  .failure(expectedError as LocalFeedImageDataLoader.SaveError) ):
+            XCTAssertEqual(receivedError, expectedError, file: file, line: line)
+        default: XCTFail("Expected result \(expectedResult), got \(receivedResult) instead", file: file, line: line)
         }
         
-        wait(for: [exp], timeout: 1.0)
     }
     
 }
