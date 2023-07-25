@@ -87,16 +87,12 @@ final class CoreDataFeedImageDataStoreTests: XCTestCase {
     }
     
     private func expect(_ sut: CoreDataFeedStore, toCompleteRetrieveWith expectedResult: FeedImageDataStore.RetrievalResult, for url: URL, file: StaticString = #file, line: UInt = #line) {
-        let exp = expectation(description: "Wait for retrieval")
-        sut.retrieve(dataForURL: url) { receivedResult in
-            switch (receivedResult, expectedResult) {
-            case let (.success(receivedData), .success(expectedData)):
-                XCTAssertEqual(receivedData, expectedData, file: file, line: line)
-            default: XCTFail("Expected \(receivedResult) got \(expectedResult) isntead", file: file, line: line)
-            }
-            exp.fulfill()
+        let receivedResult = Result{ try sut.retrieve(dataForURL: url)}
+        switch (receivedResult, expectedResult) {
+        case let (.success(receivedData), .success(expectedData)):
+            XCTAssertEqual(receivedData, expectedData, file: file, line: line)
+        default: XCTFail("Expected \(receivedResult) got \(expectedResult) isntead", file: file, line: line)
         }
-        wait(for: [exp], timeout: 1.0)
     }
     
     private func insert(_ data: Data, for url: URL, into sut: CoreDataFeedStore, file: StaticString = #file, line: UInt = #line) {
@@ -104,19 +100,17 @@ final class CoreDataFeedImageDataStoreTests: XCTestCase {
         let exp = expectation(description: "Wait for insertion")
         let image = localImage(url: url)
         sut.insert([image], timeStamp: Date()) { insertImageResult in
-            switch insertImageResult {
-            case let .failure(error):
-                XCTFail("Expected success got \(error) intead")
-                exp.fulfill()
-            case .success:
-                sut.insert(data, for: url) { insertResult in
-                    if case let Result.failure(error) = insertResult {
-                        XCTFail("Failed insert data \(data) got \(error) intead")
-                    }
-                    exp.fulfill()
-                }
+            if case let .failure(error) = insertImageResult {
+                XCTFail("Expected success got \(error) intead", file: file, line: line)
             }
+            exp.fulfill()
         }
         wait(for: [exp], timeout: 1.0)
+        
+        do {
+            try sut.insert(data, for: url)
+        } catch {
+            XCTFail("Failed insert data \(data) got \(error) intead", file: file, line: line)
+        }
     }
 }
