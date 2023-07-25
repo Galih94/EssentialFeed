@@ -13,7 +13,7 @@ final class FeedImageDataStoreSpy: FeedImageDataStore {
         case insert(data: Data, for: URL)
     }
     
-    private var retrievalResult: FeedImageDataStore.RetrievalResult?
+    private var retrievalResult: Result<Data?,Error>?
     private var insertionResult: Result<Void,Error>?
     private(set) var receivedMessages = [Message]()
     
