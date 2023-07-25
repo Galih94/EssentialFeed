@@ -15,8 +15,13 @@ import EssentialFeediOS
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
+    private lazy var scheduler: AnyDispatchQueueScheduler = DispatchQueue(
+        label: "com.essentialdeveloper.infra.queue",
+        qos: .userInitiated,
+        attributes: .concurrent
+    ).eraseToAnyScheduler()
     
-    private lazy var logger = Logger(subsystem: "com.galih.EssentialApp", category: "main")
+    private lazy var logger = Logger(subsystem: "com.galih.EssentialApp", category: "main") /// Logger to log event in code
     
     private lazy var navigationController: UINavigationController =  UINavigationController(
             rootViewController: FeedUIComposer.feedComposedWith(
@@ -54,10 +59,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         configureWindow()
     }
     
-    convenience init(httpClient: HTTPClient, store: FeedStore & FeedImageDataStore) {
-        self.init()
-        self.httpClient = httpClient
-        self.store = store
+    convenience init(
+        httpClient: HTTPClient,
+        store: FeedStore & FeedImageDataStore,
+        scheduler: AnyDispatchQueueScheduler ) {
+            self.init()
+            self.httpClient = httpClient
+            self.store = store
+            self.scheduler = scheduler
     }
     
     func configureWindow() {
@@ -132,13 +141,17 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         return localImageLoader
             .loadImageDataPublisher(url)
             .logCacheMisses(url: url, logger: logger)
-            .fallback(to: { [logger, httpClient] in
+            .fallback(to: { [logger, httpClient, scheduler] in
                 return httpClient.getPublisher(url: url)
                     .logErrors(url: url, logger: logger)
                     .logElapsedTime(url: url, logger: logger)
                     .tryMap(FeedImageDataMapper.map)
                     .caching(to: localImageLoader, for: url)
+                    .subscribe(on: scheduler)
+                    .eraseToAnyPublisher()
             })
+            .subscribe(on: scheduler)
+            .eraseToAnyPublisher()
     }
     
 }
