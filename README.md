@@ -11,15 +11,15 @@ I want the app to automatically load my latest image feed. <br />
 So i can always enjoy the newest images of my friends. <br />
 
 ### Scenarios (Acceptance criteria)
-Given the customer has connectivity. 
-When the customer requests to see their feed. 
-Then the app should display the latest feed from remote. 
-And replace the cache with new feed. 
+Given the customer has connectivity. <br />
+When the customer requests to see their feed. <br />
+Then the app should display the latest feed from remote. <br />
+And replace the cache with new feed. <br />
 
 ## Narrative #2
-As an offline customer. 
-I want the app to show latest saved version of my image feed. 
-So i can always enjoy images of my friends. 
+As an offline customer. <br />
+I want the app to show latest saved version of my image feed. <br />
+So i can always enjoy images of my friends. <br />
 
 ---
 ## Load Feed Image Data From Remote Use Case
@@ -246,14 +246,14 @@ GET /feed
 ## Story: Customer requests to see comments from image feed
 
 ## Narative #1
-As an online customer. 
-I want the app to automatically load comments when tap image feed. 
-So i can see comments of image feed. 
+As an online customer. <br />
+I want the app to automatically load comments when tap image feed. <br />
+So i can see comments of image feed. <br />
 
 ### Scenarios (Acceptance criteria)
-Given the customer has connectivity. 
-When the customer requests to see comments of image feed. 
-Then the app should display the comments from remote. 
+Given the customer has connectivity. <br />
+When the customer requests to see comments of image feed. <br />
+Then the app should display the comments from remote. <br />
 
 ---
 ## Load Comments From Remote Use Case
