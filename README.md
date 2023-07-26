@@ -6,22 +6,20 @@ This repositories contains learning material on implementing Feed Feature
 ## Story: Customer requests to see their image feed
 
 ## Narative #1
-As an online customer
-I want the app to automatically load my latest image feed
-So i can always enjoy the newest images of my friends
+As an online customer. 
+I want the app to automatically load my latest image feed. 
+So i can always enjoy the newest images of my friends. 
 
 ### Scenarios (Acceptance criteria)
-Given the customer has connectivity
-When the customer requests to see their feed
-Then the app should display the latest feed from remote
-And replace the cache with new feed
+Given the customer has connectivity. 
+When the customer requests to see their feed. 
+Then the app should display the latest feed from remote. 
+And replace the cache with new feed. 
 
 ## Narrative #2
-As an offline customer 
-Iwant the app to show latest saved version of my image feed
-So i can always enjoy images of my friends
-
-
+As an offline customer. 
+I want the app to show latest saved version of my image feed. 
+So i can always enjoy images of my friends. 
 
 ---
 ## Load Feed Image Data From Remote Use Case
@@ -108,7 +106,7 @@ So i can always enjoy images of my friends
 ### Primary course (happy path):
 1. Execute "Validate Cache" command with above data
 2. System fetches feed data from cache.
-3. System validates cache is less thab seven days old.
+3. System validates cache is less than seven days old.
 
 ### Retrieval Error course (sad path):
 1. System deletes cache.
@@ -237,26 +235,25 @@ GET /feed
 3. The loading should start automatically when the user navigates to the screen.
     - The user should also be able to reload the comments manually (Pull-to-refresh).
 4. At all times, the user whould have a back button to return to the feed screen.
-    - Cancle any running comments API requests when the user navigates back.
+    - Cancel any running comments API requests when the user navigates back.
 5. The comments screen layout should match the UI specs.
     - Present the comment date using relative date formatting, e.g., "1 day ago."
 6. The comments screen title should be localized in all languages supported in the project.
-7. The Comments screen shpuld support Light and Dark Mode.
-8. Write tests to validate your implementation, including unit, integration, and snapshot tests (aim to write the test first!).
+7. The comments screen should support Light and Dark Mode.
 
 ---
 ## BDD Specs
 ## Story: Customer requests to see comments from image feed
 
 ## Narative #1
-As an online customer
-I want the app to automatically load comments when tap image feed
-So i can see comments of image feed
+As an online customer. 
+I want the app to automatically load comments when tap image feed. 
+So i can see comments of image feed. 
 
 ### Scenarios (Acceptance criteria)
-Given the customer has connectivity
-When the customer requests to see comments of image feed
-Then the app should display the comments from remote
+Given the customer has connectivity. 
+When the customer requests to see comments of image feed. 
+Then the app should display the comments from remote. 
 
 ---
 ## Load Comments From Remote Use Case
