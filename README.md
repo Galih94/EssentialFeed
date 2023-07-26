@@ -245,6 +245,11 @@ GET /feed
 8. Write tests to validate your implementation, including unit, integration, and snapshot tests (aim to write the test first!).
 ---
 
+## Comment UX goals:
+- [✅] Display a list of comments when the user taps on an image in the feed.
+- [✅] At all times, the user should have back button to return to the feed screen.
+    - [✅] Cancel any running comments API requests when the user navigates back. 
+
 ## API Specs
 ### Payload  contract
 ``` 
