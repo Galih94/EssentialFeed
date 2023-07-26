@@ -230,10 +230,10 @@ GET /feed
 
 ## Goals
 1. Display a list of comments when the user taps on an image in the feed.
-2. Loading the commnets can fail, so you must handle the UI states accordingly.
+2. Loading the comments can fail, so you must handle the UI states accordingly.
     - Show a loading spinner while loading the comments.
     - If it fails to load: Show an error message.
-    - If it loads successfully: SHow all loaded comments in the order they were returned by the remote API.
+    - If it loads successfully: Show all loaded comments in the order they were returned by the remote API.
 3. The loading should start automatically when the user navigates to the screen.
     - The user should also be able to reload the comments manually (Pull-to-refresh).
 4. At all times, the user whould have a back button to return to the feed screen.
