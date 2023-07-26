@@ -2,7 +2,7 @@
 This repositories contains learning material on implementing Feed Feature
 
 ---
-# BDD Specs
+## BDD Specs
 ## Story: Customer requests to see their image feed
 
 ## Narative #1
@@ -136,7 +136,7 @@ So i can always enjoy images of my friends
 ### Saving error course (sad path):
 1. System delivers error.
 
-# Inbox Cache Specs:
+## Inbox Cache Specs:
 - [✅] Retrieve
     - [✅] Empty cache return nil / empty
     - [✅] Empty cache twice return nil / empty (no side-effects)
@@ -154,7 +154,7 @@ So i can always enjoy images of my friends
     - [✅] Error (if applicable, e.g., no delete permission)
 - [✅] Side-effects must run serially to avoid race-conditions
 
-# Inbox UX goals for the Feed UI experience:
+## Inbox UX goals for the Feed UI experience:
 - [✅] Load feed automatically when view is presented
 - [✅] Allow customer to manually reload feed (pull to refresh)
 - [✅] Show a loading indicator while loading feed 
