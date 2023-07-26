@@ -137,35 +137,35 @@ So i can always enjoy images of my friends
 1. System delivers error.
 
 # Inbox Cache Specs:
-✅ Retrieve
-    ✅ Empty cache return nil / empty
-    ✅ Empty cache twice return nil / empty (no side-effects)
-    ✅ Non-empty cache returns data
-    ✅ Non-empty cache twice returns same data (no side-effects)
-    ✅ Error returns error (if applicable, e.g., invalid data)
-    ✅ Error twice returns same error (if applicable, e.g., invalid data)
-✅ Insert
-    ✅ To empty cache stores data
-    ✅ To non-empty cache overrides previous data with new data
-    ✅ Error (if applicable, e.g., invalid data, no write permission, no empty space)
-✅ Delete
-    ✅ Empty cache does nothing (cache stays empty and does not fail)
-    ✅ Non-empty cache leaves cache empty
-    ✅ Error (if applicable, e.g., no delete permission)
-✅ Side-effects must run serially to avoid race-conditions
+- ✅ Retrieve
+    - ✅ Empty cache return nil / empty
+    - ✅ Empty cache twice return nil / empty (no side-effects)
+    - ✅ Non-empty cache returns data
+    - ✅ Non-empty cache twice returns same data (no side-effects)
+    - ✅ Error returns error (if applicable, e.g., invalid data)
+    - ✅ Error twice returns same error (if applicable, e.g., invalid data)
+- ✅ Insert
+    - ✅ To empty cache stores data
+    - ✅ To non-empty cache overrides previous data with new data
+    - ✅ Error (if applicable, e.g., invalid data, no write permission, no empty space)
+- ✅ Delete
+    - ✅ Empty cache does nothing (cache stays empty and does not fail)
+    - ✅ Non-empty cache leaves cache empty
+    - ✅ Error (if applicable, e.g., no delete permission)
+- ✅ Side-effects must run serially to avoid race-conditions
 
 # Inbox UX goals for the Feed UI experience
 
-[✅] Load feed automatically when view is presented
-[✅] Allow customer to manually reload feed (pull to refresh)
-[✅] Show a loading indicator while loading feed 
-[✅] Render all loaded feed items (location image, description)
-[✅] Image loading experience
-    [✅] Load when image is visible (on screen)
-    [✅] Cancel when image view is out of screen
-    [✅] Show a loading indicator while loading image (shimmer)
-    [✅] Option to retry on image download error
-    [✅] Preload when image view is near visible
+1. [✅] Load feed automatically when view is presented
+2. [✅] Allow customer to manually reload feed (pull to refresh)
+3. [✅] Show a loading indicator while loading feed 
+4. [✅] Render all loaded feed items (location image, description)
+5. [✅] Image loading experience
+    1. [✅] Load when image is visible (on screen)
+    2. [✅] Cancel when image view is out of screen
+    3. [✅] Show a loading indicator while loading image (shimmer)
+    4. [✅] Option to retry on image download error
+    5. [✅] Preload when image view is near visible
 ---
 
 # Essential Feed App – Image Comments Feature
