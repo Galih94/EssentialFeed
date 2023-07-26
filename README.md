@@ -6,9 +6,9 @@ This repositories contains learning material on implementing Feed Feature
 ## Story: Customer requests to see their image feed
 
 ## Narative #1
-As an online customer. 
-I want the app to automatically load my latest image feed. 
-So i can always enjoy the newest images of my friends. 
+As an online customer. \n
+I want the app to automatically load my latest image feed. \n
+So i can always enjoy the newest images of my friends. \n
 
 ### Scenarios (Acceptance criteria)
 Given the customer has connectivity. 
