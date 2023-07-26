@@ -245,6 +245,24 @@ GET /feed
 8. Write tests to validate your implementation, including unit, integration, and snapshot tests (aim to write the test first!).
 ---
 
+## Load Comments From Remote Use Case
+
+#### Data:
+- URL
+
+### Primary course (happy path):
+1. Execute "Load Comments" command with above data
+2. System downloads data from the url.
+3. System create comment from data.
+4. System delivers list of comments.
+
+### Invalid data - error course (sad path):
+1. System delivers invalid error.
+
+### No connectivity - error course (sad path):
+1. System delivers connectivity error.
+---
+
 ## Comment UX goals:
 - [✅] Display a list of comments when the user taps on an image in the feed.
 - [✅] At all times, the user should have back button to return to the feed screen.
