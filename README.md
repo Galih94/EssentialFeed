@@ -165,6 +165,19 @@ So i can always enjoy images of my friends
     - [✅] Show a loading indicator while loading image (shimmer)
     - [✅] Option to retry on image download error
     - [✅] Preload when image view is near visible
+- [✅] Create layout for pagination
+    -  [✅] Create load more loading indicator
+    -  [✅] Create load more error message
+- [✅] Infinite Scroll Experience
+    -  [✅] Trigger "Load More" action on scroll to bottom
+            -  [✅] Only if there are more items to load
+            -  [✅] Only if not already loading
+    -  [✅] Show loading indicator while loading
+    -  [✅] Show error message load more while loading more error
+            -  [✅] Tap error message to retry load more
+- [✅] Load feed 10 items at a time using Keyset Pagination
+    - [✅] First: GET /feed?limit=10
+    - [✅] Load More: GET /feed?limit=10&after_id={last_id}
 ---
 
 # Essential Feed App – Image Comments Feature
