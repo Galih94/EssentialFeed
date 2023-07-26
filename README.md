@@ -170,11 +170,11 @@ So i can always enjoy images of my friends
     -  [✅] Create load more error message
 - [✅] Infinite Scroll Experience
     -  [✅] Trigger "Load More" action on scroll to bottom
-            -  [✅] Only if there are more items to load
-            -  [✅] Only if not already loading
+        -  [✅] Only if there are more items to load
+        -  [✅] Only if not already loading
     -  [✅] Show loading indicator while loading
     -  [✅] Show error message load more while loading more error
-            -  [✅] Tap error message to retry load more
+        -  [✅] Tap error message to retry load more
 - [✅] Load feed 10 items at a time using Keyset Pagination
     - [✅] First: GET /feed?limit=10
     - [✅] Load More: GET /feed?limit=10&after_id={last_id}
