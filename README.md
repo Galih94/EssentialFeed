@@ -243,8 +243,22 @@ GET /feed
 6. The comments screen title should be localized in all languages supported in the project.
 7. The Comments screen shpuld support Light and Dark Mode.
 8. Write tests to validate your implementation, including unit, integration, and snapshot tests (aim to write the test first!).
----
 
+---
+## BDD Specs
+## Story: Customer requests to see comments from image feed
+
+## Narative #1
+As an online customer
+I want the app to automatically load comments when tap image feed
+So i can see comments of image feed
+
+### Scenarios (Acceptance criteria)
+Given the customer has connectivity
+When the customer requests to see comments of image feed
+Then the app should display the comments from remote
+
+---
 ## Load Comments From Remote Use Case
 
 #### Data:
